@@ -1,5 +1,5 @@
 {
-  "name": "reactve",
+  "name": "@openovate/reactve",
   "version": "0.0.1",
   "description": "React Virtual Engine is an un-opinionated, un-routed React app build engine",
   "author": "Christian Blanquera <cblanquera@openovate.com>",

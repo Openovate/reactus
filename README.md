@@ -22,7 +22,29 @@ Do not use **React Virtual Engine** if:
  - You want a Zero config framework
  - You use/d `create-react-app` for your project
 
-## 1. Install
+## Navigation
+
+ - 1. [Install](#1-install)
+ - 2. [Usage](#2-usage)
+   - 2.1. [Example Project](#21-example-project)
+     - 2.1.1. [Create an Engine File](#211-create-an-engine-file)
+     - 2.1.2. [Create an Webpack Config](#212-create-a-webpack-config)
+     - 2.1.3. [Create a Babel Config](#213-create-a-babel-config)
+     - 2.1.4. [Create a Page Layout](#214-create-a-page-layout)
+     - 2.1.5. [Create a Link Component](#215-create-a-link-component)
+     - 2.1.6. [Create Views](#216-create-views)
+     - 2.1.7. [Create a Server File](#217-create-a-server-file)
+     - 2.1.8. [Add Scripts to Package Configuration](#218-add-scripts-to-package-configuration)
+     - 2.1.9. [Done](#219-done)
+   - 2.2. [Building](#22-building)
+   - 2.3. [Customizing](#23-customizing)
+     - 2.3.1. [Use a Custom Entry File](#231-use-a-custom-entry-file)
+     - 2.3.2. [Use a Custom Router File](#232-use-a-custom-router-file)
+     - 2.3.3. [White Labeling](#233-white-labeling)
+     - 2.3.4. [Adding Custom Virtual Files](#234-adding-custom-virtual-files)
+     - 2.3.5. [Not Using Express or Custom Router](#235-not-using-express-or-custom-router)
+
+### 1. Install
 
 ```bash
 $ npm i --save reactve
@@ -90,13 +112,13 @@ engine.view('/product/:id', '/product/detail', path.join(__dirname, 'views/Produ
 export default engine
 ```
 
-##### 2.1.1.1. Parameters
+###### 2.1.1.1. Parameters
 
 We instantiate the `engine` using `Reactve()`. Next, we need to tell the
 engine where to get the webpack config using `engine.set('webpack', config)`
 and set the default page using `engine.set('page', Page)`.
 
-##### 2.1.1.2. Components
+###### 2.1.1.2. Components
 
 Next we need to declare all the components that will be used in the project.
 `reactve` virtually builds a global component registry accessible only by views
@@ -111,7 +133,7 @@ register components where the following parameters are accepted.
  *(ie. no special character, spaces, etc.)*
  - **path to source file** - the actual place where the source code is located
 
-##### 2.1.1.3. Views
+###### 2.1.1.3. Views
 
 Last, we need to declare all the views that will be used in the project.
 `reactve` virtually builds a virtual file structure for views and be accessed
@@ -131,7 +153,7 @@ following parameters are accepted.
 
 > TIP: In this part of the project, this would be an ideal place to load your custom modules.
 
-##### 2.1.2. Create an Webpack Config
+##### 2.1.2. Create a Webpack Config
 
 Create a file called `[ROOT]/webpack.config.js` with the following contents.
 
@@ -334,7 +356,7 @@ In the example of `Product.getInitialProps(route)`, you can alternative accept a
 `route` argument which has the meta information of the route path, in this case,
 `route.params.id`.
 
-#### 2.1.7. Create a Server File
+##### 2.1.7. Create a Server File
 
 Create a file called `[ROOT]/server.js` with the following contents.
 
@@ -405,7 +427,7 @@ following parameters are accepted.
 - `response` - The response object
 - `props` - The data object to pass as `props` to the component
 
-#### 2.1.8. Add Scripts to Package Configuration
+##### 2.1.8. Add Scripts to Package Configuration
 
 In your `[ROOT]/package.json`, add the following scripts.
 
@@ -422,19 +444,21 @@ In your `[ROOT]/package.json`, add the following scripts.
 We use `babel-node` in this case to read from the `.babelrc` file to transform
 both ES modules and react files to Common JS.
 
-#### 2.1.9. Done
+##### 2.1.9. Done
 
 In terminal, navigate to `[ROOT]` and run `$ npm start`. Next visit
 `http://localhost:3000/` in your browser. You should see something like the
 following.
 
-```
+----
+
 # Home Page
 
  - [Home](#)
  - [Product 1](#)
  - [Product 2](#)
-```
+
+---
 
 If you click around you should notice that the views are navigating using client
 side routing. If you try to view source and refresh a page you will confirm that
