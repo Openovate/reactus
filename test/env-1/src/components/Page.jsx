@@ -1,14 +1,14 @@
 import React from 'react';
 
-export default function Page({ title, children }) {
+export default function Page(props) {
   return (
     <html>
       <head>
         <meta charSet="utf-8" />
-        <title>{title}</title>
+        <title>{props.title}</title>
       </head>
       <body>
-        <div id="root">{children}</div>
+        <div id="root">{'{APP}'}</div>
         <noscript>You need to enable JavaScript to run this app.</noscript>
         <script src="/index.bundle.js"></script>
       </body>

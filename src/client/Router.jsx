@@ -107,13 +107,18 @@ class Router extends React.Component {
   }
 
   render() {
+    //try to get the component
+    const component = this.state.component || this.props.component;
+
     //if no component
-    if (!this.state.component) {
+    if (!component) {
       //nothing we can do...
       return null;
     }
 
-    const { component, route, props } = this.state;
+    //from here, we will try to make it into an element
+
+    const { route, props } = this.state;
     const { history } = this.props;
 
     props.route = route;
@@ -123,6 +128,6 @@ class Router extends React.Component {
   }
 }
 
-export default (history, routes) => {
-  return React.createElement(Router, { history, routes })
+export default (props) => {
+  return React.createElement(Router, props)
 }

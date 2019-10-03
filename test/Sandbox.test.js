@@ -10,7 +10,7 @@ test('Home Page Test', async () => {
   const title = await page.title();
   const header = await page.$eval('h1', header => header.innerText)
 
-  expect(title).toBe('Home Page');
+  expect(title).toBe('Welcome!');
   expect(header).toBe('Home Page')
 })
 

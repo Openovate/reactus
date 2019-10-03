@@ -6,7 +6,7 @@ import Router from 'reactus/Router.jsx';
 const { createBrowserHistory } = require('history');
 const history = createBrowserHistory();
 
-ReactDOM.render(
-  Router(history, routes),
+ReactDOM.hydrate(
+  Router({history, routes}),
   document.getElementById('root')
 )

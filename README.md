@@ -229,21 +229,21 @@ Create a file called `[ROOT]/components/Page.jsx` with the following contents.
 //#FILE: [ROOT]/components/Page.jsx
 import React from 'react';
 
-export default function Page({ title, children }) {
+export default function Page(props) {
   return (
     <html>
       <head>
-        <meta charSet="utf-8" />
-        <title>{title}</title>
+        <title>{props.title}</title>
       </head>
       <body>
-        <div id="root">{children}</div>
+        <div id="root">{'{APP}'}</div>
         <noscript>You need to enable JavaScript to run this app.</noscript>
         <script src="/index.bundle.js"></script>
       </body>
     </html>
   );
 }
+
 ```
 
 This layout is registered in `[ROOT]/engine.js`, so whenever `render()` is
@@ -381,13 +381,19 @@ function getProduct(id) {
 
 //add routes
 app.get('/', async(req, res) => {
+  const props = getHome()
+  const pageProps = { title: 'Welcome!' }
+
   res.setHeader('Content-Type', 'text/html')
-  engine.render('/home', res, getHome())
+  engine.render(res, '/home', props, pageProps)
 })
 
 app.get('/product/:id', async(req, res) => {
+  const props = getProduct(req.params.id)
+  const pageProps = { title: 'Product Detail' }
+
   res.setHeader('Content-Type', 'text/html')
-  engine.render('/product/detail', res, getProduct(req.params.id))
+  engine.render(res, '/product/detail', props, pageProps);
 })
 
 app.get('/api/home', (req, res) => {
@@ -422,12 +428,14 @@ examples on how to use the `engine.render()` method.
  - `app.get('/api/product/:id', async(req, res) => {})` - For `localhost:3000/api/product/2`;
  Example of a mock API call handing dynamic URL parameters.
 
-`engine.render(view, response, props)` - renders a registered view where the
-following parameters are accepted.
+`engine.render(response, view, props, pageProps, page)` - renders a registered
+view where the following parameters are accepted.
 
-- `view` - The client side path where the registered view is located
-- `response` - The response object
-- `props` - The data object to pass as `props` to the component
+ - `response` - The response object
+ - `view` - The client side path where the registered view is located
+ - `props` - The data object to pass as `props` to the component
+ - `pageProps` - The data object to pass as `props` to the page component
+ - `page` - Incase you want to a different page component on runtime
 
 ##### 2.1.8. Add Scripts to Package Configuration
 
@@ -515,7 +523,7 @@ import Router from 'reactus/Router.jsx';
 const { createBrowserHistory } = require('history');
 const history = createBrowserHistory();
 
-ReactDOM.render(
+ReactDOM.hydrate(
   Router(history, routes),
   document.getElementById('root')
 )

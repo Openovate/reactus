@@ -1,7 +1,7 @@
 {
   "name": "reactus",
-  "version": "0.0.3",
-  "description": "React Virtual Engine is an un-opinionated, un-routed React app build engine",
+  "version": "0.0.4",
+  "description": "Reactus is an un-opinionated, un-routed React app build engine",
   "author": "Christian Blanquera <cblanquera@openovate.com>",
   "license": "MIT",
   "homepage": "https://github.com/openovate/reactus#readme",

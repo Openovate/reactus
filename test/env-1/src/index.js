@@ -18,13 +18,19 @@ function getProduct(id) {
 
 //add routes
 app.get('/', async(req, res) => {
+  const props = getHome()
+  const pageProps = { title: 'Welcome!' }
+
   res.setHeader('Content-Type', 'text/html')
-  engine.render('/home', res, getHome())
+  engine.render(res, '/home', props, pageProps)
 })
 
 app.get('/product/:id', async(req, res) => {
+  const props = getProduct(req.params.id)
+  const pageProps = { title: 'Product Detail' }
+
   res.setHeader('Content-Type', 'text/html')
-  engine.render('/product/detail', res, getProduct(req.params.id))
+  engine.render(res, '/product/detail', props, pageProps);
 })
 
 app.get('/api/home', (req, res) => {

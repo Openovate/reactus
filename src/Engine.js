@@ -6,7 +6,7 @@ const webpack = require('webpack');
 const JailbreakPlugin = require('@openovate/webpack-jailbreak');
 
 const React = require('react');
-const { renderToString } = require('react-dom/server');
+const { renderToString, renderToStaticMarkup } = require('react-dom/server');
 const { createMemoryHistory } = require('history');
 
 const Module = require('module');
@@ -258,14 +258,15 @@ class Engine {
   /**
    * Renders a react browser view
    *
-   * @param {String} path
    * @param {ServerResponse} res
-   * @param {Object} props
-   * @param {React.Component} [page = Page]
+   * @param {String} path
+   * @param {Object} [props = {}]
+   * @param {Object} [pageProps = {}]
+   * @param {React.Component} [page = null]
    *
    * @return {Engine}
    */
-  render(path, res, props, page) {
+  render(res, path, props = {}, pageProps = {}, page = null) {
     //remove forward slash at the start
     if (path.indexOf('/') === 0) {
       path = path.substr(1)
@@ -273,8 +274,8 @@ class Engine {
 
     //setup page
     page = page || this.registry.get('page');
+
     //setup props
-    props = props || {};
     props.history = createMemoryHistory();
 
     //if no browser path
@@ -304,9 +305,13 @@ class Engine {
     }
 
     //component should be a composite, make a page
-    const html = React.createElement(page, props, view(props));
+    const html = React.createElement(page, pageProps);
+
     //last set the content
-    res.send('<!DOCTYPE html>' + renderToString(html));
+    res.send('<!DOCTYPE html>' + renderToStaticMarkup(html)
+      .replace('{APP}', renderToString(view(props)))
+    );
+
     return this;
   }
 
