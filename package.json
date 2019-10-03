@@ -1,6 +1,6 @@
 {
   "name": "reactus",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "React Virtual Engine is an un-opinionated, un-routed React app build engine",
   "author": "Christian Blanquera <cblanquera@openovate.com>",
   "license": "MIT",
@@ -28,6 +28,7 @@
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.5.5",
+    "@openovate/jsm": "0.0.14",
     "@openovate/webpack-jailbreak": "^0.0.3",
     "babel-loader": "^8.0.6",
     "history": "^4.10.1",

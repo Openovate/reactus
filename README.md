@@ -412,10 +412,13 @@ examples on how to use the `engine.render()` method.
 
  - `app.get('/', async(req, res) => {})` - For `localhost:3000/`; Should load
  the home page with `[ROOT]/views/Home.jsx`
+
  - `app.get('/product/:id', async(req, res) => {})` - For `localhost:3000/product/2`;
  Should load the product page with `[ROOT]/views/Product.jsx`
+
  - `app.get('/api/home', async(req, res) => {})` - For `localhost:3000/api/home`;
  Example of a mock API call.
+
  - `app.get('/api/product/:id', async(req, res) => {})` - For `localhost:3000/api/product/2`;
  Example of a mock API call handing dynamic URL parameters.
 
@@ -686,6 +689,9 @@ engine.set('brand', 'your_framework')
 ...
 ```
 
+This way, virtual files can be accessed like `your_framework/views/product/detail.jsx`
+for example.
+
 #### 2.3.4. Adding Custom Virtual Files
 
 If you want to declare custom virtual files, you can do so like the following
@@ -702,7 +708,8 @@ engine.customFiles[target] = fs.readFileSync('/absolute/path/to/your/code');
 ...
 ```
 
-If you noticed, you can actually pass any code as a string or buffer to
+This way, virtual files can be accessed like `reactus/custom` for example. If
+you noticed, you can actually pass any code as a string or buffer to
 `engine.customFiles`.
 
 #### 2.3.5. Not Using Express or Custom Router
