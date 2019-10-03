@@ -56,11 +56,11 @@ First thing to do is install packages that will transpile ESM modules, React
 components, and essential webpack build tools.
 
 ```bash
-npm i --save @babel/cli @babel/core @babel/node @babel/polyfill @babel/preset-env @babel/preset-react @babel/register react react-dom webpack webpack-cli history express
+$ npm i --save @babel/cli @babel/core @babel/node @babel/polyfill @babel/preset-env @babel/preset-react @babel/register react react-dom webpack webpack-cli history express
 ```
 
 ```bash
-npm i --save-dev babel-loader webpack-dev-middleware webpack-hot-middleware
+$ npm i --save-dev babel-loader webpack-dev-middleware webpack-hot-middleware
 ```
 
 #### 2.1. Example Project
@@ -272,7 +272,7 @@ function handle({ to, history, props }, event) {
 
 The `Link` component uses a `history` prop.
 [History](https://www.npmjs.com/package/history) is used by the original
-`react-router` library and the `reactus` Router relies on  
+`react-router` library and the `reactus` Router relies on
 [this](https://github.com/Openovate/reactus/blob/master/src/client/Router.jsx)
 for client side rendering and will pass the `history` to all pages on load.
 
@@ -351,9 +351,9 @@ Product.getInitialProps = async function getInitialProps(route) {
 }
 ```
 
-In the example of `Product.getInitialProps(route)`, you can alternative accept a
-`route` argument which has the meta information of the route path, in this case,
-`route.params.id`.
+In the example of `Product.getInitialProps(route)`, you can alternatively accept
+a `route` argument which has the meta information of the route path, in this
+case of `route.params.id`.
 
 ##### 2.1.7. Create a Server File
 
@@ -408,18 +408,18 @@ We include the engine into the app by `import engine from './engine'` and use it
 by `app.use(engine.middleware())`.
 
 After that, other typical routes are added. The following routes are provided as
-examples on how to the `engine.render()` method.
+examples on how to use the `engine.render()` method.
 
  - `app.get('/', async(req, res) => {})` - For `localhost:3000/`; Should load
- the home page from `[ROOT]/views/Home.jsx`
+ the home page with `[ROOT]/views/Home.jsx`
  - `app.get('/product/:id', async(req, res) => {})` - For `localhost:3000/product/2`;
- Should load the product page from `[ROOT]/views/Product.jsx`
+ Should load the product page with `[ROOT]/views/Product.jsx`
  - `app.get('/api/home', async(req, res) => {})` - For `localhost:3000/api/home`;
  Example of a mock API call.
  - `app.get('/api/product/:id', async(req, res) => {})` - For `localhost:3000/api/product/2`;
  Example of a mock API call handing dynamic URL parameters.
 
-`engine.render(view, response, props)` renders a registered view where the
+`engine.render(view, response, props)` - renders a registered view where the
 following parameters are accepted.
 
 - `view` - The client side path where the registered view is located
