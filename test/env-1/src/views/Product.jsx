@@ -1,5 +1,5 @@
 import React from 'react'
-import Link from  'reactve/components/Link.jsx'
+import Link from  'reactus/components/Link.jsx'
 
 export default function Product(props) {
   return (

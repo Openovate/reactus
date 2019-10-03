@@ -56,7 +56,7 @@ class Engine {
    * @const {String} MODULE_NAME
    */
   static get MODULE_NAME() {
-    return 'reactve';
+    return 'reactus';
   }
 
   /**

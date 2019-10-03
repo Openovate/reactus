@@ -1,16 +1,16 @@
 {
-  "name": "@openovate/reactve",
-  "version": "0.0.1",
+  "name": "reactus",
+  "version": "0.0.2",
   "description": "React Virtual Engine is an un-opinionated, un-routed React app build engine",
   "author": "Christian Blanquera <cblanquera@openovate.com>",
   "license": "MIT",
-  "homepage": "https://github.com/openovate/reactve#readme",
+  "homepage": "https://github.com/openovate/reactus#readme",
   "bugs": {
-    "url": "https://github.com/openovate/reactve/issues"
+    "url": "https://github.com/openovate/reactus/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/openovate/reactve.git"
+    "url": "git+https://github.com/openovate/reactus.git"
   },
   "keywords": [
     "react",

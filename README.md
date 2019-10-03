@@ -1,13 +1,13 @@
-# React Virtual Engine
+# Reactus
 
 An un-opinionated, un-routed version of a **React** app build engine. There are
 many great React frameworks, most notably [Next.js](https://nextjs.org/) and
 [Razzle](https://github.com/jaredpalmer/razzle) each helping developers setup
-their React app faster than traditional tooling. React Virtual Engine is a
+their React app faster than traditional tooling. Reactus is a
 **lite** version of a React framework, focused on generating bundles via
 **Webpack**.
 
-Use **React Virtual Engine** if:
+Use **Reactus** if:
 
  - You want to define your own custom file structure
  - You want to modularize your React project
@@ -16,7 +16,7 @@ Use **React Virtual Engine** if:
  - You have spent an exhaustive amount of time looking at Webpack's code.
  - You like to work with bare metal libraries
 
-Do not use **React Virtual Engine** if:
+Do not use **Reactus** if:
 
  - You want an out of box full stack solution
  - You want a Zero config framework
@@ -47,13 +47,12 @@ Do not use **React Virtual Engine** if:
 ### 1. Install
 
 ```bash
-$ npm i --save reactve
+$ npm i --save reactus
 ```
 
 ### 2. Usage
 
-In this section, we will refer the React Virtual Engine as `reactve`. First
-thing to do is install packages that will transpile ESM modules, React
+First thing to do is install packages that will transpile ESM modules, React
 components, and essential webpack build tools.
 
 ```bash
@@ -66,7 +65,7 @@ npm i --save-dev babel-loader webpack-dev-middleware webpack-hot-middleware
 
 #### 2.1. Example Project
 
-While, React Virtual Engine is un-opinionated, for these next sections we are
+While, Reactus is un-opinionated, for these next sections we are
 going to create a file structure that looks similar to the following and
 `[ROOT]` is denoted as your project root.
 
@@ -92,11 +91,11 @@ Create a file called `[ROOT]/engine.js` with the following contents.
 ```js
 //#FILE: [ROOT]/engine.js
 import path from 'path'
-import Reactve from 'reactve'
+import Reactus from 'reactus'
 import config from './webpack.config'
 import Page from './components/Page.jsx'
 
-const engine = Reactve()
+const engine = Reactus()
 
 //add params
 engine.set('webpack', config)
@@ -114,17 +113,17 @@ export default engine
 
 ###### 2.1.1.1. Parameters
 
-We instantiate the `engine` using `Reactve()`. Next, we need to tell the
+We instantiate the `engine` using `Reactus()`. Next, we need to tell the
 engine where to get the webpack config using `engine.set('webpack', config)`
 and set the default page using `engine.set('page', Page)`.
 
 ###### 2.1.1.2. Components
 
-Next we need to declare all the components that will be used in the project.
-`reactve` virtually builds a global component registry accessible only by views
-using `import Link from 'reactve/components/Link.jsx'` for example.
+Next, we need to declare all the components that will be used in the project.
+`reactus` virtually builds a global component registry accessible only by views
+using `import Link from 'reactus/components/Link.jsx'` for example.
 
-> NOTE: `reactve/components/Link.jsx` is a virtual file that does not really exist.
+> NOTE: `reactus/components/Link.jsx` is a virtual file that does not really exist.
 
 The method `engine.component(name, path to source file)` is a function used to
 register components where the following parameters are accepted.
@@ -136,10 +135,10 @@ register components where the following parameters are accepted.
 ###### 2.1.1.3. Views
 
 Last, we need to declare all the views that will be used in the project.
-`reactve` virtually builds a virtual file structure for views and be accessed
-using `import Product from 'reactve/views/product/detail.jsx'` for example.
+`reactus` virtually builds a virtual file structure for views and be accessed
+using `import Product from 'reactus/views/product/detail.jsx'` for example.
 
-> NOTE: `reactve/views/product/detail.jsx` is a virtual file that does not really exist.
+> NOTE: `reactus/views/product/detail.jsx` is a virtual file that does not really exist.
 
 `engine.view(route, target, source)` is a function to register views where the
 following parameters are accepted.
@@ -167,7 +166,7 @@ module.exports = {
   entry: {
     index: [
       'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-      'reactve/entry.js'
+      'reactus/entry.js'
     ]
   },
   output: {
@@ -185,7 +184,7 @@ module.exports = {
       },
       {
         test: /\.(js|jsx)$/,
-        include: /node_modules\/reactve/,
+        include: /node_modules\/reactus/,
         loader: 'babel-loader',
         options: { presets: ['@babel/env', '@babel/preset-react'] }
       },
@@ -205,7 +204,7 @@ module.exports = {
 ```
 
 We need to make sure in our config that there is a rule to transform the
-`reactve` package by setting `include: /node_modules\/reactve/` as a module
+`reactus` package by setting `include: /node_modules\/reactus/` as a module
 rule. The next important thing to have is the `HotModuleReplacementPlugin()`.
 This will allow re-bundling and reloads when you develop your project.
 
@@ -273,8 +272,8 @@ function handle({ to, history, props }, event) {
 
 The `Link` component uses a `history` prop.
 [History](https://www.npmjs.com/package/history) is used by the original
-`react-router` library and the `reactve` Router relies on  
-[this](https://github.com/Openovate/reactve/blob/master/src/client/Router.jsx)
+`react-router` library and the `reactus` Router relies on  
+[this](https://github.com/Openovate/reactus/blob/master/src/client/Router.jsx)
 for client side rendering and will pass the `history` to all pages on load.
 
 ##### 2.1.6. Create Views
@@ -284,7 +283,7 @@ Create a file called `[ROOT]/views/Home.jsx` with the following contents.
 ```js
 //#FILE: [ROOT]/views/Home.jsx
 import React from 'react'
-import Link from  'reactve/components/Link.jsx'
+import Link from  'reactus/components/Link.jsx'
 
 export default function Home(props) {
   return (
@@ -307,7 +306,7 @@ Home.getInitialProps = async function getInitialProps() {
 
 Remember that in `[ROOT]/engine.js`, this component was registered as a virtual
 component. That is how it can be accessed like
-`import Link from  'reactve/components/Link.jsx'`.
+`import Link from  'reactus/components/Link.jsx'`.
 
 ```js
 //#FILE: [ROOT]/engine.js
@@ -318,7 +317,7 @@ engine.component('Link', path.join(__dirname, 'components/Link.jsx'))
 ...
 ```
 
-The client side routing of `reactve` automatically calls on `Home.getInitialProps()`.
+The client side routing of `reactus` automatically calls on `Home.getInitialProps()`.
 Here is where you should `fetch` data from the server assuming that it was not
 already loaded.
 
@@ -327,7 +326,7 @@ Create another file called `[ROOT]/views/Product.jsx` with the following content
 ```js
 //#FILE: [ROOT]/views/Product.jsx
 import React from 'react'
-import Link from  'reactve/components/Link.jsx'
+import Link from  'reactus/components/Link.jsx'
 
 export default function Product(props) {
   return (
@@ -497,18 +496,18 @@ bundles.
 
 ### 2.3. Customizing
 
-This section will show how `reactve` can be changed to fit your project needs.
+This section will show how `reactus` can be changed to fit your project needs.
 
 #### 2.3.1. Use a Custom Entry File
 
-By default, `reactve` uses a pre-defined entry file that looks like the following.
+By default, `reactus` uses a pre-defined entry file that looks like the following.
 
 ```js
-//#FILE: reactve/client/entry.js
+//#FILE: reactus/client/entry.js
 import '@babel/polyfill';
 import ReactDOM from 'react-dom';
-import routes from 'reactve/routes';
-import Router from 'reactve/Router.jsx';
+import routes from 'reactus/routes';
+import Router from 'reactus/Router.jsx';
 
 const { createBrowserHistory } = require('history');
 const history = createBrowserHistory();
@@ -530,11 +529,11 @@ engine.set('entry', '/absolute/path/to/your/entry/file.js')
 
 #### 2.3.2. Use a Custom Router File
 
-By default, `reactve` uses a pre-defined router file that looks like the
+By default, `reactus` uses a pre-defined router file that looks like the
 following.
 
 ```js
-//#FILE: reactve/client/Router.jsx
+//#FILE: reactus/client/Router.jsx
 import path from 'path';
 import React, { useState } from 'react';
 
@@ -635,7 +634,7 @@ class Router extends React.Component {
         resolve = resolve.substr(1);
       }
 
-      import(`reactve/views/${resolve}.jsx`).then(
+      import(`reactus/views/${resolve}.jsx`).then(
         this.handleComponent.bind(this, route)
       );
 
@@ -677,7 +676,7 @@ engine.set('router', '/absolute/path/to/your/router/file.jsx')
 
 #### 2.3.3. White Labeling
 
-If you are creating your own framework using `reactve`, you may want to
+If you are creating your own framework using `reactus`, you may want to
 change the brand name. You can do this with the following snippet of code.
 
 ```js
@@ -697,8 +696,8 @@ snippet.
 import fs from 'fs'
 ...
 
-const engine = Reactve()
-const target = 'node_modules/reactve/custom.js';
+const engine = Reactus()
+const target = 'node_modules/reactus/custom.js';
 engine.customFiles[target] = fs.readFileSync('/absolute/path/to/your/code');
 ...
 ```
@@ -715,11 +714,11 @@ change the middleware to map these changes.
 //#FILE: [ROOT]/engine.js
 ...
 
-const engine = Reactve()
+const engine = Reactus()
 
 engine.middleware = function() { /* YOUR CODE */ }
 engine.Middleware.prototype.initializeDev = function() { /* YOUR CODE */ }
-engine.Middleware.prototype.initializeDev = function() { /* YOUR CODE */ }
-engine.Middleware.prototype.initializeDev = function() { /* YOUR CODE */ }
+engine.Middleware.prototype.initializeHot = function() { /* YOUR CODE */ }
+engine.Middleware.prototype.initializeBundler = function() { /* YOUR CODE */ }
 ...
 ```

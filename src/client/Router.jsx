@@ -98,7 +98,7 @@ class Router extends React.Component {
         resolve = resolve.substr(1);
       }
 
-      import(`reactve/views/${resolve}.jsx`).then(
+      import(`reactus/views/${resolve}.jsx`).then(
         this.handleComponent.bind(this, route)
       );
 

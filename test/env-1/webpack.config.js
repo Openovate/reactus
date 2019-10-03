@@ -6,7 +6,7 @@ module.exports = {
   entry: {
     index: [
       'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-      'reactve/entry.js'
+      'reactus/entry.js'
     ]
   },
   output: {
@@ -24,7 +24,7 @@ module.exports = {
       },
       {
         test: /\.(js|jsx)$/,
-        include: /node_modules\/reactve/,
+        include: /node_modules\/reactus/,
         loader: 'babel-loader',
         options: { presets: ['@babel/env', '@babel/preset-react'] }
       },

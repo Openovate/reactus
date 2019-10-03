@@ -15,11 +15,11 @@ class Helpers {
   }
 
   /**
-   * Primarily used for testing, this creates a virtual `reactve` node module
+   * Primarily used for testing, this creates a virtual `reactus` node module
    *
    * @param {String} brand
    */
-  static shim(brand = 'reactve') {
+  static shim(brand = 'reactus') {
     //overwrite Node's Module->resolveFilename
     const resolveFilename = Module._resolveFilename;
     Module._resolveFilename = function resolve(request, parent) {
