@@ -46,6 +46,26 @@ class Helpers {
       return index;
     };
   }
+
+  /**
+   * Helper to walk through each file
+   *
+   * @param {FileSystem} fileSystem
+   * @param {String} folder
+   * @param {Function} callback
+   */
+  static walk(fileSystem, folder, callback) {
+    const files = fileSystem.readdirSync(folder);
+
+    for (const file of files) {
+      const item = path.join(folder, file);
+      if (fileSystem.statSync(item).isDirectory()) {
+        this.walk(fileSystem, item, callback);
+      } else {
+        callback(item);
+      }
+    }
+  }
 }
 
 module.exports = Helpers;

@@ -3,6 +3,7 @@ const { join, resolve, extname } = require('path');
 const { Exception, Registry } = require('@openovate/jsm');
 
 const webpack = require('webpack');
+const Watchpack = require('watchpack');
 const JailbreakPlugin = require('@openovate/webpack-jailbreak');
 
 const React = require('react');
@@ -15,6 +16,8 @@ const requireFromString = require('require-from-string');
 
 const Helpers = require('./Helpers');
 const Middleware = require('./Middleware');
+
+const noop = () => {};
 
 class Engine {
   /**
@@ -60,25 +63,6 @@ class Engine {
   }
 
   /**
-   * @var {Object} files
-   */
-  get files() {
-    if (!this.lazyFiles) {
-      const files = Object.assign({}, this.customFiles);
-
-      this._buildEntry(files);
-      this._buildRouter(files);
-      this._buildRoutes(files);
-      this._buildComponents(files);
-
-      //return webpack as compiler
-      this.lazyFiles = files;
-    }
-
-    return this.lazyFiles;
-  }
-
-  /**
    * @var {Compiler} compiler
    */
   get compiler() {
@@ -95,13 +79,120 @@ class Engine {
       config.plugins = [].concat(config.plugins);
 
       //add the jailbreak plugin
-      config.plugins.push(new JailbreakPlugin({ files: this.files }));
+      config.plugins.push(this.system);
 
       //return webpack as compiler
       this.lazyCompiler = webpack(config);
     }
 
     return this.lazyCompiler;
+  }
+
+  /**
+   * @var {Object} files
+   */
+  get files() {
+    if (!this.lazyFiles) {
+      const files = {};
+      //load files from sources
+      for(const target in this.sources) {
+        const source = this.sources[target];
+        //if it doesn't exist or is not a file
+        if (!fs.existsSync(source) || !fs.lstatSync(source).isFile()) {
+          //assume it's a string
+          files[target] = source;
+          continue;
+        }
+
+        files[target] = fs.readFileSync(source);
+      }
+
+      //manually make a routes.js file
+      const routes = {};
+      const views = this.registry.get('views') || {};
+      Object.keys(views).forEach(path => {
+        routes[views[path].route] = path;
+      });
+
+      //generate routes file
+      const brand = this.registry.get('module');
+      const target = Engine.FILE_ROUTES.replace('{MODULE}', brand);
+      files[target] = 'module.exports = ' + JSON.stringify(routes, null, 2);
+
+      //return webpack as compiler
+      this.lazyFiles = files;
+    }
+
+    return this.lazyFiles;
+  }
+
+  /**
+   * @var {Object} presets
+   */
+  get presets() {
+    if (!this.lazyPresets) {
+      this.lazyPresets = JSON.parse(
+        fs.readFileSync(
+          resolve(__dirname, '../.babelrc')
+        )
+      );
+    }
+
+    return this.lazyPresets;
+  }
+
+  /**
+   * @var {Object} map
+   */
+  get sources() {
+    const sources = {};
+
+    //get the brand name
+    const brand = this.registry.get('module');
+
+    //get entry
+    const entry = Engine.FILE_ENTRY.replace('{MODULE}', brand);
+    sources[entry] = this.registry.get('entry');
+
+    //get router
+    const router = Engine.FILE_ROUTER.replace('{MODULE}', brand);
+    sources[router] = this.registry.get('router');
+
+    //get views
+    const views = this.registry.get('views') || {};
+    Object.keys(views).forEach(path => {
+      const target = Engine.FILE_VIEW
+        .replace('{MODULE}', brand)
+        .replace('{PATH}', path);
+      sources[target] = views[path].view;
+    });
+
+    //get components
+    const components = this.registry.get('components') || {};
+    Object.keys(components).forEach(name => {
+      const target = Engine.FILE_COMPONENT
+        .replace('{MODULE}', brand)
+        .replace('{NAME}', name);
+      sources[target] = components[name];
+    });
+
+    //deal with custom files
+    Object.keys(this.customFiles).forEach(target => {
+      sources[target] = this.customFiles[target];
+    });
+
+    return sources;
+  }
+
+  /**
+   * @var {Object} system
+   */
+  get system() {
+    if (!this.lazySystem) {
+      this.lazySystem = new JailbreakPlugin({ files: this.files });
+    }
+
+    return this.lazySystem;
   }
 
   /**
@@ -123,6 +214,9 @@ class Engine {
     this.customFiles = {};
 
     this.lazyFiles = null;
+    this.lazySystem = null;
+    this.lazyPresets = null;
+    this.lazyWatcher = null;
     this.lazyCompiler = null;
     this.initialized = false;
 
@@ -170,13 +264,6 @@ class Engine {
     //flag it so it doesnt initialize again
     this.initialized = true;
 
-    //get the babel presets ready..
-    const presets = JSON.parse(
-      fs.readFileSync(
-        resolve(__dirname, '../.babelrc')
-      )
-    );
-
     //when files are requested, it wont start with node_modules
     const files = {};
     Object.keys(this.files).forEach(file => {
@@ -202,7 +289,7 @@ class Engine {
       const file = join(__dirname, '../..', formatted);
 
       //transform the code back to commonjs
-      const { code } = babel.transform(files[formatted].toString(), presets);
+      const { code } = babel.transform(files[formatted].toString(), self.presets);
 
       //if it's not cached
       if (!require.cache[file]) {
@@ -225,15 +312,20 @@ class Engine {
   /**
    * Creates a middleware for an http interface
    *
+   * @param {Object} config
+   *
    * @return {Function}
    */
-  middleware() {
+  middleware(config = {}) {
     //initialize
     this.initialize();
 
     //load up the middleware
     const middleware = new this.Middleware(this);
     middleware.initialize();
+
+    //watch for changes
+    this.watch(config)
 
     return (req, res, next) => {
       //determine next
@@ -244,13 +336,7 @@ class Engine {
           return next(err);
         }
 
-        middleware.hot(req, res, (err) => {
-          if (err) {
-            return next(err);
-          }
-
-          middleware.bundler(req, res, next);
-        });
+        middleware.hot(req, res, next);
       });
     };
   }
@@ -328,6 +414,114 @@ class Engine {
   }
 
   /**
+   * Takes all the files from views and components and listens for changes
+   *
+   * @param {Object} config
+   * @param {Function} listener
+   *
+   * @return {Watchpack}
+   */
+  watch(config = {}, listener = noop) {
+    //if already watching
+    if (this.lazyWatcher) {
+      //stop from watching again
+      return this;
+    }
+
+    this.lazyWatcher = true;
+
+    //gather all the sources in the form of { source: target }
+    const sources = {};
+    Object.keys(this.sources).forEach(target => {
+      const source = this.sources[target];
+      //if source is not a real file
+      if (!fs.existsSync(source) || !fs.lstatSync(source).isFile()) {
+        //skip
+        return;
+      }
+
+      //perform an hash flip
+      sources[source] = target;
+    });
+
+    //these are the actual files we are watching
+    const files = new Set(Object.keys(sources));
+    if (config.watch instanceof Array) {
+      config.watch.forEach(file => {
+        //if the file is a folder
+        if (fs.existsSync(file) && fs.statSync(file).isDirectory()) {
+          Helpers.walk(fs, file, file => files.add(file));
+          return;
+        }
+
+        files.add(file);
+      });
+    }
+
+    //start the watcher
+    const watcher = new Watchpack(config);
+    watcher.watch(Array.from(files), [], Date.now() - 10000);
+
+    watcher.on('aggregated', changes => {
+      changes.forEach(updateServer);
+      changes.forEach(updateClient);
+      this.compiler.compile(listener);
+    });
+
+    const updateClient = source => {
+      //if source is not found
+      if (!sources[source]) {
+        //then it's not a virtual file.
+        return;
+      }
+
+      //just to be clear...
+      const target = sources[source];
+      const content = fs.readFileSync(source);
+
+      this.system.updateFile(this.compiler, target, content);
+    };
+
+    const updateServer = source => {
+      //if the source is a folder
+      if (fs.statSync(source).isDirectory()) {
+        //nothing to update
+        return;
+      }
+
+      //if source is not found
+      if (!sources[source]) {
+        //just invalidate the require cache
+        delete require.cache[require.resolve(source)];
+        return;
+      }
+
+      //just to be clear...
+      const target = sources[source].replace('node_modules/', '');
+      const file = join(__dirname, '../..', target);
+
+      const content = fs.readFileSync(source).toString();
+      //transform the code back to commonjs
+      const { code } = babel.transform(content, this.presets);
+
+      //if it's not cached
+      if (!require.cache[file]) {
+        //now call it and cache it
+        require.cache[file] = {
+          id: file,
+          filename: file,
+          loaded: true,
+          exports: requireFromString(code)
+        };
+      } else {
+        require.cache[file].exports = requireFromString(code);
+      }
+    };
+
+    return watcher;
+  }
+
+  /**
    * Registers a view
    *
    * @param {String} route
@@ -344,96 +538,6 @@ class Engine {
 
     this.registry.set('views', path, { route, view });
     return this;
-  }
-
-  /**
-   * Builds component files
-   *
-   * @param {Object} [files = {}]
-   *
-   * @return {Object}
-   */
-  _buildComponents(files = {}) {
-    const brand = this.registry.get('module');
-    const components = this.registry.get('components') || {};
-
-    //make components
-    Object.keys(components).forEach(name => {
-      const target = Engine.FILE_COMPONENT
-        .replace('{MODULE}', brand)
-        .replace('{NAME}', name);
-
-      files[target] = fs.readFileSync(components[name]);
-    });
-
-    return files;
-  }
-
-  /**
-   * Builds an entry file
-   *
-   * @param {Object} [files = {}]
-   *
-   * @return {Object}
-   */
-  _buildEntry(files = {}) {
-    const brand = this.registry.get('module');
-
-    //make entry
-    const entry = this.registry.get('entry');
-    const target = Engine.FILE_ENTRY.replace('{MODULE}', brand);
-    files[target] = fs.readFileSync(entry);
-    return files;
-  }
-
-  /**
-   * Builds a router file
-   *
-   * @param {Object} [files = {}]
-   *
-   * @return {Object}
-   */
-  _buildRouter(files = {}) {
-    const brand = this.registry.get('module');
-
-    //make the router
-    const router = this.registry.get('router');
-    const target = Engine.FILE_ROUTER.replace('{MODULE}', brand);
-    files[target] = fs.readFileSync(router);
-
-    return files;
-  }
-
-  /**
-   * Builds routes and view files
-   *
-   * @param {Object} [files = {}]
-   *
-   * @return {Object}
-   */
-  _buildRoutes(files = {}) {
-    const routes = {};
-    const brand = this.registry.get('module');
-
-    //make the routes
-    const views = this.registry.get('views') || {};
-    Object.keys(views).forEach(path => {
-      //determine the target file path (virtual pathing)
-      const target = Engine.FILE_VIEW
-        .replace('{MODULE}', brand)
-        .replace('{PATH}', path);
-
-      //add the target/view to the virtual modules
-      files[target] = fs.readFileSync(views[path].view);
-      //add route/view to the router
-      routes[views[path].route] = path;
-    });
-
-    //generate a routes file
-    const target = Engine.FILE_ROUTES.replace('{MODULE}', brand);
-    files[target] = 'module.exports = ' + JSON.stringify(routes, null, 2);
-
-    return files;
   }
 }
 

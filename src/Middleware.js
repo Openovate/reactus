@@ -1,14 +1,8 @@
+const { join, basename } = require('path');
 const webpackDev = require('webpack-dev-middleware');
 const webpackHot = require('webpack-hot-middleware');
 
 class Middleware {
-  /**
-   * @var {Function} bundler
-   */
-  get bundler() {
-    return this.middleware.bundler;
-  }
-
   /**
    * @var {Function} dev
    */
@@ -42,7 +36,6 @@ class Middleware {
   initialize() {
     this.initializeDev();
     this.initializeHot();
-    this.initializeBundler();
 
     return this;
   }
@@ -80,32 +73,6 @@ class Middleware {
     }
 
     this.middleware.hot = webpackHot(this.engine.compiler);
-
-    return this;
-  }
-
-  /**
-   * Initializes the bundler middleware
-   *
-   * @return {Middleware}
-   */
-  initializeBundler() {
-    if (this.middleware.bundler) {
-      return this;
-    }
-
-    this.middleware.bundler = (req, res, next) => {
-      //if it's not a bundle
-      if (!/^\/(.+)\.bundle\.js$/.test(req.url)) {
-        return next();
-      }
-
-      //write it and send it
-      res.setHeader('Content-Type', 'text/javascript');
-      res.write(webpackDev.fileSystem.readFileSync(req.url));
-      res.end();
-      next();
-    };
 
     return this;
   }

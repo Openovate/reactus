@@ -9,4 +9,4 @@ const history = createBrowserHistory();
 ReactDOM.hydrate(
   Router({history, routes}),
   document.getElementById('root')
-)
+);

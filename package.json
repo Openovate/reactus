@@ -1,6 +1,6 @@
 {
   "name": "reactus",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Reactus is an un-opinionated, un-routed React app build engine",
   "author": "Christian Blanquera <cblanquera@openovate.com>",
   "license": "MIT",
@@ -20,7 +20,8 @@
   "scripts": {
     "test": "jest",
     "test:build": "babel-node test/env-1/src/build.js",
-    "test:serve": "babel-node test/env-1/src/index.js"
+    "test:serve": "babel-node test/env-1/src/index.js",
+    "test:nodemon": "nodemon --exec babel-node test/env-1/src/index.js"
   },
   "dependencies": {
     "@babel/core": "^7.6.2",
@@ -29,13 +30,14 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.5.5",
     "@openovate/jsm": "0.0.14",
-    "@openovate/webpack-jailbreak": "^0.0.3",
+    "@openovate/webpack-jailbreak": "^0.0.6",
     "babel-loader": "^8.0.6",
     "history": "^4.10.1",
     "path-to-regexp": "^3.1.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "require-from-string": "^2.0.2",
+    "watchpack": "^1.6.0",
     "webpack": "^4.40.2",
     "webpack-dev-middleware": "^3.7.1",
     "webpack-hot-middleware": "^2.25.0"
@@ -48,7 +50,9 @@
     "jest": "^24.9.0",
     "jest-cli": "^24.9.0",
     "jest-puppeteer": "^4.3.0",
+    "nodemon": "^1.19.3",
     "puppeteer": "^1.20.0",
+    "react-hot-loader": "^4.12.14",
     "webpack-cli": "^3.3.9"
   }
 }

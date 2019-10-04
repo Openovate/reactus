@@ -5,7 +5,7 @@ module.exports = {
   mode: 'development',
   entry: {
     index: [
-      'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
+      'webpack-hot-middleware/client?reload=true',
       'reactus/entry.js'
     ]
   },
