@@ -10,6 +10,7 @@ export default function Page(props) {
       <body>
         <div id="root">{'{APP}'}</div>
         <noscript>You need to enable JavaScript to run this app.</noscript>
+        <script id="react-data" type="text/json">{'{DATA}'}</script>
         <script src="/index.bundle.js"></script>
       </body>
     </html>

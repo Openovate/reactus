@@ -1,12 +1,14 @@
 import '@babel/polyfill';
 import ReactDOM from 'react-dom';
 import routes from 'reactus/routes';
-import Router from 'reactus/Router.jsx';
+import createRouter from 'reactus/Router.jsx';
 
 const { createBrowserHistory } = require('history');
 const history = createBrowserHistory();
 
-ReactDOM.hydrate(
-  Router({history, routes}),
-  document.getElementById('root')
-);
+createRouter(history, routes, (Router, props) => {
+  ReactDOM.hydrate(
+    Router(props),
+    document.getElementById('root')
+  );
+})

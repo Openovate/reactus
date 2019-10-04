@@ -8,7 +8,6 @@ const JailbreakPlugin = require('@openovate/webpack-jailbreak');
 
 const React = require('react');
 const { renderToString, renderToStaticMarkup } = require('react-dom/server');
-const { createMemoryHistory } = require('history');
 
 const Module = require('module');
 const babel = require('@babel/core');
@@ -361,9 +360,6 @@ class Engine {
     //setup page
     page = page || this.registry.get('page');
 
-    //setup props
-    props.history = createMemoryHistory();
-
     //if no browser path
     if (!this.registry.has('views', path)) {
       //Can't do anything
@@ -396,6 +392,7 @@ class Engine {
     //last set the content
     res.send('<!DOCTYPE html>' + renderToStaticMarkup(html)
       .replace('{APP}', renderToString(view(props)))
+      .replace('{DATA}', JSON.stringify(props))
     );
 
     return this;
@@ -489,33 +486,8 @@ class Engine {
         return;
       }
 
-      //if source is not found
-      if (!sources[source]) {
-        //just invalidate the require cache
-        delete require.cache[require.resolve(source)];
-        return;
-      }
-
-      //just to be clear...
-      const target = sources[source].replace('node_modules/', '');
-      const file = join(__dirname, '../..', target);
-
-      const content = fs.readFileSync(source).toString();
-      //transform the code back to commonjs
-      const { code } = babel.transform(content, this.presets);
-
-      //if it's not cached
-      if (!require.cache[file]) {
-        //now call it and cache it
-        require.cache[file] = {
-          id: file,
-          filename: file,
-          loaded: true,
-          exports: requireFromString(code)
-        };
-      } else {
-        require.cache[file].exports = requireFromString(code);
-      }
+      //just invalidate the require cache
+      delete require.cache[require.resolve(source)];
     };
 
     return watcher;
