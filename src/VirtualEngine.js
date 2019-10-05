@@ -6,6 +6,8 @@ const React = require('react');
 const { renderToString, renderToStaticMarkup } = require('react-dom/server');
 
 const Module = require('module');
+const babel = require('@babel/core');
+const requireFromString = require('require-from-string');
 
 const Helpers = require('./Helpers');
 const WebpackPlugin = require('./WebpackPlugin');
@@ -57,7 +59,9 @@ class VirtualEngine {
     if (!this.lazyPage) {
       this.lazyPage = this.registry.get('page');
       if (typeof this.lazyPage === 'string') {
-        this.lazyPage = require(this.lazyPage).default;
+        const content = fs.readFileSync(this.lazyPage);
+        const { code } = babel.transform(content, this.presets);
+        this.lazyPage = requireFromString(code, this.lazyPage).default;
       }
     }
 
@@ -69,7 +73,7 @@ class VirtualEngine {
    */
   get presets() {
     if (!this.lazyPresets) {
-      this.lazyPresets = this.registry.get('babel');
+      this.lazyPresets = this.registry.get('source', 'babel');
 
       //if preset is a path
       if (typeof this.lazyPresets === 'string') {

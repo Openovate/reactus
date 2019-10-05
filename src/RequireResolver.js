@@ -25,6 +25,7 @@ class RequireResolver {
    */
   resolve(request, parent) {
     let formatted = request;
+
     if (!path.extname(formatted)) {
       formatted += '.js';
     }
@@ -132,7 +133,8 @@ class RequireResolver {
     const content = this.engine.files['node_modules/' + request].toString();
     const { code } = babel.transform(content, this.engine.presets);
 
-    return [ file, requireFromString(code) ];
+    const source = this.engine.sources['node_modules/' + request];
+    return [ file, requireFromString(code, source) ];
   }
 }
 
