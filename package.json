@@ -1,6 +1,6 @@
 {
   "name": "reactus",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Reactus is an un-opinionated, un-routed React app build engine",
   "author": "Christian Blanquera <cblanquera@openovate.com>",
   "license": "MIT",
@@ -19,16 +19,13 @@
   "main": "src/index.js",
   "scripts": {
     "test": "jest",
-    "test:build": "babel-node test/env-1/src/build.js",
-    "test:serve": "babel-node test/env-1/src/index.js",
-    "test:nodemon": "nodemon --exec babel-node test/env-1/src/index.js"
+    "test:serve": "babel-node test/shim.js quick-start/src/server"
   },
   "dependencies": {
     "@babel/core": "^7.6.2",
     "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
-    "@babel/register": "^7.5.5",
     "@openovate/jsm": "0.0.14",
     "@openovate/webpack-jailbreak": "^0.0.6",
     "babel-loader": "^8.0.6",
@@ -50,7 +47,6 @@
     "jest-cli": "^24.9.0",
     "jest-puppeteer": "^4.3.0",
     "history": "^4.10.1",
-    "nodemon": "^1.19.3",
     "puppeteer": "^1.20.0",
     "react-hot-loader": "^4.12.14",
     "webpack-cli": "^3.3.9"

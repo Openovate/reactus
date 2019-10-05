@@ -7,8 +7,5 @@ const { createBrowserHistory } = require('history');
 const history = createBrowserHistory();
 
 createRouter(history, routes, (Router, props) => {
-  ReactDOM.hydrate(
-    Router(props),
-    document.getElementById('root')
-  );
+  ReactDOM.hydrate(Router(props), document.getElementById('root'));
 })

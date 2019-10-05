@@ -1,5 +1,6 @@
 const { join } = require('path');
 const webpack = require('webpack');
+const engine = require('./src/engine').default;
 
 module.exports = {
   mode: 'development',
@@ -38,6 +39,7 @@ module.exports = {
     extensions: ['*', '.js', '.jsx']
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new engine.WebpackPlugin()
   ]
 };

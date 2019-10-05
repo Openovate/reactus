@@ -1,11 +1,12 @@
 import http from 'http'
 import express from 'express'
+import reactus from 'reactus'
 import engine from './engine'
+import config from '../webpack.config';
 
 const app = express()
 
-//use engine
-app.use(engine.middleware())
+app.use(reactus.devpack(config));
 
 //add API functions
 function getHome() {

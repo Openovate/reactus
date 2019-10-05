@@ -1,16 +1,10 @@
 import path from 'path'
-import Reactus from '../../../src'
-import config from '../webpack.config'
-import Page from './components/Page.jsx'
+import reactus from 'reactus'
 
-//shim the reactus package. only needed for testing
-Reactus.Engine.Helpers.shim();
-
-const engine = Reactus()
+const engine = reactus()
 
 //add params
-engine.set('webpack', config)
-engine.set('page', Page)
+engine.set('babel', path.join(__dirname, '../.babelrc'))
 
 //add commponents
 engine.component('Link', path.join(__dirname, 'components/Link.jsx'))

@@ -1,9 +1,13 @@
-const Engine = require('./Engine');
+const VirtualEngine = require('./VirtualEngine');
+const Helpers = require('./Helpers');
+const DevpackMiddleware = require('./DevpackMiddleware');
 
-function createEngine(config = {}) {
-  return new createEngine.Engine(config);
+function createVirtualEngine(config = {}) {
+  return new createVirtualEngine.VirtualEngine(config);
 }
 
-createEngine.Engine = Engine;
+createVirtualEngine.VirtualEngine = VirtualEngine;
+createVirtualEngine.devpack = DevpackMiddleware;
+createVirtualEngine.shim = Helpers.shim;
 
-module.exports = createEngine;
+module.exports = createVirtualEngine;

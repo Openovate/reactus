@@ -1,32 +1,41 @@
 const path = require('path');
 const Module = require('module');
-const { Exception } = require('@openovate/jsm');
+const ReactusException = require('./ReactusException');
 
 class Helpers {
   /**
-   * Primarily used for http.createServer to match interface with express
+   * Shim for server middleware
    *
-   * @param {String} error
+   * @param {(String|Error)} error
    */
   static next(error) {
     if (error) {
-      throw Exception.for(error);
+      if (typeof error === 'string') {
+        error = ReactusException.for(error);
+      }
+
+      throw error;
     }
   }
+
+  /**
+   * A non operational function
+   */
+  static noop() {}
 
   /**
    * Primarily used for testing, this creates a virtual `reactus` node module
    *
    * @param {String} brand
    */
-  static shim(brand = 'reactus') {
+  static shim(label = 'reactus') {
     //overwrite Node's Module->resolveFilename
     const resolveFilename = Module._resolveFilename;
     Module._resolveFilename = function resolve(request, parent) {
       //if they are asking for the brand
-      if (request !== brand) {
+      if (request !== label) {
         //business as usual.
-        return resolveFilename(request, parent);
+        return resolveFilename.call(Module, request, parent);
       }
 
       const index = path.resolve(__dirname, 'index.js');
