@@ -1,6 +1,6 @@
 {
   "name": "reactus",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Reactus is an un-opinionated, un-routed React app build engine",
   "author": "Christian Blanquera <cblanquera@openovate.com>",
   "license": "MIT",

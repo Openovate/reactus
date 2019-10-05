@@ -54,11 +54,11 @@ $ npm init -y
 
 ...
 
-$ npm i --save reactus express react react-dom history
+$ npm i --save reactus express react
 
 ...
 
-$ npm i --save-dev @babel/cli @babel/node @babel/core @babel/preset-env @babel/preset-react @babel/polyfill babel-loader webpack webpack-cli
+$ npm i --save-dev @babel/cli @babel/core @babel/node @babel/polyfill @babel/preset-env @babel/preset-react babel-loader webpack webpack-cli
 ```
 
 The following describes each package installed and what it is used for.
@@ -68,27 +68,21 @@ The following describes each package installed and what it is used for.
  - `reactus` - used to generate a virtual file structure for modular purposes
  - `express` - used to declare and process server URL routing
  - `react` - used process all the components and views
- - `react-dom` - used in `reactus/entry.js` to transform JSX to string
- - `history` - used in `reactus/entry.js` to listen for client side URL changes
- **(NOTE: Virtual files like `reactus/entry.js` are still treated like project
- files. That's why you should include this package)**
- and client side routing **(NOTE: Virtual files like `reactus/entry.js` are
- still treated like project files. That's why you should include this package)**
 
 ### 1.2. Development Dependencies
 
  - `@babel/cli` - used to run the `babel` terminal command which is used to
  transform ESM and JSX files to common JS
- - `@babel/node` - used to run `babel-node` terminal command which is used to
- transform ESM and JSX files to common JS in memory for development mode
  - `@babel/core` - used to programmatically transform ESM and JSX files to
  common JS. **(NOTE: `@babel/polyfill` will throw an error if this is not included)**
+ - `@babel/node` - used to run `babel-node` terminal command which is used to
+ transform ESM and JSX files to common JS in memory for development mode
+ - `@babel/polyfill` - used in `reactus/entry.js` to transform JSX files to
+ common JS on the client side as it is required *(`require()`)*
  - `@babel/preset-env` - used in `.babelrc` and is the main transformation
  preset
  - `@babel/preset-react` - used in `.babelrc` and is the JSX transformation
  preset
- - `@babel/polyfill` - used in `reactus/entry.js` to transform JSX files to
- common JS on the client side as it is required *(`require()`)*
  - `babel-loader` used in `webpack.config.js` to transform JSX files to
  common JS on the client side as the bundle is being built
  - `webpack` - used in `webpack.config.js` to enable `HotModuleReplacementPlugin()`
