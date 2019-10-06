@@ -34,6 +34,9 @@ project root.
 |- webpack.config.js
 ```
 
+You can view the files of this example
+[here](https://github.com/Openovate/reactus/tree/master/examples/quick-start-example).
+
 #### Navigation
 
  - [1. Install](#1-setup-package-json)

@@ -1,5 +1,5 @@
 {
-  "name": "reactus-modular-example",
+  "name": "reactus-bare-metal-example",
   "scripts": {
     "start": "babel-node src/server.js"
   },
@@ -16,6 +16,6 @@
   },
   "dependencies": {
     "express": "^4.17.1",
-    "reactus": "^0.0.8"
+    "reactus": "^0.0.10"
   }
 }

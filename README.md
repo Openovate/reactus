@@ -25,7 +25,8 @@ Do not use **Reactus** if:
  - [1. Install](#1-install)
  - [2. Usage](#2-usage)
    - [Quick Start Example](https://github.com/Openovate/reactus/tree/master/examples/quick-start-example)
-   - [Modular Example](https://github.com/Openovate/reactus/tree/master/examples/quick-start-example)
+   - [Modular Example](https://github.com/Openovate/reactus/tree/master/examples/modular-example)
+   - [Modular Global Example](https://github.com/Openovate/reactus/tree/master/examples/modular-global-example)
    - [Bare Metal Example](https://github.com/Openovate/reactus/tree/master/examples/bare-metal-example)
  - [3. Customizing](#23-customizing)
    - 3.1. [Use a Custom Entry File](#31-use-a-custom-entry-file)
@@ -46,6 +47,7 @@ The following examples show how to use `reactus` in detail.
 
  - [Quick Start Example](https://github.com/Openovate/reactus/tree/master/examples/quick-start-example)
  - [Modular Example](https://github.com/Openovate/reactus/tree/master/examples/modular-example)
+ - [Modular Global Example](https://github.com/Openovate/reactus/tree/master/examples/modular-global-example)
  - [Bare Metal Example](https://github.com/Openovate/reactus/tree/master/examples/bare-metal-example)
 
 ### 3. Customizing

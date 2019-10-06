@@ -2,10 +2,11 @@ const fs = require('fs');
 const path = require('path');
 const { Registry } = require('@openovate/jsm');
 
+const babel = require('@babel/core');
+const requireFromString = require('require-from-string');
+
 const React = require('react');
 const { renderToString, renderToStaticMarkup } = require('react-dom/server');
-
-const Module = require('module');
 
 const Helpers = require('./Helpers');
 const WebpackPlugin = require('./WebpackPlugin');
@@ -158,9 +159,125 @@ class VirtualEngine extends VirtualRegistry {
     this.lazyFiles = null;
     this.lazyPresets = null;
 
-    //overwrite Node's Module->resolveFilename
-    this.resolver = new VirtualEngine.RequireResolver(this, Module._resolveFilename);
-    Module._resolveFilename = this.resolver.resolve.bind(this.resolver);
+    this.resolver = VirtualEngine.RequireResolver.load()
+      .on('resolve', this.resolveFile.bind(this));
+
+    //if this is a name engine
+    if (this.has('name')) {
+      this.resolver.on('resolve', this.resolveEngine.bind(this));
+    }
+  }
+
+  /**
+   * Registers a global component
+   *
+   * @param {String} name
+   * @param {String} path
+   *
+   * @return {VirtualEngine}
+   */
+  component(name, path) {
+    super.component(name, path);
+    //uncache files
+    this.lazyFiles = null;
+    return this;
+  }
+
+  /**
+   * Require resolver for named engines
+   *
+   * @param {String} request
+   * @param {FileResolve} resolve
+   *
+   * @return {(Array|False)}
+   */
+  resolveEngine(request, resolve) {
+    //if it's already resolved
+    if (resolve.isResolved()) {
+      //don't resolve
+      return;
+    }
+
+    //if the request starts with / or;
+    if (request.indexOf('/') === 0
+      //if the request starts with . or;
+      || request.indexOf('.') === 0
+      //if this is not a name engine
+      || !this.has('name')
+    ) {
+      //cannot resolve
+      return;
+    }
+
+    //get the label
+    const name = this.get('name');
+    const label = this.get('label');
+    //looking for something like reactus/engine/web.js
+    //if the request doesn't start with reactus/engine/web
+    if (request.indexOf(path.join(label, 'engine', name)) !== 0) {
+      //cannot resolve
+      return;
+    }
+
+    //make the actual intended path
+    resolve.set(
+      //file
+      path.join(__dirname, '../..', request),
+      //exports
+      this
+    );
+  }
+
+  /**
+   * Require resolver for registered files
+   *
+   * @param {String} request
+   * @param {FileResolve} resolve
+   */
+  resolveFile(request, resolve) {
+    //if it's already resolved
+    if (resolve.isResolved()) {
+      //don't resolve
+      return;
+    }
+
+    //if the request starts with /, . or is not a file
+    if (request.indexOf('/') === 0
+      || request.indexOf('.') === 0
+      || !this.files['node_modules/' + request]
+    ) {
+      //cannot resolve
+      return;
+    }
+
+    //transform the code back to commonjs
+    const content = this.files['node_modules/' + request].toString();
+    const { code } = babel.transform(content, this.presets);
+
+    const source = this.sources['node_modules/' + request];
+
+    resolve.set(
+      //file
+      path.join(__dirname, '../..', request),
+      //exports
+      requireFromString(code, source)
+    );
+  }
+
+  /**
+   * Registers a view
+   *
+   * @param {String} route
+   * @param {String} path
+   * @param {String} view
+   *
+   * @return {Router}
+   */
+  view(route, path, view) {
+    super.view(route, path, view);
+    //uncache files
+    this.lazyFiles = null;
+    return this;
   }
 
   /**
@@ -181,13 +298,21 @@ class VirtualEngine extends VirtualRegistry {
     if (typeof middleware === 'object') {
       //merge and return
       Helpers.merge(this.data, middleware);
+      //uncache files
+      this.lazyFiles = null;
       return this;
     }
 
     //if middleware is a function
     if (typeof middleware === 'function') {
       //pass this engine to the middleware
-      (async() => { await middleware(this) })();
+      (async() => {
+        //wait for the middleware
+        await middleware(this) ;
+        //uncache files
+        this.lazyFiles = null;
+      })();
+
       return this;
     }
 

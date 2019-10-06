@@ -1,10 +1,10 @@
 import path from 'path'
 import reactus from 'reactus'
-import sample from './module/sample/engine'
 
 const engine = reactus()
 
 //add modules/middleware
-engine.use(sample)
+engine.use(require('./module/home/engine').default)
+engine.use(require('./module/product/engine').default)
 
 export default engine

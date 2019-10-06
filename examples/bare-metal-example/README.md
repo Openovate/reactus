@@ -27,6 +27,11 @@ project root.
 |- webpack.config.js
 ```
 
+You can view the files of this example
+[here](https://github.com/Openovate/reactus/tree/master/examples/bare-metal-example).
+If you copy the full example on your local computer you just need to run the
+following command in terminal `$ cd [ROOT] && npm i && npm start`.
+
 The goals of this project are the following.
 
  - [1. Have Full Control of the Webpack Entry File](#1-have-full-control-of-the-webpack-entry-file)
