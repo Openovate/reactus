@@ -1,6 +1,6 @@
 {
   "name": "reactus",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Reactus is an un-opinionated, un-routed React app build engine",
   "author": "Christian Blanquera <cblanquera@openovate.com>",
   "license": "MIT",
@@ -16,11 +16,18 @@
     "react",
     "ssr"
   ],
-  "main": "src/index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "types.ts"
+  ],
   "scripts": {
+    "build": "tsc",
+    "docs": "typedoc",
     "test:unit": "jest --config test/jest-unit.config.js",
     "test:browser": "JEST_PUPPETEER_CONFIG=test/jest-puppeteer.config.js jest --config test/jest-browser.config.js",
-    "test:serve": "babel-node test/shim.js quick-start/src/server"
+    "test:serve": "babel-node test/shim.js quick-start-example/src/server"
   },
   "dependencies": {
     "@babel/core": "^7.6.2",

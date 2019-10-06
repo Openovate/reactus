@@ -4,6 +4,7 @@ This example project demonstrates how to quickly setup a `reactus` project. This
 example uses the following external libraries.
 
  - `babel` - Used to transform ESM and JSX to common JS on the server side
+ - `react` - Used to process components and views
  - `webpack` - Used to transform ESM and JSX to common JS on the client side
 
 React comes with optional quick start methods but are not actually required to
@@ -54,7 +55,7 @@ $ npm init -y
 
 ...
 
-$ npm i --save reactus express react
+$ npm i --save reactus express
 
 ...
 
@@ -67,7 +68,10 @@ The following describes each package installed and what it is used for.
 
  - `reactus` - used to generate a virtual file structure for modular purposes
  - `express` - used to declare and process server URL routing
- - `react` - used process all the components and views
+
+`reactus` also inherently installs `react`, `react-dom` and `history` as apart
+of its own dependencies. If you need a different version of any of these
+packages, manually install these.
 
 ### 1.2. Development Dependencies
 
@@ -172,7 +176,7 @@ import reactus from 'reactus'
 const engine = reactus()
 
 //add params
-engine.set('babel', path.join(__dirname, '../.babelrc'))
+engine.set('source', 'babel', path.join(__dirname, '../.babelrc'))
 
 //add commponents
 engine.component('Link', path.join(__dirname, 'components/Link.jsx'))
@@ -187,7 +191,7 @@ export default engine
 ### 3.1. Parameters
 
 We instantiate the `engine` using `Reactus()`. Next, we need to tell the
-engine where to get the babel config using `engine.set('babel', ...)`.
+engine where to get the babel config using `engine.set('source', 'babel', ...)`.
 
 ### 3.2. Components
 

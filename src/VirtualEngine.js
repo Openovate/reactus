@@ -6,15 +6,13 @@ const React = require('react');
 const { renderToString, renderToStaticMarkup } = require('react-dom/server');
 
 const Module = require('module');
-const babel = require('@babel/core');
-const requireFromString = require('require-from-string');
 
 const Helpers = require('./Helpers');
 const WebpackPlugin = require('./WebpackPlugin');
 const RequireResolver = require('./RequireResolver');
-const ReactusException = require('./ReactusException');
+const VirtualRegistry = require('./VirtualRegistry');
 
-class VirtualEngine {
+class VirtualEngine extends VirtualRegistry {
   /**
    * @var {Object} files - { context target: actual code }
    */
@@ -36,14 +34,14 @@ class VirtualEngine {
 
       //manually make a routes.js file
       const routes = {};
-      const views = this.registry.get('views') || {};
+      const views = this.get('views') || {};
       Object.keys(views).forEach(path => {
         routes[views[path].route] = path;
       });
 
       //generate routes file
-      const label = this.registry.get('label');
-      const target = this.registry.get('path', 'routes').replace('{LABEL}', label);
+      const label = this.get('label');
+      const target = this.get('path', 'routes').replace('{LABEL}', label);
       files[target] = 'module.exports = ' + JSON.stringify(routes, null, 2);
 
       this.lazyFiles = files;
@@ -53,58 +51,25 @@ class VirtualEngine {
   }
 
   /**
-   * @var {Component} page
-   */
-  get page() {
-    if (!this.lazyPage) {
-      this.lazyPage = this.registry.get('page');
-      if (typeof this.lazyPage === 'string') {
-        const content = fs.readFileSync(this.lazyPage);
-        const { code } = babel.transform(content, this.presets);
-        this.lazyPage = requireFromString(code, this.lazyPage).default;
-      }
-    }
-
-    return this.lazyPage;
-  }
-
-  /**
-   * @var {Object} presets
-   */
-  get presets() {
-    if (!this.lazyPresets) {
-      this.lazyPresets = this.registry.get('source', 'babel');
-
-      //if preset is a path
-      if (typeof this.lazyPresets === 'string') {
-        //it's a file path
-        this.lazyPresets = JSON.parse(fs.readFileSync(this.lazyPresets));
-      }
-    }
-
-    return this.lazyPresets;
-  }
-
-  /**
    * @var {Object} sources - { context target: source path }
    */
   get sources() {
     const sources = {};
 
     //get the label name
-    const label = this.registry.get('label');
-    const template = this.registry.get('path');
+    const label = this.get('label');
+    const template = this.get('path');
 
     //get entry
     const entry = template.entry.replace('{LABEL}', label);
-    sources[entry] = this.registry.get('source', 'entry');
+    sources[entry] = this.get('source', 'entry');
 
     //get router
     const router = template.router.replace('{LABEL}', label);
-    sources[router] = this.registry.get('source', 'router');
+    sources[router] = this.get('source', 'router');
 
     //get views
-    const views = this.registry.get('views') || {};
+    const views = this.get('views') || {};
     Object.keys(views).forEach(path => {
       const target = template.view
         .replace('{LABEL}', label)
@@ -113,7 +78,7 @@ class VirtualEngine {
     });
 
     //get components
-    const components = this.registry.get('components') || {};
+    const components = this.get('components') || {};
     Object.keys(components).forEach(name => {
       const target = template.component
         .replace('{LABEL}', label)
@@ -123,7 +88,7 @@ class VirtualEngine {
 
     //deal with custom files
     // formatted like - { context target: source path }
-    const custom = this.registry.get('map');
+    const custom = this.get('map');
     Object.keys(custom).forEach(target => {
       //name the source
       const source = custom[target];
@@ -168,15 +133,12 @@ class VirtualEngine {
    * @param {Object} config
    */
   constructor(config = {}) {
+    super(config);
+
     //add defaults to config
-    config = Object.assign({
+    Helpers.merge(this.data, {
       //used for white labeling
       label: 'reactus',
-      //custom files and folders to map
-      // formatted like - { context target: source path }
-      map: {},
-      // default page
-      page: path.resolve(__dirname, 'client/Page.jsx'),
       //virtual path templates which represent the target destination
       path: {
         component: 'node_modules/{LABEL}/components/{NAME}.jsx',
@@ -191,11 +153,8 @@ class VirtualEngine {
         entry: path.resolve(__dirname, 'client/entry.js'),
         router: path.resolve(__dirname, 'client/Router.jsx')
       }
-    }, config);
+    });
 
-    this.registry = new Registry(config);
-
-    this.lazyPage = null;
     this.lazyFiles = null;
     this.lazyPresets = null;
 
@@ -205,110 +164,41 @@ class VirtualEngine {
   }
 
   /**
-   * Registers a global component
+   * Middleware for VirtualEngine.
    *
-   * @param {String} name
-   * @param {String} path
-   *
-   * @return {VirtualEngine}
-   */
-  component(name, path) {
-    this.registry.set('components', name, path);
-    return this;
-  }
-
-  /**
-   * Renders a react view
-   *
-   * @param {ServerResponse} res
-   * @param {String} path
-   * @param {Object} [props = {}]
-   * @param {Object} [pageProps = {}]
-   * @param {React.Component} [page = null]
+   * @param {(VirtualRegistry|Object|Function)} middleware
    *
    * @return {VirtualEngine}
    */
-  render(res, path, props = {}, pageProps = {}, page = null) {
-    //remove forward slash at the start
-    if (path.indexOf('/') === 0) {
-      path = path.substr(1)
+  use(middleware) {
+    //if middleware is a VirtualRegistry
+    if (middleware instanceof VirtualRegistry) {
+      //just get the data
+      middleware = middleware.data;
     }
 
-    //setup page
-    page = page || this.page;
-
-    //if no browser path
-    if (!this.registry.has('views', path)) {
-      //Can't do anything
-      throw VirtualEngine.ReactusException.for('Path %s does not have a view', path);
-    }
-
-    //get the view
-    let view = require(this.registry.get('views', path).view);
-    if (typeof view === 'object' && view.default) {
-      view = view.default
-    }
-
-    //if view is a react component
-    if (view.prototype && !!view.prototype.isReactComponent) {
-      //convert the view to a composite
-      const original = view;
-      view = function componentToComposite(props) {
-        return React.createElement(original, props);
-      }
-    }
-
-    if (!page) {
-      res.send(renderToString(view(props)));
+    //if middleware is an object
+    if (typeof middleware === 'object') {
+      //merge and return
+      Helpers.merge(this.data, middleware);
       return this;
     }
 
-    //component should be a composite, make a page
-    const html = React.createElement(page, pageProps);
-
-    //last set the content
-    res.send('<!DOCTYPE html>' + renderToStaticMarkup(html)
-      .replace('{APP}', renderToString(view(props)))
-      .replace('{DATA}', JSON.stringify(props))
-    );
-
-    return this;
-  }
-
-  /**
-   * Sets a parameter path to the given value
-   *
-   * @param {*} [...path]
-   *
-   * @return {Router}
-   */
-  set(...path) {
-    this.registry.set(...path)
-    return this;
-  }
-
-  /**
-   * Registers a view
-   *
-   * @param {String} route
-   * @param {String} path
-   * @param {String} view
-   *
-   * @return {Router}
-   */
-  view(route, path, view) {
-    //remove forward slash at the start
-    if (path.indexOf('/') === 0) {
-      path = path.substr(1)
+    //if middleware is a function
+    if (typeof middleware === 'function') {
+      //pass this engine to the middleware
+      (async() => { await middleware(this) })();
+      return this;
     }
 
-    this.registry.set('views', path, { route, view });
+    //anything else?
+
     return this;
   }
 }
 
 VirtualEngine.WebpackPlugin = WebpackPlugin;
 VirtualEngine.RequireResolver = RequireResolver;
-VirtualEngine.ReactusException = ReactusException;
+VirtualEngine.VirtualRegistry = VirtualRegistry;
 
 module.exports = VirtualEngine;

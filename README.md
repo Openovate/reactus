@@ -10,9 +10,8 @@ their React app faster than traditional tooling. Reactus is a
 Use **Reactus** if:
 
  - You want to define your own custom file structure
- - You want to modularize your React project
+ - You want to modularize your React, NextJS or Razzle project
  - You want to create your own React framework
- - You have an existing Express or Webpack based project
  - You have spent an exhaustive amount of time looking at Webpack's code.
  - You like to work with bare metal libraries
 
@@ -20,13 +19,14 @@ Do not use **Reactus** if:
 
  - You want an out of box full stack solution
  - You want a Zero config framework
- - You use/d `create-react-app` for your project
 
 ## Navigation
 
  - [1. Install](#1-install)
  - [2. Usage](#2-usage)
-   - [QuickStart](https://github.com/Openovate/reactus/tree/master/examples/quick-start)
+   - [Quick Start Example](https://github.com/Openovate/reactus/tree/master/examples/quick-start-example)
+   - [Modular Example](https://github.com/Openovate/reactus/tree/master/examples/quick-start-example)
+   - [Bare Metal Example](https://github.com/Openovate/reactus/tree/master/examples/bare-metal-example)
  - [3. Customizing](#23-customizing)
    - 3.1. [Use a Custom Entry File](#31-use-a-custom-entry-file)
    - 3.2. [Use a Custom Router File](#32-use-a-custom-router-file)
@@ -44,7 +44,9 @@ $ npm i --save reactus
 
 The following examples show how to use `reactus` in detail.
 
- - [Quick Start](https://github.com/Openovate/reactus/tree/master/examples/quick-start)
+ - [Quick Start Example](https://github.com/Openovate/reactus/tree/master/examples/quick-start-example)
+ - [Modular Example](https://github.com/Openovate/reactus/tree/master/examples/modular-example)
+ - [Bare Metal Example](https://github.com/Openovate/reactus/tree/master/examples/bare-metal-example)
 
 ### 3. Customizing
 

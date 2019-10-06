@@ -4,6 +4,66 @@ const ReactusException = require('./ReactusException');
 
 class Helpers {
   /**
+   * This version of merge assumes the objects given are pure objects with
+   * static values. For example you should be able to JSON.stringify each of
+   * them. This helper does a deep merge in summary
+   *
+   * @param {Object} destination
+   * @param {Object} source
+   * @param {Array} [...sources]
+   *
+   * @return {Object}
+   */
+  static merge(destination, source, ...sources) {
+    if (typeof destination !== 'object' || destination == null) {
+      throw ReactusException.for('destination should be an object');
+    }
+
+    if (typeof source !== 'object' || source == null) {
+      throw ReactusException.for('source should be an object');
+    }
+
+    try {
+      JSON.parse(JSON.stringify(destination));
+    } catch(e) {
+      throw ReactusException.for('destination should be an object');
+    }
+
+    try {
+      JSON.parse(JSON.stringify(source));
+    } catch(e) {
+      throw ReactusException.for('source should be an object');
+    }
+
+    Object.keys(source).forEach(key => {
+      //if there is no key for this
+      if (!destination[key]
+        //if the value is null
+        || source[key] === null
+        //if the value is not an object
+        || typeof source[key] !== 'object'
+        //if the key is not an object
+        || typeof destination[key] !== 'object'
+      ) {
+        //just set it
+        destination[key] = source[key];
+        return;
+      }
+
+      //we can assume that the destination exists,
+      // key and value is an object
+
+      //recurse merge
+      this.merge(destination[key], source[key]);
+    });
+
+    //if there are more sources, recurse merge
+    sources.forEach(source => this.merge(destination, source));
+
+    return destination;
+  }
+
+  /**
    * Shim for server middleware
    *
    * @param {(String|Error)} error

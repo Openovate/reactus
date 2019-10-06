@@ -1,10 +1,7 @@
 import path from 'path'
 import reactus from 'reactus'
 
-const engine = reactus()
-
-//add params
-engine.set('babel', path.join(__dirname, '../.babelrc'))
+const engine = reactus.VirtualRegistry();
 
 //add commponents
 engine.component('Link', path.join(__dirname, 'components/Link.jsx'))

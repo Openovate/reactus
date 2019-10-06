@@ -3,7 +3,7 @@ const reactus =  require('../src');
 //shim the reactus package. only needed for testing
 reactus.shim();
 
-let example = 'quick-start/src/server';
+let example = 'quick-start-example/src/server';
 if (process.argv.length === 3) {
   example = process.argv[2];
 }

@@ -1,5 +1,5 @@
 {
-  "name": "reactus-quick-start",
+  "name": "reactus-modular-example",
   "scripts": {
     "start": "babel-node src/server.js"
   },

@@ -95,7 +95,7 @@ class RequireResolver {
     }
 
     //get the brand
-    const brand = this.engine.registry.get('module');
+    const brand = this.engine.get('module');
     //looking for something like reactus/engine/web.js
     //if the request doesn't start with reactus/engine/
     if (request.indexOf(brand + '/engine/') !== 0) {
