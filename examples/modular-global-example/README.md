@@ -28,14 +28,14 @@ You can view the files of this example
 If you copy the full example on your local computer you just need to run the
 following command in terminal `$ cd [ROOT] && npm i && npm start`.
 
-# 1. Named Engine
+## 1. Named Engine
 
 A named engine can be declared like `reactus({ name: 'global' })` and accessed
 like `import engine from 'reactus/engine/global'`. This is useful if you want to
 allow modules to access the main engine directly without passing via callback or
 dealing with multiple engines easily.
 
-# 2. Main Engine File
+## 2. Main Engine File
 
 The main file declares a named engine like `reactus({ name: 'web' })`, then
 activates each module's engine to the main process by simply requiring it.
@@ -54,7 +54,7 @@ require('./module/product/engine')
 export default engine
 ```
 
-# 3. Module Engine File
+## 3. Module Engine File
 
 Each module can access the named engine declared in `[ROOT]/engine.js` by
 simply importing it like `import engine from 'reactus/engine/web'`
@@ -71,7 +71,7 @@ engine.component('Link', path.join(__dirname, 'components/Link.jsx'))
 engine.view('/', '/home', path.join(__dirname, 'views/Home.jsx'))
 ```
 
-# 4. Module Router File
+## 4. Module Router File
 
 Similarily the router can access the named engine's `render()` function by
 simply importing the named engine as well.

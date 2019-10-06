@@ -28,7 +28,7 @@ You can view the files of this example
 If you copy the full example on your local computer you just need to run the
 following command in terminal `$ cd [ROOT] && npm i && npm start`.
 
-# 1. Module Engine File
+## 1. Module Engine File
 
 Each module can have it's own separate engine file that can specify
 configuration specific to that module to achieve separation of responsibility.
@@ -50,10 +50,10 @@ engine.view('/', '/home', path.join(__dirname, 'views/Home.jsx'))
 export default engine
 ```
 
-# 2. Main Engine File
+## 2. Main Engine File
 
 The main engine file activates each module's engine to the main process using
-`engine.use(middleware)` similar to how `express` works.
+`engine.use(middleware)`, similar to how `express` works.
 
 ```js
 //#FILE: [ROOT]/engine.js

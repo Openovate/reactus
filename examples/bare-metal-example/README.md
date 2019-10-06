@@ -39,8 +39,9 @@ The goals of this project are the following.
  - [3. Change the Module Name to `bare_metal`](#3-change-the-module-name-to-bare_metal)
  - [4. Change the Default Pathing for Routes, Components and Views](#4-change-the-default-pathing-for-routes-comonents-and-views)
  - [5. Have Full Control of the Server Side Routing](#5-have-full-control-of-the-server-side-routing)
+ - [6. Manually setup `webpack-dev-middleware` and `webpack-hot-middleware`](#6-manually-setup-webpack-dev-middleware-and-webpack-hot-middleware)
 
-### 1. Have Full Control of the Webpack Entry File
+## 1. Have Full Control of the Webpack Entry File
 
 Open `[ROOT]/webpack.config.js` and change the entry to the following.
 
@@ -58,9 +59,9 @@ module.exports = {
 };
 ```
 
-So instead of webpack using the virtual file `reactus/entry.js`, it will your
-actual project entry file. Create a file called `[ROOT]/src/client/entry.js`
-with the following contents.
+So instead of webpack using the virtual file `reactus/entry.js`, your actual
+project entry file will be used instead. Create a file called
+`[ROOT]/src/client/entry.js` with the following contents.
 
 ```js
 //# FILE: [ROOT]/src/client/entry.js
@@ -205,7 +206,7 @@ extra step *(ie, more tooling)* to get it working. Once you have the router
 provided by `reactus` in your project folder, you should understand that you
 are free to define the router anyway that is desired.
 
-### 3. Change the Module Name to `bare_metal`
+## 3. Change the Module Name to `bare_metal`
 
 Open the [engine file](https://github.com/Openovate/reactus/tree/master/examples/bare-metal-example/src/engine.js)
 *(`[ROOT]/src/engine.js`)* and add the following code.
@@ -221,7 +222,7 @@ engine.set('label', 'bare_metal');
 export default engine
 ```
 
-### 4. Change the Default Pathing for Routes, Components and Views
+## 4. Change the Default Pathing for Routes, Components and Views
 
 Open the [engine file](https://github.com/Openovate/reactus/tree/master/examples/bare-metal-example/src/engine.js)
 *(`[ROOT]/src/engine.js`)* and add the following code.
@@ -246,7 +247,7 @@ If you remember in `[ROOT]/src/client/entry.js`, routes are imported by
 engine file is how that import path was generated. The same would be implied
 with views and routes.
 
-### 5. Have Full Control of the Server Side Routing
+## 5. Have Full Control of the Server Side Routing
 
 Open the [engine file](https://github.com/Openovate/reactus/tree/master/examples/bare-metal-example/src/engine.js)
 *(`[ROOT]/src/engine.js`)* and add the following code.
@@ -263,7 +264,7 @@ engine.render = function(res, path, props = {}, pageProps = {}, page = null) {
 export default engine
 ```
 
-### 5. Manually setup `webpack-dev-middleware` and `webpack-hot-middleware`
+## 6. Manually setup `webpack-dev-middleware` and `webpack-hot-middleware`
 
 Open the [server file](https://github.com/Openovate/reactus/tree/master/examples/bare-metal-example/src/server.js)
 *(`[ROOT]/src/server.js`)* and add the following code.
