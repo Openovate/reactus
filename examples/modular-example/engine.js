@@ -1,4 +1,3 @@
-import path from 'path'
 import reactus from 'reactus'
 
 const engine = reactus()
