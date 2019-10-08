@@ -24,7 +24,7 @@
 
 • **label**? : *undefined | string*
 
-*Defined in [VirtualEngine.ts:356](https://github.com/Openovate/reactus/blob/97dd666/src/VirtualEngine.ts#L356)*
+*Defined in [VirtualEngine.ts:356](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualEngine.ts#L356)*
 
 ___
 
@@ -34,7 +34,7 @@ ___
 
 *Inherited from [RegistryOptions](_virtualregistry_.registryoptions.md).[map](_virtualregistry_.registryoptions.md#optional-map)*
 
-*Defined in [VirtualRegistry.ts:181](https://github.com/Openovate/reactus/blob/97dd666/src/VirtualRegistry.ts#L181)*
+*Defined in [VirtualRegistry.ts:181](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualRegistry.ts#L181)*
 
 ___
 
@@ -44,7 +44,7 @@ ___
 
 *Inherited from [RegistryOptions](_virtualregistry_.registryoptions.md).[page](_virtualregistry_.registryoptions.md#optional-page)*
 
-*Defined in [VirtualRegistry.ts:183](https://github.com/Openovate/reactus/blob/97dd666/src/VirtualRegistry.ts#L183)*
+*Defined in [VirtualRegistry.ts:183](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualRegistry.ts#L183)*
 
 ___
 
@@ -52,7 +52,7 @@ ___
 
 • **path**? : *undefined | object*
 
-*Defined in [VirtualEngine.ts:358](https://github.com/Openovate/reactus/blob/97dd666/src/VirtualEngine.ts#L358)*
+*Defined in [VirtualEngine.ts:358](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualEngine.ts#L358)*
 
 ___
 
@@ -62,4 +62,4 @@ ___
 
 *Overrides [RegistryOptions](_virtualregistry_.registryoptions.md).[source](_virtualregistry_.registryoptions.md#optional-source)*
 
-*Defined in [VirtualEngine.ts:366](https://github.com/Openovate/reactus/blob/97dd666/src/VirtualEngine.ts#L366)*
+*Defined in [VirtualEngine.ts:366](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualEngine.ts#L366)*

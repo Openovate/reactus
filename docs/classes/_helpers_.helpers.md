@@ -22,7 +22,7 @@
 
 ▸ **merge**(`destination`: [AnyObject](../interfaces/_helpers_.anyobject.md)‹any›, `source`: [AnyObject](../interfaces/_helpers_.anyobject.md)‹any›, ...`sources`: [AnyObject](../interfaces/_helpers_.anyobject.md)‹any›[]): *object*
 
-*Defined in [Helpers.ts:17](https://github.com/Openovate/reactus/blob/97dd666/src/Helpers.ts#L17)*
+*Defined in [Helpers.ts:17](https://github.com/Openovate/reactus/blob/0600fe9/src/Helpers.ts#L17)*
 
 This version of merge assumes the objects given are pure objects with
 static values. For example you should be able to JSON.stringify each of
@@ -44,7 +44,7 @@ ___
 
 ▸ **next**(`error`: any): *void*
 
-*Defined in [Helpers.ts:82](https://github.com/Openovate/reactus/blob/97dd666/src/Helpers.ts#L82)*
+*Defined in [Helpers.ts:82](https://github.com/Openovate/reactus/blob/0600fe9/src/Helpers.ts#L82)*
 
 Shim for server middleware
 
@@ -62,7 +62,7 @@ ___
 
 ▸ **noop**(): *void*
 
-*Defined in [Helpers.ts:95](https://github.com/Openovate/reactus/blob/97dd666/src/Helpers.ts#L95)*
+*Defined in [Helpers.ts:95](https://github.com/Openovate/reactus/blob/0600fe9/src/Helpers.ts#L95)*
 
 A non operational function
 
@@ -74,7 +74,7 @@ ___
 
 ▸ **shim**(`label`: string): *void*
 
-*Defined in [Helpers.ts:102](https://github.com/Openovate/reactus/blob/97dd666/src/Helpers.ts#L102)*
+*Defined in [Helpers.ts:102](https://github.com/Openovate/reactus/blob/0600fe9/src/Helpers.ts#L102)*
 
 Primarily used for testing, this creates a virtual `reactus` node module
 
@@ -92,7 +92,7 @@ ___
 
 ▸ **walk**(`folder`: string, `callback`: Function, `fileSystem`: "fs"): *void*
 
-*Defined in [Helpers.ts:137](https://github.com/Openovate/reactus/blob/97dd666/src/Helpers.ts#L137)*
+*Defined in [Helpers.ts:137](https://github.com/Openovate/reactus/blob/0600fe9/src/Helpers.ts#L137)*
 
 Helper to walk through each file
 

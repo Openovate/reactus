@@ -31,7 +31,7 @@
 
 *Implementation of [JavascriptFile](../interfaces/_fileresolve_.javascriptfile.md).[exports](../interfaces/_fileresolve_.javascriptfile.md#exports)*
 
-*Defined in [FileResolve.ts:10](https://github.com/Openovate/reactus/blob/97dd666/src/FileResolve.ts#L10)*
+*Defined in [FileResolve.ts:10](https://github.com/Openovate/reactus/blob/0600fe9/src/FileResolve.ts#L10)*
 
 **`var`** exports
 
@@ -43,7 +43,7 @@ ___
 
 *Implementation of [JavascriptFile](../interfaces/_fileresolve_.javascriptfile.md).[file](../interfaces/_fileresolve_.javascriptfile.md#file)*
 
-*Defined in [FileResolve.ts:5](https://github.com/Openovate/reactus/blob/97dd666/src/FileResolve.ts#L5)*
+*Defined in [FileResolve.ts:5](https://github.com/Openovate/reactus/blob/0600fe9/src/FileResolve.ts#L5)*
 
 **`var`** file
 
@@ -53,7 +53,7 @@ ___
 
 ▸ **get**(): *[JavascriptFile](../interfaces/_fileresolve_.javascriptfile.md)*
 
-*Defined in [FileResolve.ts:15](https://github.com/Openovate/reactus/blob/97dd666/src/FileResolve.ts#L15)*
+*Defined in [FileResolve.ts:15](https://github.com/Openovate/reactus/blob/0600fe9/src/FileResolve.ts#L15)*
 
 Returns the resolved data
 
@@ -65,7 +65,7 @@ ___
 
 ▸ **isResolved**(): *boolean*
 
-*Defined in [FileResolve.ts:37](https://github.com/Openovate/reactus/blob/97dd666/src/FileResolve.ts#L37)*
+*Defined in [FileResolve.ts:37](https://github.com/Openovate/reactus/blob/0600fe9/src/FileResolve.ts#L37)*
 
 Returns true if resolved
 
@@ -77,7 +77,7 @@ ___
 
 ▸ **set**(`file`: string, `exports`: any): *[FileResolve](_fileresolve_.fileresolve.md)*
 
-*Defined in [FileResolve.ts:28](https://github.com/Openovate/reactus/blob/97dd666/src/FileResolve.ts#L28)*
+*Defined in [FileResolve.ts:28](https://github.com/Openovate/reactus/blob/0600fe9/src/FileResolve.ts#L28)*
 
 Sets the resolve data
 

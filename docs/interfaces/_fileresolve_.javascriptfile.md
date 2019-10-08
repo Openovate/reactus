@@ -23,7 +23,7 @@
 
 • **exports**: *any*
 
-*Defined in [FileResolve.ts:46](https://github.com/Openovate/reactus/blob/97dd666/src/FileResolve.ts#L46)*
+*Defined in [FileResolve.ts:46](https://github.com/Openovate/reactus/blob/0600fe9/src/FileResolve.ts#L46)*
 
 ___
 
@@ -31,4 +31,4 @@ ___
 
 • **file**: *string*
 
-*Defined in [FileResolve.ts:45](https://github.com/Openovate/reactus/blob/97dd666/src/FileResolve.ts#L45)*
+*Defined in [FileResolve.ts:45](https://github.com/Openovate/reactus/blob/0600fe9/src/FileResolve.ts#L45)*

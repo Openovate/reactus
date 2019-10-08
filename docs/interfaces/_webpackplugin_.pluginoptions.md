@@ -18,4 +18,4 @@
 
 • **watch**: *string[]*
 
-*Defined in [WebpackPlugin.ts:174](https://github.com/Openovate/reactus/blob/97dd666/src/WebpackPlugin.ts#L174)*
+*Defined in [WebpackPlugin.ts:174](https://github.com/Openovate/reactus/blob/0600fe9/src/WebpackPlugin.ts#L174)*

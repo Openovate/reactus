@@ -20,7 +20,7 @@
 
 • **devpack**: *[createMiddleware](_devpackmiddleware_.md#createmiddleware)* =  DevpackMiddleware
 
-*Defined in [index.ts:12](https://github.com/Openovate/reactus/blob/97dd666/src/index.ts#L12)*
+*Defined in [index.ts:12](https://github.com/Openovate/reactus/blob/0600fe9/src/index.ts#L12)*
 
 ___
 
@@ -28,7 +28,7 @@ ___
 
 • **shim**: *[shim](../classes/_helpers_.helpers.md#static-shim)* =  Helpers.shim
 
-*Defined in [index.ts:11](https://github.com/Openovate/reactus/blob/97dd666/src/index.ts#L11)*
+*Defined in [index.ts:11](https://github.com/Openovate/reactus/blob/0600fe9/src/index.ts#L11)*
 
 ## Functions
 
@@ -36,7 +36,7 @@ ___
 
 ▸ **VirtualRegistry**(`config?`: [RegistryOptions](../interfaces/_virtualregistry_.registryoptions.md)): *[VirtualRegistry](../classes/_virtualregistry_.virtualregistry.md)*
 
-*Defined in [index.ts:31](https://github.com/Openovate/reactus/blob/97dd666/src/index.ts#L31)*
+*Defined in [index.ts:31](https://github.com/Openovate/reactus/blob/0600fe9/src/index.ts#L31)*
 
 **Parameters:**
 
@@ -52,7 +52,7 @@ ___
 
 ▸ **createVirtualEngine**(`config?`: [EngineOptions](../interfaces/_virtualengine_.engineoptions.md)): *[VirtualEngine](../classes/_virtualengine_.virtualengine.md)*
 
-*Defined in [index.ts:14](https://github.com/Openovate/reactus/blob/97dd666/src/index.ts#L14)*
+*Defined in [index.ts:14](https://github.com/Openovate/reactus/blob/0600fe9/src/index.ts#L14)*
 
 **Parameters:**
 

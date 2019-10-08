@@ -49,7 +49,7 @@
 
 *Overrides void*
 
-*Defined in [VirtualRegistry.ts:57](https://github.com/Openovate/reactus/blob/97dd666/src/VirtualRegistry.ts#L57)*
+*Defined in [VirtualRegistry.ts:57](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualRegistry.ts#L57)*
 
 Sets up the registry
 
@@ -77,7 +77,7 @@ ___
 
 • **lazyPage**? : *[AnyComponent](../modules/_virtualregistry_.md#anycomponent)*
 
-*Defined in [VirtualRegistry.ts:19](https://github.com/Openovate/reactus/blob/97dd666/src/VirtualRegistry.ts#L19)*
+*Defined in [VirtualRegistry.ts:19](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualRegistry.ts#L19)*
 
 **`var`** lazyPage
 
@@ -87,7 +87,7 @@ ___
 
 • **lazyPresets**: *object | null* =  null
 
-*Defined in [VirtualRegistry.ts:24](https://github.com/Openovate/reactus/blob/97dd666/src/VirtualRegistry.ts#L24)*
+*Defined in [VirtualRegistry.ts:24](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualRegistry.ts#L24)*
 
 **`var`** lazyPresets
 
@@ -97,7 +97,7 @@ ___
 
 • **get page**(): *any*
 
-*Defined in [VirtualRegistry.ts:29](https://github.com/Openovate/reactus/blob/97dd666/src/VirtualRegistry.ts#L29)*
+*Defined in [VirtualRegistry.ts:29](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualRegistry.ts#L29)*
 
 **`var`** page
 
@@ -109,7 +109,7 @@ ___
 
 • **get presets**(): *object*
 
-*Defined in [VirtualRegistry.ts:45](https://github.com/Openovate/reactus/blob/97dd666/src/VirtualRegistry.ts#L45)*
+*Defined in [VirtualRegistry.ts:45](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualRegistry.ts#L45)*
 
 **`var`** presets
 
@@ -121,7 +121,7 @@ ___
 
 ▸ **component**(`name`: string, `path`: string): *[VirtualRegistry](_virtualregistry_.virtualregistry.md)*
 
-*Defined in [VirtualRegistry.ts:86](https://github.com/Openovate/reactus/blob/97dd666/src/VirtualRegistry.ts#L86)*
+*Defined in [VirtualRegistry.ts:86](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualRegistry.ts#L86)*
 
 Registers a global component
 
@@ -251,7 +251,7 @@ ___
 
 ▸ **render**(`res`: ServerResponse, `path`: string, `props`: object, `pageProps`: object, `page?`: [AnyComponent](../modules/_virtualregistry_.md#anycomponent)): *[VirtualRegistry](_virtualregistry_.virtualregistry.md)*
 
-*Defined in [VirtualRegistry.ts:100](https://github.com/Openovate/reactus/blob/97dd666/src/VirtualRegistry.ts#L100)*
+*Defined in [VirtualRegistry.ts:100](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualRegistry.ts#L100)*
 
 Renders a react view
 
@@ -311,7 +311,7 @@ ___
 
 ▸ **view**(`route`: string, `path`: string, `view`: string): *[VirtualRegistry](_virtualregistry_.virtualregistry.md)*
 
-*Defined in [VirtualRegistry.ts:163](https://github.com/Openovate/reactus/blob/97dd666/src/VirtualRegistry.ts#L163)*
+*Defined in [VirtualRegistry.ts:163](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualRegistry.ts#L163)*
 
 Registers a view
 

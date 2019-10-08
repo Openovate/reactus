@@ -19,7 +19,7 @@
 
 • **files**: *[FileContentMap](_webpackplugin_.filecontentmap.md)*
 
-*Defined in [WebpackPlugin.ts:161](https://github.com/Openovate/reactus/blob/97dd666/src/WebpackPlugin.ts#L161)*
+*Defined in [WebpackPlugin.ts:161](https://github.com/Openovate/reactus/blob/0600fe9/src/WebpackPlugin.ts#L161)*
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 • **sources**: *[FileSourceMap](_webpackplugin_.filesourcemap.md)*
 
-*Defined in [WebpackPlugin.ts:162](https://github.com/Openovate/reactus/blob/97dd666/src/WebpackPlugin.ts#L162)*
+*Defined in [WebpackPlugin.ts:162](https://github.com/Openovate/reactus/blob/0600fe9/src/WebpackPlugin.ts#L162)*

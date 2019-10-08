@@ -50,7 +50,7 @@
 
 \+ **new RequireResolver**(): *[RequireResolver](_requireresolver_.requireresolver.md)*
 
-*Defined in [RequireResolver.ts:26](https://github.com/Openovate/reactus/blob/97dd666/src/RequireResolver.ts#L26)*
+*Defined in [RequireResolver.ts:26](https://github.com/Openovate/reactus/blob/0600fe9/src/RequireResolver.ts#L26)*
 
 Wrap the original resolveFilename()
 
@@ -62,7 +62,7 @@ Wrap the original resolveFilename()
 
 • **original**: *Function*
 
-*Defined in [RequireResolver.ts:15](https://github.com/Openovate/reactus/blob/97dd666/src/RequireResolver.ts#L15)*
+*Defined in [RequireResolver.ts:15](https://github.com/Openovate/reactus/blob/0600fe9/src/RequireResolver.ts#L15)*
 
 **`var`** original
 
@@ -72,7 +72,7 @@ ___
 
 ▪ **instance**: *[RequireResolver](_requireresolver_.requireresolver.md)*
 
-*Defined in [RequireResolver.ts:10](https://github.com/Openovate/reactus/blob/97dd666/src/RequireResolver.ts#L10)*
+*Defined in [RequireResolver.ts:10](https://github.com/Openovate/reactus/blob/0600fe9/src/RequireResolver.ts#L10)*
 
 **`var`** instance
 
@@ -379,7 +379,7 @@ ___
 
 ▸ **resolve**(`request`: string, `parent`: object): *any*
 
-*Defined in [RequireResolver.ts:44](https://github.com/Openovate/reactus/blob/97dd666/src/RequireResolver.ts#L44)*
+*Defined in [RequireResolver.ts:44](https://github.com/Openovate/reactus/blob/0600fe9/src/RequireResolver.ts#L44)*
 
 Resolve callback for Module._resolveFilename
 
@@ -416,7 +416,7 @@ ___
 
 ▸ **load**(): *[RequireResolver](_requireresolver_.requireresolver.md)*
 
-*Defined in [RequireResolver.ts:20](https://github.com/Openovate/reactus/blob/97dd666/src/RequireResolver.ts#L20)*
+*Defined in [RequireResolver.ts:20](https://github.com/Openovate/reactus/blob/0600fe9/src/RequireResolver.ts#L20)*
 
 In this case you do want a singleton.
 

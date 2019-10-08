@@ -55,7 +55,7 @@
 
 *Overrides [VirtualRegistry](_virtualregistry_.virtualregistry.md).[constructor](_virtualregistry_.virtualregistry.md#constructor)*
 
-*Defined in [VirtualEngine.ts:136](https://github.com/Openovate/reactus/blob/97dd666/src/VirtualEngine.ts#L136)*
+*Defined in [VirtualEngine.ts:136](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualEngine.ts#L136)*
 
 Sets up the registry
 
@@ -83,7 +83,7 @@ ___
 
 • **lazyFiles**? : *[FileContentMap](../interfaces/_virtualengine_.filecontentmap.md)*
 
-*Defined in [VirtualEngine.ts:17](https://github.com/Openovate/reactus/blob/97dd666/src/VirtualEngine.ts#L17)*
+*Defined in [VirtualEngine.ts:17](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualEngine.ts#L17)*
 
 **`var`** lazyPage
 
@@ -95,7 +95,7 @@ ___
 
 *Inherited from [VirtualRegistry](_virtualregistry_.virtualregistry.md).[lazyPage](_virtualregistry_.virtualregistry.md#protected-optional-lazypage)*
 
-*Defined in [VirtualRegistry.ts:19](https://github.com/Openovate/reactus/blob/97dd666/src/VirtualRegistry.ts#L19)*
+*Defined in [VirtualRegistry.ts:19](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualRegistry.ts#L19)*
 
 **`var`** lazyPage
 
@@ -107,7 +107,7 @@ ___
 
 *Inherited from [VirtualRegistry](_virtualregistry_.virtualregistry.md).[lazyPresets](_virtualregistry_.virtualregistry.md#protected-lazypresets)*
 
-*Defined in [VirtualRegistry.ts:24](https://github.com/Openovate/reactus/blob/97dd666/src/VirtualRegistry.ts#L24)*
+*Defined in [VirtualRegistry.ts:24](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualRegistry.ts#L24)*
 
 **`var`** lazyPresets
 
@@ -117,7 +117,7 @@ ___
 
 • **resolver**: *[RequireResolver](_requireresolver_.requireresolver.md)*
 
-*Defined in [VirtualEngine.ts:22](https://github.com/Openovate/reactus/blob/97dd666/src/VirtualEngine.ts#L22)*
+*Defined in [VirtualEngine.ts:22](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualEngine.ts#L22)*
 
 **`var`** resolver
 
@@ -127,7 +127,7 @@ ___
 
 • **get WebpackPlugin**(): *object*
 
-*Defined in [VirtualEngine.ts:133](https://github.com/Openovate/reactus/blob/97dd666/src/VirtualEngine.ts#L133)*
+*Defined in [VirtualEngine.ts:133](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualEngine.ts#L133)*
 
 **`var`** WebpackPlugin
 
@@ -141,7 +141,7 @@ ___
 
 • **get files**(): *[FileContentMap](../interfaces/_virtualengine_.filecontentmap.md)*
 
-*Defined in [VirtualEngine.ts:27](https://github.com/Openovate/reactus/blob/97dd666/src/VirtualEngine.ts#L27)*
+*Defined in [VirtualEngine.ts:27](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualEngine.ts#L27)*
 
 **`var`** files - { context target: actual code }
 
@@ -155,7 +155,7 @@ ___
 
 *Inherited from [VirtualRegistry](_virtualregistry_.virtualregistry.md).[page](_virtualregistry_.virtualregistry.md#page)*
 
-*Defined in [VirtualRegistry.ts:29](https://github.com/Openovate/reactus/blob/97dd666/src/VirtualRegistry.ts#L29)*
+*Defined in [VirtualRegistry.ts:29](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualRegistry.ts#L29)*
 
 **`var`** page
 
@@ -169,7 +169,7 @@ ___
 
 *Inherited from [VirtualRegistry](_virtualregistry_.virtualregistry.md).[presets](_virtualregistry_.virtualregistry.md#presets)*
 
-*Defined in [VirtualRegistry.ts:45](https://github.com/Openovate/reactus/blob/97dd666/src/VirtualRegistry.ts#L45)*
+*Defined in [VirtualRegistry.ts:45](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualRegistry.ts#L45)*
 
 **`var`** presets
 
@@ -181,7 +181,7 @@ ___
 
 • **get sources**(): *[FileSourceMap](../interfaces/_virtualengine_.filesourcemap.md)*
 
-*Defined in [VirtualEngine.ts:64](https://github.com/Openovate/reactus/blob/97dd666/src/VirtualEngine.ts#L64)*
+*Defined in [VirtualEngine.ts:64](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualEngine.ts#L64)*
 
 **`var`** sources - { context target: source path }
 
@@ -195,7 +195,7 @@ ___
 
 *Overrides [VirtualRegistry](_virtualregistry_.virtualregistry.md).[component](_virtualregistry_.virtualregistry.md#component)*
 
-*Defined in [VirtualEngine.ts:181](https://github.com/Openovate/reactus/blob/97dd666/src/VirtualEngine.ts#L181)*
+*Defined in [VirtualEngine.ts:181](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualEngine.ts#L181)*
 
 Registers a global component
 
@@ -327,7 +327,7 @@ ___
 
 *Inherited from [VirtualRegistry](_virtualregistry_.virtualregistry.md).[render](_virtualregistry_.virtualregistry.md#render)*
 
-*Defined in [VirtualRegistry.ts:100](https://github.com/Openovate/reactus/blob/97dd666/src/VirtualRegistry.ts#L100)*
+*Defined in [VirtualRegistry.ts:100](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualRegistry.ts#L100)*
 
 Renders a react view
 
@@ -349,7 +349,7 @@ ___
 
 ▸ **resolveEngine**(`request`: string, `resolve`: [FileResolve](_fileresolve_.fileresolve.md)): *void*
 
-*Defined in [VirtualEngine.ts:194](https://github.com/Openovate/reactus/blob/97dd666/src/VirtualEngine.ts#L194)*
+*Defined in [VirtualEngine.ts:194](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualEngine.ts#L194)*
 
 Require resolver for named engines
 
@@ -368,7 +368,7 @@ ___
 
 ▸ **resolveFile**(`request`: string, `resolve`: [FileResolve](_fileresolve_.fileresolve.md)): *void*
 
-*Defined in [VirtualEngine.ts:242](https://github.com/Openovate/reactus/blob/97dd666/src/VirtualEngine.ts#L242)*
+*Defined in [VirtualEngine.ts:242](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualEngine.ts#L242)*
 
 Require resolver for registered files
 
@@ -425,7 +425,7 @@ ___
 
 ▸ **use**(`middleware`: [VirtualRegistry](_virtualregistry_.virtualregistry.md) | object | Function): *[VirtualEngine](_virtualengine_.virtualengine.md)*
 
-*Defined in [VirtualEngine.ts:295](https://github.com/Openovate/reactus/blob/97dd666/src/VirtualEngine.ts#L295)*
+*Defined in [VirtualEngine.ts:295](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualEngine.ts#L295)*
 
 Middleware for VirtualEngine.
 
@@ -445,7 +445,7 @@ ___
 
 *Overrides [VirtualRegistry](_virtualregistry_.virtualregistry.md).[view](_virtualregistry_.virtualregistry.md#view)*
 
-*Defined in [VirtualEngine.ts:283](https://github.com/Openovate/reactus/blob/97dd666/src/VirtualEngine.ts#L283)*
+*Defined in [VirtualEngine.ts:283](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualEngine.ts#L283)*
 
 Registers a view
 
