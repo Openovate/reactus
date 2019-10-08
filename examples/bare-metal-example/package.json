@@ -16,6 +16,6 @@
   },
   "dependencies": {
     "express": "^4.17.1",
-    "reactus": "^0.0.10"
+    "reactus": "^0.0.12"
   }
 }
