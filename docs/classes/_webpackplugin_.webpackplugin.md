@@ -2,6 +2,9 @@
 
 # Class: WebpackPlugin
 
+This should be added into your `webpack.config.js`. This sends all the
+virtual file information to webpack to be considered when bundling files
+
 ## Hierarchy
 
 * **WebpackPlugin**
@@ -37,7 +40,7 @@
 
 \+ **new WebpackPlugin**(`engine`: [VirtualEngine](../interfaces/_webpackplugin_.virtualengine.md), `config`: [PluginOptions](../interfaces/_webpackplugin_.pluginoptions.md), `listener`: webpack.Compiler.Handler): *[WebpackPlugin](_webpackplugin_.webpackplugin.md)*
 
-*Defined in [WebpackPlugin.ts:80](https://github.com/Openovate/reactus/blob/0600fe9/src/WebpackPlugin.ts#L80)*
+*Defined in [WebpackPlugin.ts:85](https://github.com/Openovate/reactus/blob/519cdb0/src/WebpackPlugin.ts#L85)*
 
 Sets up the engine, watchpack config and listener
 
@@ -45,9 +48,9 @@ Sets up the engine, watchpack config and listener
 
 Name | Type | Default | Description |
 ------ | ------ | ------ | ------ |
-`engine` | [VirtualEngine](../interfaces/_webpackplugin_.virtualengine.md) | - | - |
-`config` | [PluginOptions](../interfaces/_webpackplugin_.pluginoptions.md) |  { watch: [] } | - |
-`listener` | webpack.Compiler.Handler |  Helpers.noop |   |
+`engine` | [VirtualEngine](../interfaces/_webpackplugin_.virtualengine.md) | - | The Virtual Engine |
+`config` | [PluginOptions](../interfaces/_webpackplugin_.pluginoptions.md) |  { watch: [] } | The plugin options |
+`listener` | webpack.Compiler.Handler |  Helpers.noop | The callback to call when webpack finishes compiling  |
 
 **Returns:** *[WebpackPlugin](_webpackplugin_.webpackplugin.md)*
 
@@ -57,9 +60,9 @@ Name | Type | Default | Description |
 
 • **config**: *[PluginOptions](../interfaces/_webpackplugin_.pluginoptions.md)*
 
-*Defined in [WebpackPlugin.ts:17](https://github.com/Openovate/reactus/blob/0600fe9/src/WebpackPlugin.ts#L17)*
+*Defined in [WebpackPlugin.ts:21](https://github.com/Openovate/reactus/blob/519cdb0/src/WebpackPlugin.ts#L21)*
 
-**`var`** config
+The plugin options. Right now it's just `{ watch: [file, folder, ..] }`
 
 ___
 
@@ -67,9 +70,9 @@ ___
 
 • **engine**: *any*
 
-*Defined in [WebpackPlugin.ts:12](https://github.com/Openovate/reactus/blob/0600fe9/src/WebpackPlugin.ts#L12)*
+*Defined in [WebpackPlugin.ts:16](https://github.com/Openovate/reactus/blob/519cdb0/src/WebpackPlugin.ts#L16)*
 
-**`var`** engine
+The Virtual Engine
 
 ___
 
@@ -77,9 +80,9 @@ ___
 
 • **listener**: *webpack.Compiler.Handler*
 
-*Defined in [WebpackPlugin.ts:22](https://github.com/Openovate/reactus/blob/0600fe9/src/WebpackPlugin.ts#L22)*
+*Defined in [WebpackPlugin.ts:26](https://github.com/Openovate/reactus/blob/519cdb0/src/WebpackPlugin.ts#L26)*
 
-**`var`** listener
+The callback to call when webpack finishes compiling
 
 ___
 
@@ -87,9 +90,9 @@ ___
 
 • **system**? : *any*
 
-*Defined in [WebpackPlugin.ts:27](https://github.com/Openovate/reactus/blob/0600fe9/src/WebpackPlugin.ts#L27)*
+*Defined in [WebpackPlugin.ts:31](https://github.com/Openovate/reactus/blob/519cdb0/src/WebpackPlugin.ts#L31)*
 
-**`var`** system
+This is the holder for the JailbreakPlugin
 
 ___
 
@@ -97,9 +100,9 @@ ___
 
 • **watcher**? : *any*
 
-*Defined in [WebpackPlugin.ts:32](https://github.com/Openovate/reactus/blob/0600fe9/src/WebpackPlugin.ts#L32)*
+*Defined in [WebpackPlugin.ts:36](https://github.com/Openovate/reactus/blob/519cdb0/src/WebpackPlugin.ts#L36)*
 
-**`var`** watcher
+This is the holder for Watchpack
 
 ## Accessors
 
@@ -107,9 +110,10 @@ ___
 
 • **get files**(): *string[]*
 
-*Defined in [WebpackPlugin.ts:37](https://github.com/Openovate/reactus/blob/0600fe9/src/WebpackPlugin.ts#L37)*
+*Defined in [WebpackPlugin.ts:42](https://github.com/Openovate/reactus/blob/519cdb0/src/WebpackPlugin.ts#L42)*
 
-**`var`** files
+A list of files to watch. When changes are made to any of these files, it
+will tell webpack to rebuild
 
 **Returns:** *string[]*
 
@@ -119,9 +123,9 @@ ___
 
 • **get sources**(): *[FileSourceMap](../interfaces/_webpackplugin_.filesourcemap.md)*
 
-*Defined in [WebpackPlugin.ts:65](https://github.com/Openovate/reactus/blob/0600fe9/src/WebpackPlugin.ts#L65)*
+*Defined in [WebpackPlugin.ts:70](https://github.com/Openovate/reactus/blob/519cdb0/src/WebpackPlugin.ts#L70)*
 
-**`var`** sources - { source path: context target }
+a list of sources in the form of `{ source path: context target }`
 
 **Returns:** *[FileSourceMap](../interfaces/_webpackplugin_.filesourcemap.md)*
 
@@ -131,7 +135,7 @@ ___
 
 ▸ **apply**(`compiler`: Compiler): *void*
 
-*Defined in [WebpackPlugin.ts:104](https://github.com/Openovate/reactus/blob/0600fe9/src/WebpackPlugin.ts#L104)*
+*Defined in [WebpackPlugin.ts:109](https://github.com/Openovate/reactus/blob/519cdb0/src/WebpackPlugin.ts#L109)*
 
 Used by webpack
 
@@ -139,7 +143,7 @@ Used by webpack
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`compiler` | Compiler |   |
+`compiler` | Compiler | the webpack compiler  |
 
 **Returns:** *void*
 
@@ -149,7 +153,7 @@ ___
 
 ▸ **updateClient**(`compiler`: Compiler, `source`: string): *void*
 
-*Defined in [WebpackPlugin.ts:126](https://github.com/Openovate/reactus/blob/0600fe9/src/WebpackPlugin.ts#L126)*
+*Defined in [WebpackPlugin.ts:131](https://github.com/Openovate/reactus/blob/519cdb0/src/WebpackPlugin.ts#L131)*
 
 Updates a file's content in webpack
 
@@ -157,8 +161,8 @@ Updates a file's content in webpack
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`compiler` | Compiler | - |
-`source` | string |   |
+`compiler` | Compiler | the webpack compiler |
+`source` | string | the source file to update  |
 
 **Returns:** *void*
 
@@ -168,7 +172,7 @@ ___
 
 ▸ **updateServer**(`compiler`: Compiler, `source`: string): *void*
 
-*Defined in [WebpackPlugin.ts:146](https://github.com/Openovate/reactus/blob/0600fe9/src/WebpackPlugin.ts#L146)*
+*Defined in [WebpackPlugin.ts:151](https://github.com/Openovate/reactus/blob/519cdb0/src/WebpackPlugin.ts#L151)*
 
 Updates a file's content in require
 
@@ -176,7 +180,7 @@ Updates a file's content in require
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`compiler` | Compiler | - |
-`source` | string |   |
+`compiler` | Compiler | the webpack compiler |
+`source` | string | the source file to update  |
 
 **Returns:** *void*

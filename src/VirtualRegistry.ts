@@ -12,19 +12,26 @@ import ReactusException from './ReactusException';
 const babel = require('@babel/core');
 const requireFromString = require('require-from-string');
 
+/**
+ * A component and view registry used to track virtual files
+ */
 export default class VirtualRegistry extends Registry {
   /**
-   * @var lazyPage
+   * Since page compiles to common JS, we should cache the results to
+   * intentionally prevent unwanted compiles to the same file over and over
+   * again. To refresh the page, just delete this
    */
   protected lazyPage?: AnyComponent;
 
   /**
-   * @var lazyPresets
+   * Since .babelrc is read, we should cache the results to intentionally
+   * prevent unwanted compiles to the same file over and over again. To refresh
+   * the preset, just set this to null
    */
   protected lazyPresets: object|null = null;
 
   /**
-   * @var page
+   * The transformed page component from `Page.jsx`
    */
   get page(): any {
     if (!this.lazyPage) {
@@ -40,7 +47,7 @@ export default class VirtualRegistry extends Registry {
   }
 
   /**
-   * @var presets
+   * The configuration from `.babelrc`
    */
   get presets(): object {
     if (!this.lazyPresets) {
@@ -59,7 +66,7 @@ export default class VirtualRegistry extends Registry {
   /**
    * Sets up the registry
    *
-   * @param config
+   * @param config - the registry options
    */
   constructor(config: object = {}) {
     super(config);
@@ -80,8 +87,8 @@ export default class VirtualRegistry extends Registry {
   /**
    * Registers a global component
    *
-   * @param name
-   * @param path
+   * @param name - the name of the component
+   * @param path - the actual absolute path where this component file is located
    */
   component(name: string, path: string): VirtualRegistry {
     this.set('components', name, path);
@@ -91,11 +98,11 @@ export default class VirtualRegistry extends Registry {
   /**
    * Renders a react view
    *
-   * @param res
-   * @param path
-   * @param props
-   * @param pageProps
-   * @param page
+   * @param res - the response
+   * @param path - the path where the virtual view exists. ie `product/detail`
+   * @param props - the props for the main component
+   * @param pageProps - the props for the page component
+   * @param page - if you want to use a custom page component
    */
   render(
     res: ServerResponse,
@@ -156,9 +163,10 @@ export default class VirtualRegistry extends Registry {
   /**
    * Registers a view
    *
-   * @param route
-   * @param path
-   * @param view
+   * @param route - the route as in `/product/:id`
+   * @param path - the path where to virtually store the view where
+   * `product/detail` will be translated to `reactus/views/product/detail.jsx`
+   * @param view - the actual absolute path where the view file is located
    */
   view(route: string, path: string, view: string): VirtualRegistry {
     //remove forward slash at the start
@@ -175,6 +183,9 @@ export default class VirtualRegistry extends Registry {
 
 export type AnyComponent = string | FunctionComponent<object> | ComponentClass<object, any>;
 
+/**
+ * An abstract describing all possible options of the registry
+ */
 export interface RegistryOptions {
   //custom files and folders to map
   // formatted like - { context target: source path }

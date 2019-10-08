@@ -18,7 +18,7 @@
 
 Ƭ **NextFunction**: *function*
 
-*Defined in [DevpackMiddleware.ts:49](https://github.com/Openovate/reactus/blob/0600fe9/src/DevpackMiddleware.ts#L49)*
+*Defined in [DevpackMiddleware.ts:49](https://github.com/Openovate/reactus/blob/519cdb0/src/DevpackMiddleware.ts#L49)*
 
 #### Type declaration:
 
@@ -36,7 +36,7 @@ Name | Type |
 
 ▸ **createMiddleware**(`webpackConfig`: Configuration, `devConfig`: webpackDev.Options): *Function*
 
-*Defined in [DevpackMiddleware.ts:14](https://github.com/Openovate/reactus/blob/0600fe9/src/DevpackMiddleware.ts#L14)*
+*Defined in [DevpackMiddleware.ts:14](https://github.com/Openovate/reactus/blob/519cdb0/src/DevpackMiddleware.ts#L14)*
 
 Creates a Middleware for http server or express
 
@@ -45,6 +45,6 @@ Creates a Middleware for http server or express
 Name | Type | Description |
 ------ | ------ | ------ |
 `webpackConfig` | Configuration | The `webpack` configuration options from webpack.config.js |
-`devConfig` | webpackDev.Options | The `webpack-dev-middleware` options. Usually has { noInfo: true }  |
+`devConfig` | webpackDev.Options | The `webpack-dev-middleware` options. Usually has `{ noInfo: true }`  |
 
 **Returns:** *Function*

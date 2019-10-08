@@ -18,4 +18,4 @@
 
 • **Module**: *any* =  require('module')
 
-*Defined in [RequireResolver.ts:4](https://github.com/Openovate/reactus/blob/0600fe9/src/RequireResolver.ts#L4)*
+*Defined in [RequireResolver.ts:4](https://github.com/Openovate/reactus/blob/519cdb0/src/RequireResolver.ts#L4)*

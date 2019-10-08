@@ -2,6 +2,8 @@
 
 # Interface: PluginOptions
 
+An abstract describing all possible options of the plugin
+
 ## Hierarchy
 
 * **PluginOptions**
@@ -18,4 +20,4 @@
 
 • **watch**: *string[]*
 
-*Defined in [WebpackPlugin.ts:174](https://github.com/Openovate/reactus/blob/0600fe9/src/WebpackPlugin.ts#L174)*
+*Defined in [WebpackPlugin.ts:192](https://github.com/Openovate/reactus/blob/519cdb0/src/WebpackPlugin.ts#L192)*

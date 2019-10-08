@@ -2,6 +2,8 @@
 
 # Class: Helpers
 
+Helpers are generic methods used by this library
+
 ## Hierarchy
 
 * **Helpers**
@@ -22,7 +24,7 @@
 
 ▸ **merge**(`destination`: [AnyObject](../interfaces/_helpers_.anyobject.md)‹any›, `source`: [AnyObject](../interfaces/_helpers_.anyobject.md)‹any›, ...`sources`: [AnyObject](../interfaces/_helpers_.anyobject.md)‹any›[]): *object*
 
-*Defined in [Helpers.ts:17](https://github.com/Openovate/reactus/blob/0600fe9/src/Helpers.ts#L17)*
+*Defined in [Helpers.ts:20](https://github.com/Openovate/reactus/blob/519cdb0/src/Helpers.ts#L20)*
 
 This version of merge assumes the objects given are pure objects with
 static values. For example you should be able to JSON.stringify each of
@@ -32,9 +34,9 @@ them. This helper does a deep merge in summary
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`destination` | [AnyObject](../interfaces/_helpers_.anyobject.md)‹any› | - |
-`source` | [AnyObject](../interfaces/_helpers_.anyobject.md)‹any› | - |
-`...sources` | [AnyObject](../interfaces/_helpers_.anyobject.md)‹any›[] |   |
+`destination` | [AnyObject](../interfaces/_helpers_.anyobject.md)‹any› | The object where all the sources will be merged into |
+`source` | [AnyObject](../interfaces/_helpers_.anyobject.md)‹any› | The source object to copy over to the destination |
+`...sources` | [AnyObject](../interfaces/_helpers_.anyobject.md)‹any›[] | If there are more sources, same as `source`  |
 
 **Returns:** *object*
 
@@ -44,7 +46,7 @@ ___
 
 ▸ **next**(`error`: any): *void*
 
-*Defined in [Helpers.ts:82](https://github.com/Openovate/reactus/blob/0600fe9/src/Helpers.ts#L82)*
+*Defined in [Helpers.ts:85](https://github.com/Openovate/reactus/blob/519cdb0/src/Helpers.ts#L85)*
 
 Shim for server middleware
 
@@ -52,7 +54,7 @@ Shim for server middleware
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`error` | any |   |
+`error` | any | Any error *(string or Error or Exception)*  |
 
 **Returns:** *void*
 
@@ -62,7 +64,7 @@ ___
 
 ▸ **noop**(): *void*
 
-*Defined in [Helpers.ts:95](https://github.com/Openovate/reactus/blob/0600fe9/src/Helpers.ts#L95)*
+*Defined in [Helpers.ts:98](https://github.com/Openovate/reactus/blob/519cdb0/src/Helpers.ts#L98)*
 
 A non operational function
 
@@ -74,7 +76,7 @@ ___
 
 ▸ **shim**(`label`: string): *void*
 
-*Defined in [Helpers.ts:102](https://github.com/Openovate/reactus/blob/0600fe9/src/Helpers.ts#L102)*
+*Defined in [Helpers.ts:105](https://github.com/Openovate/reactus/blob/519cdb0/src/Helpers.ts#L105)*
 
 Primarily used for testing, this creates a virtual `reactus` node module
 
@@ -82,7 +84,7 @@ Primarily used for testing, this creates a virtual `reactus` node module
 
 Name | Type | Default | Description |
 ------ | ------ | ------ | ------ |
-`label` | string | "reactus" |   |
+`label` | string | "reactus" | The name of the package to shim this library to  |
 
 **Returns:** *void*
 
@@ -92,7 +94,7 @@ ___
 
 ▸ **walk**(`folder`: string, `callback`: Function, `fileSystem`: "fs"): *void*
 
-*Defined in [Helpers.ts:137](https://github.com/Openovate/reactus/blob/0600fe9/src/Helpers.ts#L137)*
+*Defined in [Helpers.ts:140](https://github.com/Openovate/reactus/blob/519cdb0/src/Helpers.ts#L140)*
 
 Helper to walk through each file
 
@@ -100,8 +102,8 @@ Helper to walk through each file
 
 Name | Type | Default | Description |
 ------ | ------ | ------ | ------ |
-`folder` | string | - | - |
-`callback` | Function | - |   |
-`fileSystem` | "fs" |  fs | - |
+`folder` | string | - | the absolute folder path |
+`callback` | Function | - | the callback to call when a file is found |
+`fileSystem` | "fs" |  fs | the file system in which to find files from  |
 
 **Returns:** *void*

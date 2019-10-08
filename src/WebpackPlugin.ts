@@ -5,34 +5,39 @@ import Helpers from './Helpers';
 const Watchpack = require('watchpack');
 const JailbreakPlugin = require('@openovate/webpack-jailbreak');
 
+/**
+ * This should be added into your `webpack.config.js`. This sends all the
+ * virtual file information to webpack to be considered when bundling files
+ */
 export default class WebpackPlugin {
   /**
-   * @var engine
+   * The Virtual Engine
    */
   protected engine: any;
 
   /**
-   * @var config
+   * The plugin options. Right now it's just `{ watch: [file, folder, ..] }`
    */
   protected config: PluginOptions;
 
   /**
-   * @var listener
+   * The callback to call when webpack finishes compiling
    */
   protected listener: webpack.Compiler.Handler;
 
   /**
-   * @var system
+   * This is the holder for the JailbreakPlugin
    */
   protected system?: any;
 
   /**
-   * @var watcher
+   * This is the holder for Watchpack
    */
   protected watcher?: any;
 
   /**
-   * @var files
+   * A list of files to watch. When changes are made to any of these files, it
+   * will tell webpack to rebuild
    */
   get files(): string[] {
     //get files from sources
@@ -60,7 +65,7 @@ export default class WebpackPlugin {
   }
 
   /**
-   * @var sources - { source path: context target }
+   * a list of sources in the form of `{ source path: context target }`
    */
   get sources(): FileSourceMap {
     const sources: FileSourceMap = {};
@@ -82,9 +87,9 @@ export default class WebpackPlugin {
   /**
    * Sets up the engine, watchpack config and listener
    *
-   * @param engine
-   * @param config
-   * @param listener
+   * @param engine - The Virtual Engine
+   * @param config - The plugin options
+   * @param listener - The callback to call when webpack finishes compiling
    */
   constructor(
     engine: VirtualEngine,
@@ -99,7 +104,7 @@ export default class WebpackPlugin {
   /**
    * Used by webpack
    *
-   * @param compiler
+   * @param compiler - the webpack compiler
    */
   apply(compiler: webpack.Compiler) {
     this.system = new JailbreakPlugin({ files: this.engine.files });
@@ -120,8 +125,8 @@ export default class WebpackPlugin {
   /**
    * Updates a file's content in webpack
    *
-   * @param compiler
-   * @param source
+   * @param compiler - the webpack compiler
+   * @param source - the source file to update
    */
   updateClient(compiler: webpack.Compiler, source: string) {
     //if source is not found
@@ -140,8 +145,8 @@ export default class WebpackPlugin {
   /**
    * Updates a file's content in require
    *
-   * @param compiler
-   * @param source
+   * @param compiler - the webpack compiler
+   * @param source - the source file to update
    */
   updateServer(compiler: webpack.Compiler, source: string) {
     //if the source is a folder
@@ -157,19 +162,32 @@ export default class WebpackPlugin {
 
 //custom interfaces and types
 
+/**
+ * `VirtualEngine.ts` calls this file, so we can't require it back because of
+ * circular dependency limitations. Instead we create a mock interface
+ */
 export interface VirtualEngine {
   files: FileContentMap;
   sources: FileSourceMap;
 }
 
+/**
+ * An abstract describing the contents of the `engine.files` array
+ */
 export interface FileContentMap {
   [key: string]: Buffer|string
 }
 
+/**
+ * An abstract describing `engine.sources`
+ */
 export interface FileSourceMap {
   [key: string]: string
 }
 
+/**
+ * An abstract describing all possible options of the plugin
+ */
 export interface PluginOptions {
   watch: string[];
 }

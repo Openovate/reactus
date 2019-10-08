@@ -2,6 +2,8 @@
 
 # Interface: JavascriptFile
 
+A JavascriptFile is a file that has exported results
+
 ## Hierarchy
 
 * **JavascriptFile**
@@ -23,7 +25,9 @@
 
 • **exports**: *any*
 
-*Defined in [FileResolve.ts:46](https://github.com/Openovate/reactus/blob/0600fe9/src/FileResolve.ts#L46)*
+*Defined in [FileResolve.ts:60](https://github.com/Openovate/reactus/blob/519cdb0/src/FileResolve.ts#L60)*
+
+The compiled results of the file, Usually from `exports`
 
 ___
 
@@ -31,4 +35,6 @@ ___
 
 • **file**: *string*
 
-*Defined in [FileResolve.ts:45](https://github.com/Openovate/reactus/blob/0600fe9/src/FileResolve.ts#L45)*
+*Defined in [FileResolve.ts:55](https://github.com/Openovate/reactus/blob/519cdb0/src/FileResolve.ts#L55)*
+
+The string file absolute path

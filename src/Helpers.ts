@@ -4,15 +4,18 @@ import FileResolve from './FileResolve';
 import RequireResolver from './RequireResolver';
 import ReactusException from './ReactusException';
 
+/**
+ * Helpers are generic methods used by this library
+ */
 export default class Helpers {
   /**
    * This version of merge assumes the objects given are pure objects with
    * static values. For example you should be able to JSON.stringify each of
    * them. This helper does a deep merge in summary
    *
-   * @param destination
-   * @param source
-   * @param sources
+   * @param destination - The object where all the sources will be merged into
+   * @param source - The source object to copy over to the destination
+   * @param sources - If there are more sources, same as `source`
    */
   static merge(
     destination: AnyObject<any>,
@@ -77,7 +80,7 @@ export default class Helpers {
   /**
    * Shim for server middleware
    *
-   * @param error
+   * @param error - Any error *(string or Error or Exception)*
    */
   static next(error: any) {
     if (error) {
@@ -97,7 +100,7 @@ export default class Helpers {
   /**
    * Primarily used for testing, this creates a virtual `reactus` node module
    *
-   * @param label
+   * @param label - The name of the package to shim this library to
    */
   static shim(label: string = 'reactus') {
     RequireResolver.load().on('resolve', (
@@ -130,9 +133,9 @@ export default class Helpers {
   /**
    * Helper to walk through each file
    *
-   * @param fileSystem
-   * @param folder
-   * @param callback
+   * @param folder - the absolute folder path
+   * @param callback - the callback to call when a file is found
+   * @param fileSystem - the file system in which to find files from
    */
   static walk(folder: string, callback: Function, fileSystem = fs) {
     const files = fileSystem.readdirSync(folder);
@@ -150,4 +153,7 @@ export default class Helpers {
 
 //custom interfaces and types
 
+/**
+ * AnyObject is slightly more specific than an object
+ */
 export interface AnyObject<T> { [key: string]: T; }

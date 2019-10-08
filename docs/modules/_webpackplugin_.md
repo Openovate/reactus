@@ -26,7 +26,7 @@
 
 • **JailbreakPlugin**: *any* =  require('@openovate/webpack-jailbreak')
 
-*Defined in [WebpackPlugin.ts:6](https://github.com/Openovate/reactus/blob/0600fe9/src/WebpackPlugin.ts#L6)*
+*Defined in [WebpackPlugin.ts:6](https://github.com/Openovate/reactus/blob/519cdb0/src/WebpackPlugin.ts#L6)*
 
 ___
 
@@ -34,4 +34,4 @@ ___
 
 • **Watchpack**: *any* =  require('watchpack')
 
-*Defined in [WebpackPlugin.ts:5](https://github.com/Openovate/reactus/blob/0600fe9/src/WebpackPlugin.ts#L5)*
+*Defined in [WebpackPlugin.ts:5](https://github.com/Openovate/reactus/blob/519cdb0/src/WebpackPlugin.ts#L5)*

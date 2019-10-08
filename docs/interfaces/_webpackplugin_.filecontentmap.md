@@ -2,6 +2,8 @@
 
 # Interface: FileContentMap
 
+An abstract describing the contents of the `engine.files` array
+
 ## Hierarchy
 
 * **FileContentMap**
@@ -9,3 +11,5 @@
 ## Indexable
 
 * \[ **key**: *string*\]: Buffer | string
+
+An abstract describing the contents of the `engine.files` array

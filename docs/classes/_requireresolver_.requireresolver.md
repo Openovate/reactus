@@ -2,6 +2,14 @@
 
 # Class: RequireResolver
 
+Allows to define how a virtual module gets loaded when a user does
+`require('something')` instead of having multiple points where the
+`Module._resolveFilename()` is wrapped, this class is a single point
+where it is wrapped then triggering an event when `require()` is used.
+This class should be instantiated using `RequireResolver.load()` to
+enforce a static class pattern because `require()` is heavily used so
+we shouldn't be wrapping this more than once.
+
 ## Hierarchy
 
 * internal
@@ -50,7 +58,7 @@
 
 \+ **new RequireResolver**(): *[RequireResolver](_requireresolver_.requireresolver.md)*
 
-*Defined in [RequireResolver.ts:26](https://github.com/Openovate/reactus/blob/0600fe9/src/RequireResolver.ts#L26)*
+*Defined in [RequireResolver.ts:35](https://github.com/Openovate/reactus/blob/519cdb0/src/RequireResolver.ts#L35)*
 
 Wrap the original resolveFilename()
 
@@ -62,9 +70,9 @@ Wrap the original resolveFilename()
 
 • **original**: *Function*
 
-*Defined in [RequireResolver.ts:15](https://github.com/Openovate/reactus/blob/0600fe9/src/RequireResolver.ts#L15)*
+*Defined in [RequireResolver.ts:24](https://github.com/Openovate/reactus/blob/519cdb0/src/RequireResolver.ts#L24)*
 
-**`var`** original
+The original Module._resolveFilename()
 
 ___
 
@@ -72,9 +80,9 @@ ___
 
 ▪ **instance**: *[RequireResolver](_requireresolver_.requireresolver.md)*
 
-*Defined in [RequireResolver.ts:10](https://github.com/Openovate/reactus/blob/0600fe9/src/RequireResolver.ts#L10)*
+*Defined in [RequireResolver.ts:19](https://github.com/Openovate/reactus/blob/519cdb0/src/RequireResolver.ts#L19)*
 
-**`var`** instance
+The static instance of RequireResolver
 
 ## Methods
 
@@ -379,7 +387,7 @@ ___
 
 ▸ **resolve**(`request`: string, `parent`: object): *any*
 
-*Defined in [RequireResolver.ts:44](https://github.com/Openovate/reactus/blob/0600fe9/src/RequireResolver.ts#L44)*
+*Defined in [RequireResolver.ts:53](https://github.com/Openovate/reactus/blob/519cdb0/src/RequireResolver.ts#L53)*
 
 Resolve callback for Module._resolveFilename
 
@@ -387,8 +395,8 @@ Resolve callback for Module._resolveFilename
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`request` | string | - |
-`parent` | object |   |
+`request` | string | the request string; may not be an absolute path |
+`parent` | object | the parent object from the `require.cache`  |
 
 **Returns:** *any*
 
@@ -416,7 +424,7 @@ ___
 
 ▸ **load**(): *[RequireResolver](_requireresolver_.requireresolver.md)*
 
-*Defined in [RequireResolver.ts:20](https://github.com/Openovate/reactus/blob/0600fe9/src/RequireResolver.ts#L20)*
+*Defined in [RequireResolver.ts:29](https://github.com/Openovate/reactus/blob/519cdb0/src/RequireResolver.ts#L29)*
 
 In this case you do want a singleton.
 

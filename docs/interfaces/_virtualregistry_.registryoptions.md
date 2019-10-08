@@ -2,6 +2,8 @@
 
 # Interface: RegistryOptions
 
+An abstract describing all possible options of the registry
+
 ## Hierarchy
 
 * **RegistryOptions**
@@ -22,7 +24,7 @@
 
 • **map**? : *undefined | object*
 
-*Defined in [VirtualRegistry.ts:181](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualRegistry.ts#L181)*
+*Defined in [VirtualRegistry.ts:192](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualRegistry.ts#L192)*
 
 ___
 
@@ -30,7 +32,7 @@ ___
 
 • **page**? : *undefined | string*
 
-*Defined in [VirtualRegistry.ts:183](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualRegistry.ts#L183)*
+*Defined in [VirtualRegistry.ts:194](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualRegistry.ts#L194)*
 
 ___
 
@@ -38,4 +40,4 @@ ___
 
 • **source**? : *undefined | object*
 
-*Defined in [VirtualRegistry.ts:185](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualRegistry.ts#L185)*
+*Defined in [VirtualRegistry.ts:196](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualRegistry.ts#L196)*

@@ -2,6 +2,8 @@
 
 # Interface: RouteMap
 
+An abstract describing `routes`
+
 ## Hierarchy
 
 * **RouteMap**
@@ -9,3 +11,5 @@
 ## Indexable
 
 * \[ **key**: *string*\]: string
+
+An abstract describing `routes`

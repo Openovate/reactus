@@ -2,6 +2,8 @@
 
 # Class: VirtualEngine
 
+The main engine that processes and routes virtual files to webpack, and require
+
 ## Hierarchy
 
   ↳ [VirtualRegistry](_virtualregistry_.virtualregistry.md)
@@ -17,10 +19,9 @@
 ### Properties
 
 * [data](_virtualengine_.virtualengine.md#protected-data)
-* [lazyFiles](_virtualengine_.virtualengine.md#protected-optional-lazyfiles)
+* [lazyFiles](_virtualengine_.virtualengine.md#optional-lazyfiles)
 * [lazyPage](_virtualengine_.virtualengine.md#protected-optional-lazypage)
 * [lazyPresets](_virtualengine_.virtualengine.md#protected-lazypresets)
-* [resolver](_virtualengine_.virtualengine.md#protected-resolver)
 
 ### Accessors
 
@@ -55,15 +56,15 @@
 
 *Overrides [VirtualRegistry](_virtualregistry_.virtualregistry.md).[constructor](_virtualregistry_.virtualregistry.md#constructor)*
 
-*Defined in [VirtualEngine.ts:136](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualEngine.ts#L136)*
+*Defined in [VirtualEngine.ts:136](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualEngine.ts#L136)*
 
-Sets up the registry
+Sets up the registry and the require resolver
 
 **Parameters:**
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`config?` | [EngineOptions](../interfaces/_virtualengine_.engineoptions.md) |   |
+`config?` | [EngineOptions](../interfaces/_virtualengine_.engineoptions.md) | The options to pass to the engine  |
 
 **Returns:** *[VirtualEngine](_virtualengine_.virtualengine.md)*
 
@@ -79,13 +80,15 @@ Defined in /server/node/openovate/reactus/node_modules/@openovate/jsm/dist/Regis
 
 ___
 
-### `Protected` `Optional` lazyFiles
+### `Optional` lazyFiles
 
 • **lazyFiles**? : *[FileContentMap](../interfaces/_virtualengine_.filecontentmap.md)*
 
-*Defined in [VirtualEngine.ts:17](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualEngine.ts#L17)*
+*Defined in [VirtualEngine.ts:22](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualEngine.ts#L22)*
 
-**`var`** lazyPage
+Since files should be formed after you set all of your virtual files,
+this makes sure we only do it intentionally when we need to. If you need
+to rebuild the files just delete this variable
 
 ___
 
@@ -95,9 +98,11 @@ ___
 
 *Inherited from [VirtualRegistry](_virtualregistry_.virtualregistry.md).[lazyPage](_virtualregistry_.virtualregistry.md#protected-optional-lazypage)*
 
-*Defined in [VirtualRegistry.ts:19](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualRegistry.ts#L19)*
+*Defined in [VirtualRegistry.ts:24](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualRegistry.ts#L24)*
 
-**`var`** lazyPage
+Since page compiles to common JS, we should cache the results to
+intentionally prevent unwanted compiles to the same file over and over
+again. To refresh the page, just delete this
 
 ___
 
@@ -107,19 +112,11 @@ ___
 
 *Inherited from [VirtualRegistry](_virtualregistry_.virtualregistry.md).[lazyPresets](_virtualregistry_.virtualregistry.md#protected-lazypresets)*
 
-*Defined in [VirtualRegistry.ts:24](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualRegistry.ts#L24)*
+*Defined in [VirtualRegistry.ts:31](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualRegistry.ts#L31)*
 
-**`var`** lazyPresets
-
-___
-
-### `Protected` resolver
-
-• **resolver**: *[RequireResolver](_requireresolver_.requireresolver.md)*
-
-*Defined in [VirtualEngine.ts:22](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualEngine.ts#L22)*
-
-**`var`** resolver
+Since .babelrc is read, we should cache the results to intentionally
+prevent unwanted compiles to the same file over and over again. To refresh
+the preset, just set this to null
 
 ## Accessors
 
@@ -127,9 +124,9 @@ ___
 
 • **get WebpackPlugin**(): *object*
 
-*Defined in [VirtualEngine.ts:133](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualEngine.ts#L133)*
+*Defined in [VirtualEngine.ts:133](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualEngine.ts#L133)*
 
-**`var`** WebpackPlugin
+The plugin to attach as a plugin in `webpack.config.js`
 
 **Returns:** *object*
 
@@ -141,9 +138,9 @@ ___
 
 • **get files**(): *[FileContentMap](../interfaces/_virtualengine_.filecontentmap.md)*
 
-*Defined in [VirtualEngine.ts:27](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualEngine.ts#L27)*
+*Defined in [VirtualEngine.ts:27](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualEngine.ts#L27)*
 
-**`var`** files - { context target: actual code }
+A list of files in the form of `{ context target: actual code }`
 
 **Returns:** *[FileContentMap](../interfaces/_virtualengine_.filecontentmap.md)*
 
@@ -155,9 +152,9 @@ ___
 
 *Inherited from [VirtualRegistry](_virtualregistry_.virtualregistry.md).[page](_virtualregistry_.virtualregistry.md#page)*
 
-*Defined in [VirtualRegistry.ts:29](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualRegistry.ts#L29)*
+*Defined in [VirtualRegistry.ts:36](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualRegistry.ts#L36)*
 
-**`var`** page
+The transformed page component from `Page.jsx`
 
 **Returns:** *any*
 
@@ -169,9 +166,9 @@ ___
 
 *Inherited from [VirtualRegistry](_virtualregistry_.virtualregistry.md).[presets](_virtualregistry_.virtualregistry.md#presets)*
 
-*Defined in [VirtualRegistry.ts:45](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualRegistry.ts#L45)*
+*Defined in [VirtualRegistry.ts:52](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualRegistry.ts#L52)*
 
-**`var`** presets
+The configuration from `.babelrc`
 
 **Returns:** *object*
 
@@ -181,9 +178,9 @@ ___
 
 • **get sources**(): *[FileSourceMap](../interfaces/_virtualengine_.filesourcemap.md)*
 
-*Defined in [VirtualEngine.ts:64](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualEngine.ts#L64)*
+*Defined in [VirtualEngine.ts:64](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualEngine.ts#L64)*
 
-**`var`** sources - { context target: source path }
+A list of sources in the form of `{ context target: source path }`
 
 **Returns:** *[FileSourceMap](../interfaces/_virtualengine_.filesourcemap.md)*
 
@@ -195,7 +192,7 @@ ___
 
 *Overrides [VirtualRegistry](_virtualregistry_.virtualregistry.md).[component](_virtualregistry_.virtualregistry.md#component)*
 
-*Defined in [VirtualEngine.ts:181](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualEngine.ts#L181)*
+*Defined in [VirtualEngine.ts:181](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualEngine.ts#L181)*
 
 Registers a global component
 
@@ -203,8 +200,8 @@ Registers a global component
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`name` | string | - |
-`path` | string |   |
+`name` | string | the name of the component |
+`path` | string | the actual absolute path where this component file is located  |
 
 **Returns:** *[VirtualEngine](_virtualengine_.virtualengine.md)*
 
@@ -327,7 +324,7 @@ ___
 
 *Inherited from [VirtualRegistry](_virtualregistry_.virtualregistry.md).[render](_virtualregistry_.virtualregistry.md#render)*
 
-*Defined in [VirtualRegistry.ts:100](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualRegistry.ts#L100)*
+*Defined in [VirtualRegistry.ts:107](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualRegistry.ts#L107)*
 
 Renders a react view
 
@@ -335,11 +332,11 @@ Renders a react view
 
 Name | Type | Default | Description |
 ------ | ------ | ------ | ------ |
-`res` | ServerResponse | - | - |
-`path` | string | - | - |
-`props` | object |  {} | - |
-`pageProps` | object |  {} | - |
-`page?` | [AnyComponent](../modules/_virtualregistry_.md#anycomponent) | - |   |
+`res` | ServerResponse | - | the response |
+`path` | string | - | the path where the virtual view exists. ie `product/detail` |
+`props` | object |  {} | the props for the main component |
+`pageProps` | object |  {} | the props for the page component |
+`page?` | [AnyComponent](../modules/_virtualregistry_.md#anycomponent) | - | if you want to use a custom page component  |
 
 **Returns:** *[VirtualRegistry](_virtualregistry_.virtualregistry.md)*
 
@@ -349,7 +346,7 @@ ___
 
 ▸ **resolveEngine**(`request`: string, `resolve`: [FileResolve](_fileresolve_.fileresolve.md)): *void*
 
-*Defined in [VirtualEngine.ts:194](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualEngine.ts#L194)*
+*Defined in [VirtualEngine.ts:194](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualEngine.ts#L194)*
 
 Require resolver for named engines
 
@@ -357,8 +354,8 @@ Require resolver for named engines
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`request` | string | - |
-`resolve` | [FileResolve](_fileresolve_.fileresolve.md) |   |
+`request` | string | the `require()` request |
+`resolve` | [FileResolve](_fileresolve_.fileresolve.md) | if this method can resolve it, file and exports should be set  |
 
 **Returns:** *void*
 
@@ -368,7 +365,7 @@ ___
 
 ▸ **resolveFile**(`request`: string, `resolve`: [FileResolve](_fileresolve_.fileresolve.md)): *void*
 
-*Defined in [VirtualEngine.ts:242](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualEngine.ts#L242)*
+*Defined in [VirtualEngine.ts:242](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualEngine.ts#L242)*
 
 Require resolver for registered files
 
@@ -376,8 +373,8 @@ Require resolver for registered files
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`request` | string | - |
-`resolve` | [FileResolve](_fileresolve_.fileresolve.md) |   |
+`request` | string | the `require()` request |
+`resolve` | [FileResolve](_fileresolve_.fileresolve.md) | if this method can resolve it, file and exports should be set  |
 
 **Returns:** *void*
 
@@ -425,15 +422,15 @@ ___
 
 ▸ **use**(`middleware`: [VirtualRegistry](_virtualregistry_.virtualregistry.md) | object | Function): *[VirtualEngine](_virtualengine_.virtualengine.md)*
 
-*Defined in [VirtualEngine.ts:295](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualEngine.ts#L295)*
+*Defined in [VirtualEngine.ts:296](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualEngine.ts#L296)*
 
-Middleware for VirtualEngine.
+Middleware method for VirtualEngine. Similar to how `express.use()` works
 
 **Parameters:**
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`middleware` | [VirtualRegistry](_virtualregistry_.virtualregistry.md) &#124; object &#124; Function |   |
+`middleware` | [VirtualRegistry](_virtualregistry_.virtualregistry.md) &#124; object &#124; Function | the middleware interface to add to the engine  |
 
 **Returns:** *[VirtualEngine](_virtualengine_.virtualengine.md)*
 
@@ -445,7 +442,7 @@ ___
 
 *Overrides [VirtualRegistry](_virtualregistry_.virtualregistry.md).[view](_virtualregistry_.virtualregistry.md#view)*
 
-*Defined in [VirtualEngine.ts:283](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualEngine.ts#L283)*
+*Defined in [VirtualEngine.ts:284](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualEngine.ts#L284)*
 
 Registers a view
 
@@ -453,8 +450,8 @@ Registers a view
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`route` | string | - |
-`path` | string | - |
-`view` | string |   |
+`route` | string | the route as in `/product/:id` |
+`path` | string | the path where to virtually store the view where `product/detail` will be translated to `reactus/views/product/detail.jsx` |
+`view` | string | the actual absolute path where the view file is located  |
 
 **Returns:** *[VirtualEngine](_virtualengine_.virtualengine.md)*

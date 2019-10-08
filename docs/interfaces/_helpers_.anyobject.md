@@ -2,6 +2,8 @@
 
 # Interface: AnyObject <**T**>
 
+AnyObject is slightly more specific than an object
+
 ## Type parameters
 
 ▪ **T**
@@ -13,3 +15,5 @@
 ## Indexable
 
 * \[ **key**: *string*\]: T
+
+AnyObject is slightly more specific than an object

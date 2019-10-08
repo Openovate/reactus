@@ -10,19 +10,19 @@ import VirtualRegistry, { RegistryOptions } from './VirtualRegistry';
 const babel = require('@babel/core');
 const requireFromString = require('require-from-string');
 
+/**
+ * The main engine that processes and routes virtual files to webpack, and require
+ */
 export default class VirtualEngine extends VirtualRegistry {
   /**
-   * @var lazyPage
+   * Since files should be formed after you set all of your virtual files,
+   * this makes sure we only do it intentionally when we need to. If you need
+   * to rebuild the files just delete this variable
    */
-  protected lazyFiles?: FileContentMap;
+  public lazyFiles?: FileContentMap;
 
   /**
-   * @var resolver
-   */
-  protected resolver: RequireResolver;
-
-  /**
-   * @var files - { context target: actual code }
+   * A list of files in the form of `{ context target: actual code }`
    */
   get files(): FileContentMap {
     if (!this.lazyFiles) {
@@ -59,7 +59,7 @@ export default class VirtualEngine extends VirtualRegistry {
   }
 
   /**
-   * @var sources - { context target: source path }
+   * A list of sources in the form of `{ context target: source path }`
    */
   get sources(): FileSourceMap {
     const sources: FileSourceMap = {};
@@ -128,7 +128,7 @@ export default class VirtualEngine extends VirtualRegistry {
   }
 
   /**
-   * @var WebpackPlugin
+   * The plugin to attach as a plugin in `webpack.config.js`
    */
   get WebpackPlugin(): { new(): WebpackPlugin } {
     //trick to bind an extra argument to constructor
@@ -136,9 +136,9 @@ export default class VirtualEngine extends VirtualRegistry {
   }
 
   /**
-   * Sets up the registry
+   * Sets up the registry and the require resolver
    *
-   * @param config
+   * @param config - The options to pass to the engine
    */
   constructor(config?: EngineOptions) {
     super(config || {});
@@ -163,20 +163,20 @@ export default class VirtualEngine extends VirtualRegistry {
       }
     });
 
-    this.resolver = RequireResolver.load()
+    const resolver = RequireResolver.load()
       .on('resolve', this.resolveFile.bind(this));
 
     //if this is a name engine
     if (this.has('name')) {
-      this.resolver.on('resolve', this.resolveEngine.bind(this));
+      resolver.on('resolve', this.resolveEngine.bind(this));
     }
   }
 
   /**
    * Registers a global component
    *
-   * @param name
-   * @param path
+   * @param name - the name of the component
+   * @param path - the actual absolute path where this component file is located
    */
   component(name: string, path: string): VirtualEngine {
     super.component(name, path);
@@ -188,8 +188,8 @@ export default class VirtualEngine extends VirtualRegistry {
   /**
    * Require resolver for named engines
    *
-   * @param request
-   * @param resolve
+   * @param request - the `require()` request
+   * @param resolve - if this method can resolve it, file and exports should be set
    */
   resolveEngine(request: string, resolve: FileResolve) {
     //if it's already resolved
@@ -236,8 +236,8 @@ export default class VirtualEngine extends VirtualRegistry {
   /**
    * Require resolver for registered files
    *
-   * @param request
-   * @param resolve
+   * @param request - the `require()` request
+   * @param resolve - if this method can resolve it, file and exports should be set
    */
   resolveFile(request: string, resolve: FileResolve) {
     //if it's already resolved
@@ -276,9 +276,10 @@ export default class VirtualEngine extends VirtualRegistry {
   /**
    * Registers a view
    *
-   * @param route
-   * @param path
-   * @param view
+   * @param route - the route as in `/product/:id`
+   * @param path - the path where to virtually store the view where
+   * `product/detail` will be translated to `reactus/views/product/detail.jsx`
+   * @param view - the actual absolute path where the view file is located
    */
   view(route: string, path: string, view: string): VirtualEngine {
     super.view(route, path, view);
@@ -288,9 +289,9 @@ export default class VirtualEngine extends VirtualRegistry {
   }
 
   /**
-   * Middleware for VirtualEngine.
+   * Middleware method for VirtualEngine. Similar to how `express.use()` works
    *
-   * @param middleware
+   * @param middleware - the middleware interface to add to the engine
    */
   use(middleware: VirtualRegistry|object|Function): VirtualEngine {
     //if middleware is a VirtualRegistry
@@ -339,18 +340,30 @@ export {
 
 //custom interfaces and types
 
+/**
+ * An abstract describing the contents of the `engine.files` array
+ */
 export interface FileContentMap {
   [key: string]: Buffer|string
 }
 
+/**
+ * An abstract describing `engine.sources`
+ */
 export interface FileSourceMap {
   [key: string]: string
 }
 
+/**
+ * An abstract describing `routes`
+ */
 export interface RouteMap {
   [key: string]: string
 }
 
+/**
+ * An abstract describing all possible options of the engine
+ */
 export interface EngineOptions extends RegistryOptions {
   //used for white labeling
   label?: string,

@@ -2,6 +2,8 @@
 
 # Class: VirtualRegistry
 
+A component and view registry used to track virtual files
+
 ## Hierarchy
 
 * Registry
@@ -49,7 +51,7 @@
 
 *Overrides void*
 
-*Defined in [VirtualRegistry.ts:57](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualRegistry.ts#L57)*
+*Defined in [VirtualRegistry.ts:64](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualRegistry.ts#L64)*
 
 Sets up the registry
 
@@ -57,7 +59,7 @@ Sets up the registry
 
 Name | Type | Default | Description |
 ------ | ------ | ------ | ------ |
-`config` | object |  {} |   |
+`config` | object |  {} | the registry options  |
 
 **Returns:** *[VirtualRegistry](_virtualregistry_.virtualregistry.md)*
 
@@ -77,9 +79,11 @@ ___
 
 • **lazyPage**? : *[AnyComponent](../modules/_virtualregistry_.md#anycomponent)*
 
-*Defined in [VirtualRegistry.ts:19](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualRegistry.ts#L19)*
+*Defined in [VirtualRegistry.ts:24](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualRegistry.ts#L24)*
 
-**`var`** lazyPage
+Since page compiles to common JS, we should cache the results to
+intentionally prevent unwanted compiles to the same file over and over
+again. To refresh the page, just delete this
 
 ___
 
@@ -87,9 +91,11 @@ ___
 
 • **lazyPresets**: *object | null* =  null
 
-*Defined in [VirtualRegistry.ts:24](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualRegistry.ts#L24)*
+*Defined in [VirtualRegistry.ts:31](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualRegistry.ts#L31)*
 
-**`var`** lazyPresets
+Since .babelrc is read, we should cache the results to intentionally
+prevent unwanted compiles to the same file over and over again. To refresh
+the preset, just set this to null
 
 ## Accessors
 
@@ -97,9 +103,9 @@ ___
 
 • **get page**(): *any*
 
-*Defined in [VirtualRegistry.ts:29](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualRegistry.ts#L29)*
+*Defined in [VirtualRegistry.ts:36](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualRegistry.ts#L36)*
 
-**`var`** page
+The transformed page component from `Page.jsx`
 
 **Returns:** *any*
 
@@ -109,9 +115,9 @@ ___
 
 • **get presets**(): *object*
 
-*Defined in [VirtualRegistry.ts:45](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualRegistry.ts#L45)*
+*Defined in [VirtualRegistry.ts:52](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualRegistry.ts#L52)*
 
-**`var`** presets
+The configuration from `.babelrc`
 
 **Returns:** *object*
 
@@ -121,7 +127,7 @@ ___
 
 ▸ **component**(`name`: string, `path`: string): *[VirtualRegistry](_virtualregistry_.virtualregistry.md)*
 
-*Defined in [VirtualRegistry.ts:86](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualRegistry.ts#L86)*
+*Defined in [VirtualRegistry.ts:93](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualRegistry.ts#L93)*
 
 Registers a global component
 
@@ -129,8 +135,8 @@ Registers a global component
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`name` | string | - |
-`path` | string |   |
+`name` | string | the name of the component |
+`path` | string | the actual absolute path where this component file is located  |
 
 **Returns:** *[VirtualRegistry](_virtualregistry_.virtualregistry.md)*
 
@@ -251,7 +257,7 @@ ___
 
 ▸ **render**(`res`: ServerResponse, `path`: string, `props`: object, `pageProps`: object, `page?`: [AnyComponent](../modules/_virtualregistry_.md#anycomponent)): *[VirtualRegistry](_virtualregistry_.virtualregistry.md)*
 
-*Defined in [VirtualRegistry.ts:100](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualRegistry.ts#L100)*
+*Defined in [VirtualRegistry.ts:107](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualRegistry.ts#L107)*
 
 Renders a react view
 
@@ -259,11 +265,11 @@ Renders a react view
 
 Name | Type | Default | Description |
 ------ | ------ | ------ | ------ |
-`res` | ServerResponse | - | - |
-`path` | string | - | - |
-`props` | object |  {} | - |
-`pageProps` | object |  {} | - |
-`page?` | [AnyComponent](../modules/_virtualregistry_.md#anycomponent) | - |   |
+`res` | ServerResponse | - | the response |
+`path` | string | - | the path where the virtual view exists. ie `product/detail` |
+`props` | object |  {} | the props for the main component |
+`pageProps` | object |  {} | the props for the page component |
+`page?` | [AnyComponent](../modules/_virtualregistry_.md#anycomponent) | - | if you want to use a custom page component  |
 
 **Returns:** *[VirtualRegistry](_virtualregistry_.virtualregistry.md)*
 
@@ -311,7 +317,7 @@ ___
 
 ▸ **view**(`route`: string, `path`: string, `view`: string): *[VirtualRegistry](_virtualregistry_.virtualregistry.md)*
 
-*Defined in [VirtualRegistry.ts:163](https://github.com/Openovate/reactus/blob/0600fe9/src/VirtualRegistry.ts#L163)*
+*Defined in [VirtualRegistry.ts:171](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualRegistry.ts#L171)*
 
 Registers a view
 
@@ -319,8 +325,8 @@ Registers a view
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`route` | string | - |
-`path` | string | - |
-`view` | string |   |
+`route` | string | the route as in `/product/:id` |
+`path` | string | the path where to virtually store the view where `product/detail` will be translated to `reactus/views/product/detail.jsx` |
+`view` | string | the actual absolute path where the view file is located  |
 
 **Returns:** *[VirtualRegistry](_virtualregistry_.virtualregistry.md)*

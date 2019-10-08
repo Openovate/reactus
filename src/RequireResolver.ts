@@ -3,14 +3,23 @@ import FileResolve from './FileResolve';
 
 const Module = require('module');
 
+/**
+ * Allows to define how a virtual module gets loaded when a user does
+ * `require('something')` instead of having multiple points where the
+ * `Module._resolveFilename()` is wrapped, this class is a single point
+ * where it is wrapped then triggering an event when `require()` is used.
+ * This class should be instantiated using `RequireResolver.load()` to
+ * enforce a static class pattern because `require()` is heavily used so
+ * we shouldn't be wrapping this more than once.
+ */
 export default class RequireResolver extends EventEmitter {
   /**
-   * @var instance
+   * The static instance of RequireResolver
    */
   static instance: RequireResolver;
 
   /**
-   * @var original
+   * The original Module._resolveFilename()
    */
   original: Function;
 
@@ -38,8 +47,8 @@ export default class RequireResolver extends EventEmitter {
   /**
    * Resolve callback for Module._resolveFilename
    *
-   * @param {String} request
-   * @param {Object} parent
+   * @param request - the request string; may not be an absolute path
+   * @param parent - the parent object from the `require.cache`
    */
   resolve(request: string, parent: object) {
     //try to resolve

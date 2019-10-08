@@ -2,6 +2,9 @@
 
 # Class: FileResolve
 
+File Resolve is an abstract to describe how to resolve a file request from
+`@require(file)`. You just simply need to set the exports.
+
 ## Hierarchy
 
 * **FileResolve**
@@ -31,9 +34,9 @@
 
 *Implementation of [JavascriptFile](../interfaces/_fileresolve_.javascriptfile.md).[exports](../interfaces/_fileresolve_.javascriptfile.md#exports)*
 
-*Defined in [FileResolve.ts:10](https://github.com/Openovate/reactus/blob/0600fe9/src/FileResolve.ts#L10)*
+*Defined in [FileResolve.ts:14](https://github.com/Openovate/reactus/blob/519cdb0/src/FileResolve.ts#L14)*
 
-**`var`** exports
+The compiled results of the file, Usually from `exports`
 
 ___
 
@@ -43,9 +46,9 @@ ___
 
 *Implementation of [JavascriptFile](../interfaces/_fileresolve_.javascriptfile.md).[file](../interfaces/_fileresolve_.javascriptfile.md#file)*
 
-*Defined in [FileResolve.ts:5](https://github.com/Openovate/reactus/blob/0600fe9/src/FileResolve.ts#L5)*
+*Defined in [FileResolve.ts:9](https://github.com/Openovate/reactus/blob/519cdb0/src/FileResolve.ts#L9)*
 
-**`var`** file
+The string file absolute path
 
 ## Methods
 
@@ -53,7 +56,7 @@ ___
 
 ▸ **get**(): *[JavascriptFile](../interfaces/_fileresolve_.javascriptfile.md)*
 
-*Defined in [FileResolve.ts:15](https://github.com/Openovate/reactus/blob/0600fe9/src/FileResolve.ts#L15)*
+*Defined in [FileResolve.ts:19](https://github.com/Openovate/reactus/blob/519cdb0/src/FileResolve.ts#L19)*
 
 Returns the resolved data
 
@@ -65,7 +68,7 @@ ___
 
 ▸ **isResolved**(): *boolean*
 
-*Defined in [FileResolve.ts:37](https://github.com/Openovate/reactus/blob/0600fe9/src/FileResolve.ts#L37)*
+*Defined in [FileResolve.ts:41](https://github.com/Openovate/reactus/blob/519cdb0/src/FileResolve.ts#L41)*
 
 Returns true if resolved
 
@@ -77,7 +80,7 @@ ___
 
 ▸ **set**(`file`: string, `exports`: any): *[FileResolve](_fileresolve_.fileresolve.md)*
 
-*Defined in [FileResolve.ts:28](https://github.com/Openovate/reactus/blob/0600fe9/src/FileResolve.ts#L28)*
+*Defined in [FileResolve.ts:32](https://github.com/Openovate/reactus/blob/519cdb0/src/FileResolve.ts#L32)*
 
 Sets the resolve data
 
@@ -85,7 +88,7 @@ Sets the resolve data
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`file` | string | - |
-`exports` | any |   |
+`file` | string | The string file absolute path |
+`exports` | any | The compiled results of the file, Usually from `exports`  |
 
 **Returns:** *[FileResolve](_fileresolve_.fileresolve.md)*

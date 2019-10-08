@@ -1,11 +1,15 @@
+/**
+ * File Resolve is an abstract to describe how to resolve a file request from
+ * `@require(file)`. You just simply need to set the exports.
+ */
 export default class FileResolve implements JavascriptFile {
   /**
-   * @var file
+   * The string file absolute path
    */
   file: string = '';
 
   /**
-   * @var exports
+   * The compiled results of the file, Usually from `exports`
    */
   exports: any;
 
@@ -22,8 +26,8 @@ export default class FileResolve implements JavascriptFile {
   /**
    * Sets the resolve data
    *
-   * @param file
-   * @param exports
+   * @param file - The string file absolute path
+   * @param exports - The compiled results of the file, Usually from `exports`
    */
   set(file: string, exports: any): FileResolve {
     this.file = file;
@@ -41,7 +45,17 @@ export default class FileResolve implements JavascriptFile {
 
 //custom interfaces and types
 
+/**
+ * A JavascriptFile is a file that has exported results
+ */
 export interface JavascriptFile {
+  /**
+   * The string file absolute path
+   */
   file: string;
+
+  /**
+   * The compiled results of the file, Usually from `exports`
+   */
   exports: any;
 }
