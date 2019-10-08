@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const VirtualEngine = require('../../src/VirtualEngine');
+const { VirtualEngine } = require('../../src');
 
 test('registry, files and sources test', () => {
   const engine = new VirtualEngine();
@@ -14,7 +14,7 @@ test('registry, files and sources test', () => {
   engine.view('/product/:id', '/product/detail', productSourcePath);
   engine.component('Link', linkSourcePath);
 
-  const view = engine.registry.get('views', 'product/detail');
+  const view = engine.get('views', 'product/detail');
   expect(view.route).toBe('/product/:id');
   expect(view.view).toBe(productSourcePath);
 

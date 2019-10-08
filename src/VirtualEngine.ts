@@ -1,25 +1,32 @@
-const fs = require('fs');
-const path = require('path');
-const { Registry } = require('@openovate/jsm');
+import fs from 'fs';
+import path from 'path';
+
+import Helpers from './Helpers';
+import FileResolve from './FileResolve';
+import WebpackPlugin from './WebpackPlugin';
+import RequireResolver from './RequireResolver';
+import VirtualRegistry, { RegistryOptions } from './VirtualRegistry';
 
 const babel = require('@babel/core');
 const requireFromString = require('require-from-string');
 
-const React = require('react');
-const { renderToString, renderToStaticMarkup } = require('react-dom/server');
-
-const Helpers = require('./Helpers');
-const WebpackPlugin = require('./WebpackPlugin');
-const RequireResolver = require('./RequireResolver');
-const VirtualRegistry = require('./VirtualRegistry');
-
-class VirtualEngine extends VirtualRegistry {
+export default class VirtualEngine extends VirtualRegistry {
   /**
-   * @var {Object} files - { context target: actual code }
+   * @var lazyPage
    */
-  get files() {
+  protected lazyFiles?: FileContentMap;
+
+  /**
+   * @var resolver
+   */
+  protected resolver: RequireResolver;
+
+  /**
+   * @var files - { context target: actual code }
+   */
+  get files(): FileContentMap {
     if (!this.lazyFiles) {
-      const files = {};
+      const files: FileContentMap = {};
       //load files from sources
       for(const target in this.sources) {
         const source = this.sources[target];
@@ -34,9 +41,9 @@ class VirtualEngine extends VirtualRegistry {
       }
 
       //manually make a routes.js file
-      const routes = {};
+      const routes: RouteMap = {};
       const views = this.get('views') || {};
-      Object.keys(views).forEach(path => {
+      Object.keys(views).forEach((path: string) => {
         routes[views[path].route] = path;
       });
 
@@ -52,10 +59,10 @@ class VirtualEngine extends VirtualRegistry {
   }
 
   /**
-   * @var {Object} sources - { context target: source path }
+   * @var sources - { context target: source path }
    */
-  get sources() {
-    const sources = {};
+  get sources(): FileSourceMap {
+    const sources: FileSourceMap = {};
 
     //get the label name
     const label = this.get('label');
@@ -71,7 +78,7 @@ class VirtualEngine extends VirtualRegistry {
 
     //get views
     const views = this.get('views') || {};
-    Object.keys(views).forEach(path => {
+    Object.keys(views).forEach((path: string) => {
       const target = template.view
         .replace('{LABEL}', label)
         .replace('{PATH}', path);
@@ -80,7 +87,7 @@ class VirtualEngine extends VirtualRegistry {
 
     //get components
     const components = this.get('components') || {};
-    Object.keys(components).forEach(name => {
+    Object.keys(components).forEach((name: string) => {
       const target = template.component
         .replace('{LABEL}', label)
         .replace('{NAME}', name);
@@ -90,7 +97,7 @@ class VirtualEngine extends VirtualRegistry {
     //deal with custom files
     // formatted like - { context target: source path }
     const custom = this.get('map');
-    Object.keys(custom).forEach(target => {
+    Object.keys(custom).forEach((target: string) => {
       //name the source
       const source = custom[target];
       //if the source does not exist
@@ -102,13 +109,13 @@ class VirtualEngine extends VirtualRegistry {
       //if source is a folder
       if (fs.statSync(source).isDirectory()) {
         //walk the folder and add files that it finds
-        Helpers.walk(fs, source, file => {
+        Helpers.walk(source, (file: string) => {
           //so let's say source is /foo/bar/zoo
           //file could look like /foo/bar/zoo/bam.js
           //so we just need to chop off the source and use the target instead
           const sourceTarget = path.join(target, file.substr(source.length));
           sources[sourceTarget] = file;
-        });
+        }, fs);
 
         return;
       }
@@ -121,20 +128,20 @@ class VirtualEngine extends VirtualRegistry {
   }
 
   /**
-   * @var {Plugin} WebpackPlugin
+   * @var WebpackPlugin
    */
-  get WebpackPlugin() {
+  get WebpackPlugin(): { new(): WebpackPlugin } {
     //trick to bind an extra argument to constructor
-    return VirtualEngine.WebpackPlugin.bind(null, this);
+    return WebpackPlugin.bind(null, this);
   }
 
   /**
    * Sets up the registry
    *
-   * @param {Object} config
+   * @param config
    */
-  constructor(config = {}) {
-    super(config);
+  constructor(config?: EngineOptions) {
+    super(config || {});
 
     //add defaults to config
     Helpers.merge(this.data, {
@@ -151,15 +158,12 @@ class VirtualEngine extends VirtualRegistry {
       //fixed source paths
       source: {
         babel: path.resolve(__dirname, '../.babelrc'),
-        entry: path.resolve(__dirname, 'client/entry.js'),
-        router: path.resolve(__dirname, 'client/Router.jsx')
+        entry: path.resolve(__dirname, '../client/entry.js'),
+        router: path.resolve(__dirname, '../client/Router.jsx')
       }
     });
 
-    this.lazyFiles = null;
-    this.lazyPresets = null;
-
-    this.resolver = VirtualEngine.RequireResolver.load()
+    this.resolver = RequireResolver.load()
       .on('resolve', this.resolveFile.bind(this));
 
     //if this is a name engine
@@ -171,27 +175,23 @@ class VirtualEngine extends VirtualRegistry {
   /**
    * Registers a global component
    *
-   * @param {String} name
-   * @param {String} path
-   *
-   * @return {VirtualEngine}
+   * @param name
+   * @param path
    */
-  component(name, path) {
+  component(name: string, path: string): VirtualEngine {
     super.component(name, path);
     //uncache files
-    this.lazyFiles = null;
+    delete this.lazyFiles;
     return this;
   }
 
   /**
    * Require resolver for named engines
    *
-   * @param {String} request
-   * @param {FileResolve} resolve
-   *
-   * @return {(Array|False)}
+   * @param request
+   * @param resolve
    */
-  resolveEngine(request, resolve) {
+  resolveEngine(request: string, resolve: FileResolve) {
     //if it's already resolved
     if (resolve.isResolved()) {
       //don't resolve
@@ -212,17 +212,22 @@ class VirtualEngine extends VirtualRegistry {
     //get the label
     const name = this.get('name');
     const label = this.get('label');
-    //looking for something like reactus/engine/web.js
+    //looking for something like reactus/engine/web
     //if the request doesn't start with reactus/engine/web
     if (request.indexOf(path.join(label, 'engine', name)) !== 0) {
       //cannot resolve
       return;
     }
 
+    let formatted = request;
+    if (!path.extname(formatted)) {
+      formatted += '.js';
+    }
+
     //make the actual intended path
     resolve.set(
       //file
-      path.join(__dirname, '../..', request),
+      path.join(__dirname, '../..', formatted),
       //exports
       this
     );
@@ -231,14 +236,18 @@ class VirtualEngine extends VirtualRegistry {
   /**
    * Require resolver for registered files
    *
-   * @param {String} request
-   * @param {FileResolve} resolve
+   * @param request
+   * @param resolve
    */
-  resolveFile(request, resolve) {
+  resolveFile(request: string, resolve: FileResolve) {
     //if it's already resolved
     if (resolve.isResolved()) {
       //don't resolve
       return;
+    }
+
+    if (!path.extname(request)) {
+      request = request + '.js';
     }
 
     //if the request starts with /, . or is not a file
@@ -267,31 +276,27 @@ class VirtualEngine extends VirtualRegistry {
   /**
    * Registers a view
    *
-   * @param {String} route
-   * @param {String} path
-   * @param {String} view
-   *
-   * @return {Router}
+   * @param route
+   * @param path
+   * @param view
    */
-  view(route, path, view) {
+  view(route: string, path: string, view: string): VirtualEngine {
     super.view(route, path, view);
     //uncache files
-    this.lazyFiles = null;
+    delete this.lazyFiles;
     return this;
   }
 
   /**
    * Middleware for VirtualEngine.
    *
-   * @param {(VirtualRegistry|Object|Function)} middleware
-   *
-   * @return {VirtualEngine}
+   * @param middleware
    */
-  use(middleware) {
+  use(middleware: VirtualRegistry|object|Function): VirtualEngine {
     //if middleware is a VirtualRegistry
     if (middleware instanceof VirtualRegistry) {
       //just get the data
-      middleware = middleware.data;
+      middleware = middleware.get();
     }
 
     //if middleware is an object
@@ -299,7 +304,7 @@ class VirtualEngine extends VirtualRegistry {
       //merge and return
       Helpers.merge(this.data, middleware);
       //uncache files
-      this.lazyFiles = null;
+      delete this.lazyFiles;
       return this;
     }
 
@@ -310,7 +315,7 @@ class VirtualEngine extends VirtualRegistry {
         //wait for the middleware
         await middleware(this) ;
         //uncache files
-        this.lazyFiles = null;
+        delete this.lazyFiles;
       })();
 
       return this;
@@ -322,8 +327,45 @@ class VirtualEngine extends VirtualRegistry {
   }
 }
 
-VirtualEngine.WebpackPlugin = WebpackPlugin;
-VirtualEngine.RequireResolver = RequireResolver;
-VirtualEngine.VirtualRegistry = VirtualRegistry;
+//additional exports
 
-module.exports = VirtualEngine;
+export {
+  VirtualRegistry,
+  WebpackPlugin,
+  RequireResolver,
+  FileResolve,
+  RegistryOptions
+};
+
+//custom interfaces and types
+
+export interface FileContentMap {
+  [key: string]: Buffer|string
+}
+
+export interface FileSourceMap {
+  [key: string]: string
+}
+
+export interface RouteMap {
+  [key: string]: string
+}
+
+export interface EngineOptions extends RegistryOptions {
+  //used for white labeling
+  label?: string,
+  //virtual path templates which represent the target destination
+  path?: {
+    component?: string,
+    entry?: string,
+    router?: string,
+    routes?: string,
+    view?: string
+  },
+  //fixed source paths
+  source?: {
+    babel?: string,
+    entry?: string,
+    router?: string
+  }
+}

@@ -33,13 +33,13 @@ engine.render = function(res, path, props = {}, pageProps = {}, page = null) {
   page = page || this.page;
 
   //if no browser path
-  if (!this.registry.has('views', path)) {
+  if (!this.has('views', path)) {
     //Can't do anything
     throw new Error('Path ' + path + ' does not have a view');
   }
 
   //get the view
-  let view = require(this.registry.get('views', path).view);
+  let view = require(this.get('views', path).view);
   if (typeof view === 'object' && view.default) {
     view = view.default
   }

@@ -1,20 +1,24 @@
-const path = require('path');
-const Module = require('module');
-const ReactusException = require('./ReactusException');
+import fs from 'fs';
+import path from 'path';
+import FileResolve from './FileResolve';
+import RequireResolver from './RequireResolver';
+import ReactusException from './ReactusException';
 
-class Helpers {
+export default class Helpers {
   /**
    * This version of merge assumes the objects given are pure objects with
    * static values. For example you should be able to JSON.stringify each of
    * them. This helper does a deep merge in summary
    *
-   * @param {Object} destination
-   * @param {Object} source
-   * @param {Array} [...sources]
-   *
-   * @return {Object}
+   * @param destination
+   * @param source
+   * @param sources
    */
-  static merge(destination, source, ...sources) {
+  static merge(
+    destination: AnyObject<any>,
+    source: AnyObject<any>,
+    ...sources: AnyObject<any>[]
+  ): object {
     if (typeof destination !== 'object' || destination == null) {
       throw ReactusException.for('destination should be an object');
     }
@@ -35,7 +39,7 @@ class Helpers {
       throw ReactusException.for('source should be an object');
     }
 
-    Object.keys(source).forEach(key => {
+    Object.keys(source).forEach((key: string) => {
       //if there is no key for this
       if (!destination[key]
         //if the value is null
@@ -45,6 +49,13 @@ class Helpers {
         //if the key is not an object
         || typeof destination[key] !== 'object'
       ) {
+        //if source key is an object
+        if (typeof source[key] === 'object') {
+          //make a shallow clone
+          destination[key] = Object.assign({}, source[key]);
+          return;
+        }
+
         //just set it
         destination[key] = source[key];
         return;
@@ -58,7 +69,7 @@ class Helpers {
     });
 
     //if there are more sources, recurse merge
-    sources.forEach(source => this.merge(destination, source));
+    sources.forEach((source: object) => this.merge(destination, source));
 
     return destination;
   }
@@ -66,9 +77,9 @@ class Helpers {
   /**
    * Shim for server middleware
    *
-   * @param {(String|Error)} error
+   * @param error
    */
-  static next(error) {
+  static next(error: any) {
     if (error) {
       if (typeof error === 'string') {
         error = ReactusException.for(error);
@@ -86,19 +97,20 @@ class Helpers {
   /**
    * Primarily used for testing, this creates a virtual `reactus` node module
    *
-   * @param {String} brand
+   * @param label
    */
-  static shim(label = 'reactus') {
-    //overwrite Node's Module->resolveFilename
-    const resolveFilename = Module._resolveFilename;
-    Module._resolveFilename = function resolve(request, parent) {
-      //if they are asking for the brand
+  static shim(label: string = 'reactus') {
+    RequireResolver.load().on('resolve', (
+      request: string,
+      resolve: FileResolve
+    ) => {
+      //if they are not asking for the label
       if (request !== label) {
         //business as usual.
-        return resolveFilename.call(Module, request, parent);
+        return;
       }
 
-      const index = path.resolve(__dirname, 'index.js');
+      const index = path.resolve(__dirname, '../dist/index.js');
 
       //if it's not cached
       if (!require.cache[index]) {
@@ -111,25 +123,24 @@ class Helpers {
         };
       }
 
-      //redirect them to our cached version
-      return index;
-    };
+      resolve.set(index, require('./index'))
+    });
   }
 
   /**
    * Helper to walk through each file
    *
-   * @param {FileSystem} fileSystem
-   * @param {String} folder
-   * @param {Function} callback
+   * @param fileSystem
+   * @param folder
+   * @param callback
    */
-  static walk(fileSystem, folder, callback) {
+  static walk(folder: string, callback: Function, fileSystem = fs) {
     const files = fileSystem.readdirSync(folder);
 
     for (const file of files) {
       const item = path.join(folder, file);
       if (fileSystem.statSync(item).isDirectory()) {
-        this.walk(fileSystem, item, callback);
+        this.walk(item, callback, fileSystem);
       } else {
         callback(item);
       }
@@ -137,4 +148,6 @@ class Helpers {
   }
 }
 
-module.exports = Helpers;
+//custom interfaces and types
+
+export interface AnyObject<T> { [key: string]: T; }

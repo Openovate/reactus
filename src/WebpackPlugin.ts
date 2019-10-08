@@ -1,14 +1,40 @@
-const fs = require('fs');
-const webpack = require('webpack');
+import fs from 'fs';
+import webpack from 'webpack';
+import Helpers from './Helpers';
+
 const Watchpack = require('watchpack');
 const JailbreakPlugin = require('@openovate/webpack-jailbreak');
-const Helpers = require('./Helpers');
 
-class WebpackPlugin {
+export default class WebpackPlugin {
   /**
-   * @var {Array} files
+   * @var engine
    */
-  get files() {
+  protected engine: any;
+
+  /**
+   * @var config
+   */
+  protected config: PluginOptions;
+
+  /**
+   * @var listener
+   */
+  protected listener: webpack.Compiler.Handler;
+
+  /**
+   * @var system
+   */
+  protected system?: any;
+
+  /**
+   * @var watcher
+   */
+  protected watcher?: any;
+
+  /**
+   * @var files
+   */
+  get files(): string[] {
     //get files from sources
     const files = new Set(Object.keys(this.sources));
     //if no custom files
@@ -18,11 +44,11 @@ class WebpackPlugin {
     }
 
     //loop through each item as file
-    this.config.watch.forEach(file => {
+    this.config.watch.forEach((file: string) => {
       //if the file is a folder
       if (fs.existsSync(file) && fs.statSync(file).isDirectory()) {
         //walk the folder and add files that it finds
-        Helpers.walk(fs, file, file => files.add(file));
+        Helpers.walk(file, (file: string) => files.add(file), fs);
         return;
       }
 
@@ -34,11 +60,11 @@ class WebpackPlugin {
   }
 
   /**
-   * @var {Object} sources - { source path: context target }
+   * @var sources - { source path: context target }
    */
-  get sources() {
-    const sources = {};
-    Object.keys(this.engine.sources).forEach(target => {
+  get sources(): FileSourceMap {
+    const sources: FileSourceMap = {};
+    Object.keys(this.engine.sources).forEach((target: string) => {
       const source = this.engine.sources[target];
       //if source is not a real file
       if (!fs.existsSync(source) || !fs.lstatSync(source).isFile()) {
@@ -56,11 +82,15 @@ class WebpackPlugin {
   /**
    * Sets up the engine, watchpack config and listener
    *
-   * @param {VirtualEngine} engine
-   * @param {Object} [config = {}]
-   * @param {Function} [listener = noop]
+   * @param engine
+   * @param config
+   * @param listener
    */
-  constructor(engine, config = {}, listener = Helpers.noop) {
+  constructor(
+    engine: VirtualEngine,
+    config: PluginOptions = { watch: [] },
+    listener: webpack.Compiler.Handler = Helpers.noop
+  ) {
     this.engine = engine;
     this.config = config;
     this.listener = listener;
@@ -69,19 +99,19 @@ class WebpackPlugin {
   /**
    * Used by webpack
    *
-   * @param {Compiler} compiler
+   * @param compiler
    */
-  apply(compiler) {
+  apply(compiler: webpack.Compiler) {
     this.system = new JailbreakPlugin({ files: this.engine.files });
 
     //start the watcher
     this.watcher = new Watchpack(this.config);
     this.watcher.watch(this.files, [], Date.now() - 10000);
 
-    this.watcher.on('aggregated', changes => {
+    this.watcher.on('aggregated', (changes: string[]) => {
       changes.forEach(this.updateServer.bind(this, compiler));
       changes.forEach(this.updateClient.bind(this, compiler));
-      compiler.compile(this.listener);
+      compiler.run(this.listener);
     });
 
     this.system.apply(compiler);
@@ -90,10 +120,10 @@ class WebpackPlugin {
   /**
    * Updates a file's content in webpack
    *
-   * @param {Compiler} compiler
-   * @param {Compiler} source
+   * @param compiler
+   * @param source
    */
-  updateClient(compiler, source) {
+  updateClient(compiler: webpack.Compiler, source: string) {
     //if source is not found
     if (!this.sources[source]) {
       //then it's not a virtual file.
@@ -110,10 +140,10 @@ class WebpackPlugin {
   /**
    * Updates a file's content in require
    *
-   * @param {Compiler} compiler
-   * @param {Compiler} source
+   * @param compiler
+   * @param source
    */
-  updateServer(compiler, source) {
+  updateServer(compiler: webpack.Compiler, source: string) {
     //if the source is a folder
     if (fs.statSync(source).isDirectory()) {
       //nothing to update
@@ -125,4 +155,21 @@ class WebpackPlugin {
   }
 }
 
-module.exports = WebpackPlugin;
+//custom interfaces and types
+
+export interface VirtualEngine {
+  files: FileContentMap;
+  sources: FileSourceMap;
+}
+
+export interface FileContentMap {
+  [key: string]: Buffer|string
+}
+
+export interface FileSourceMap {
+  [key: string]: string
+}
+
+export interface PluginOptions {
+  watch: string[];
+}

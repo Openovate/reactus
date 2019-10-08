@@ -1,22 +1,32 @@
-const fs = require('fs');
-const path = require('path');
-const { Registry } = require('@openovate/jsm');
+import fs from 'fs';
+import path from 'path';
+import { ServerResponse } from 'http';
+import { Registry } from '@openovate/jsm';
+
+import React, { FunctionComponent, ComponentClass } from 'react';
+import { renderToString, renderToStaticMarkup } from 'react-dom/server';
+
+import Helpers from './Helpers';
+import ReactusException from './ReactusException';
 
 const babel = require('@babel/core');
 const requireFromString = require('require-from-string');
 
-const React = require('react');
-const { renderToString, renderToStaticMarkup } = require('react-dom/server');
-
-const Helpers = require('./Helpers');
-const ReactusException = require('./ReactusException');
-
-
-class VirtualRegistry extends Registry {
+export default class VirtualRegistry extends Registry {
   /**
-   * @var {Component} page
+   * @var lazyPage
    */
-  get page() {
+  protected lazyPage?: AnyComponent;
+
+  /**
+   * @var lazyPresets
+   */
+  protected lazyPresets: object|null = null;
+
+  /**
+   * @var page
+   */
+  get page(): any {
     if (!this.lazyPage) {
       this.lazyPage = this.get('page');
       if (typeof this.lazyPage === 'string') {
@@ -30,28 +40,28 @@ class VirtualRegistry extends Registry {
   }
 
   /**
-   * @var {Object} presets
+   * @var presets
    */
-  get presets() {
+  get presets(): object {
     if (!this.lazyPresets) {
       this.lazyPresets = this.get('source', 'babel');
 
       //if preset is a path
       if (typeof this.lazyPresets === 'string') {
         //it's a file path
-        this.lazyPresets = JSON.parse(fs.readFileSync(this.lazyPresets));
+        this.lazyPresets = JSON.parse(fs.readFileSync(this.lazyPresets).toString());
       }
     }
 
-    return this.lazyPresets;
+    return this.lazyPresets || {};
   }
 
   /**
    * Sets up the registry
    *
-   * @param {Object} config
+   * @param config
    */
-  constructor(config = {}) {
+  constructor(config: object = {}) {
     super(config);
     //add defaults to config
     Helpers.merge(this.data, {
@@ -59,26 +69,21 @@ class VirtualRegistry extends Registry {
       // formatted like - { context target: source path }
       map: {},
       // default page
-      page: path.resolve(__dirname, 'client/Page.jsx'),
+      page: path.resolve(__dirname, '../client/Page.jsx'),
       //fixed source paths
       source: {
         babel: path.resolve(__dirname, '../.babelrc')
       }
     });
-
-    this.lazyPage = null;
-    this.lazyFiles = null;
   }
 
   /**
    * Registers a global component
    *
-   * @param {String} name
-   * @param {String} path
-   *
-   * @return {VirtualEngine}
+   * @param name
+   * @param path
    */
-  component(name, path) {
+  component(name: string, path: string): VirtualRegistry {
     this.set('components', name, path);
     return this;
   }
@@ -86,15 +91,19 @@ class VirtualRegistry extends Registry {
   /**
    * Renders a react view
    *
-   * @param {ServerResponse} res
-   * @param {String} path
-   * @param {Object} [props = {}]
-   * @param {Object} [pageProps = {}]
-   * @param {React.Component} [page = null]
-   *
-   * @return {VirtualEngine}
+   * @param res
+   * @param path
+   * @param props
+   * @param pageProps
+   * @param page
    */
-  render(res, path, props = {}, pageProps = {}, page = null) {
+  render(
+    res: ServerResponse,
+    path: string,
+    props: object = {},
+    pageProps: object = {},
+    page?: AnyComponent
+  ): VirtualRegistry {
     //remove forward slash at the start
     if (path.indexOf('/') === 0) {
       path = path.substr(1)
@@ -119,13 +128,14 @@ class VirtualRegistry extends Registry {
     if (view.prototype && !!view.prototype.isReactComponent) {
       //convert the view to a composite
       const original = view;
-      view = function componentToComposite(props) {
+      view = function componentToComposite(props: object) {
         return React.createElement(original, props);
       }
     }
 
     if (!page) {
-      res.send(renderToString(view(props)));
+      res.write(renderToString(view(props)));
+      res.end();
       return this;
     }
 
@@ -133,10 +143,12 @@ class VirtualRegistry extends Registry {
     const html = React.createElement(page, pageProps);
 
     //last set the content
-    res.send('<!DOCTYPE html>' + renderToStaticMarkup(html)
+    res.write('<!DOCTYPE html>' + renderToStaticMarkup(html)
       .replace('{APP}', renderToString(view(props)))
       .replace('{DATA}', JSON.stringify(props))
     );
+
+    res.end();
 
     return this;
   }
@@ -144,13 +156,11 @@ class VirtualRegistry extends Registry {
   /**
    * Registers a view
    *
-   * @param {String} route
-   * @param {String} path
-   * @param {String} view
-   *
-   * @return {Router}
+   * @param route
+   * @param path
+   * @param view
    */
-  view(route, path, view) {
+  view(route: string, path: string, view: string): VirtualRegistry {
     //remove forward slash at the start
     if (path.indexOf('/') === 0) {
       path = path.substr(1)
@@ -161,4 +171,18 @@ class VirtualRegistry extends Registry {
   }
 }
 
-module.exports = VirtualRegistry;
+//custom interfaces and types
+
+export type AnyComponent = string | FunctionComponent<object> | ComponentClass<object, any>;
+
+export interface RegistryOptions {
+  //custom files and folders to map
+  // formatted like - { context target: source path }
+  map?: { [key: string]: string },
+  // default page
+  page?: string,
+  //fixed source paths
+  source?: {
+    babel?: string
+  }
+}

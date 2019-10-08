@@ -5,5 +5,8 @@ module.exports = {
   },
   testMatch: [
     "**/test/browser/**/*.test.js"
-  ]
+  ],
+  transform: {
+    "^.+\\.tsx?$": "ts-jest"
+  }
 }

@@ -1,15 +1,23 @@
-const path = require('path');
-const Module = require('module');
-const EventEmitter = require('events');
-const FileResolve = require('./FileResolve');
+import EventEmitter from 'events';
+import FileResolve from './FileResolve';
 
-class RequireResolver extends EventEmitter {
+const Module = require('module');
+
+export default class RequireResolver extends EventEmitter {
+  /**
+   * @var instance
+   */
+  static instance: RequireResolver;
+
+  /**
+   * @var original
+   */
+  original: Function;
+
   /**
    * In this case you do want a singleton.
-   *
-   * @return {RequireResolver}
    */
-  static load() {
+  static load(): RequireResolver {
     if (!this.instance) {
       this.instance = new RequireResolver();
     }
@@ -18,15 +26,12 @@ class RequireResolver extends EventEmitter {
   }
 
   /**
-   * Set the engine
-   *
-   * @param {VirtualEngine} engine
-   * @param {Function} original
+   * Wrap the original resolveFilename()
    */
   constructor() {
     super();
     //overwrite Node's Module->resolveFilename
-    this.original = Module._resolveFilename;
+    this.original = <Function> Module._resolveFilename;
     Module._resolveFilename = this.resolve.bind(this);
   }
 
@@ -36,16 +41,10 @@ class RequireResolver extends EventEmitter {
    * @param {String} request
    * @param {Object} parent
    */
-  resolve(request, parent) {
-    let formatted = request;
-
-    if (!path.extname(formatted)) {
-      formatted += '.js';
-    }
-
+  resolve(request: string, parent: object) {
     //try to resolve
     const resolve = new FileResolve;
-    this.emit('resolve', formatted, resolve);
+    this.emit('resolve', request, resolve, parent);
 
     //if its not resolved
     if (!resolve.isResolved()) {
@@ -71,4 +70,6 @@ class RequireResolver extends EventEmitter {
   }
 }
 
-module.exports = RequireResolver;
+//additional exports
+
+export { FileResolve };

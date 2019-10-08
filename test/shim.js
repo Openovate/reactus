@@ -1,7 +1,8 @@
 const path = require('path');
-const reactus =  require('../src');
+const { shim } =  require('../dist');
+
 //shim the reactus package. only needed for testing
-reactus.shim();
+shim();
 
 let example = 'quick-start-example/src/server';
 if (process.argv.length === 3) {
