@@ -8,8 +8,8 @@ import Helpers from './Helpers';
 /**
  * Creates a Middleware for http server or express
  *
- * @param webpackConfig
- * @param devConfig
+ * @param webpackConfig - The `webpack` configuration options from webpack.config.js
+ * @param devConfig - The `webpack-dev-middleware` options. Usually has { noInfo: true }
  */
 export default function createMiddleware(
   webpackConfig: webpack.Configuration,
