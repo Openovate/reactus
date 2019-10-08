@@ -1,3 +1,7 @@
+[reactus](README.md) › [Globals](globals.md)
+
+# reactus
+
 # Reactus
 
 An un-opinionated, un-routed version of a **React** app build engine. There are
@@ -34,7 +38,6 @@ Do not use **Reactus** if:
    - 3.3. [White Labeling](#33-white-labeling)
    - 3.4. [Adding Custom Virtual Files](#34-adding-custom-virtual-files)
    - 3.5. [Use a Custom Page](#35-use-a-custom-page)
- - [4. API](https://github.com/Openovate/reactus/tree/master/docs/globals.md)
 
 ### 1. Install
 
