@@ -163,12 +163,11 @@ export default class VirtualEngine extends VirtualRegistry {
       }
     });
 
-    const resolver = RequireResolver.load()
-      .on('resolve', this.resolveFile.bind(this));
+    RequireResolver.on('resolve', this.resolveFile.bind(this));
 
     //if this is a name engine
     if (this.has('name')) {
-      resolver.on('resolve', this.resolveEngine.bind(this));
+      RequireResolver.on('resolve', this.resolveEngine.bind(this));
     }
   }
 

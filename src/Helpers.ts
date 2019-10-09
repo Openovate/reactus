@@ -99,7 +99,7 @@ export function noop() {}
  * @param label - The name of the package to shim this library to
  */
 export function shim(label: string = 'reactus') {
-  RequireResolver.load().on('resolve', (
+  RequireResolver.on('resolve', (
     request: string,
     resolve: FileResolve
   ) => {

@@ -1,6 +1,10 @@
 import EventEmitter from 'events';
 import FileResolve from './FileResolve';
 
+/**
+ * Module holds `Module._resolveFilename()` which is where all `require()` goes
+ * to find out where the actual file is located
+ */
 const Module = require('module');
 
 /**
@@ -12,27 +16,11 @@ const Module = require('module');
  * enforce a static class pattern because `require()` is heavily used so
  * we shouldn't be wrapping this more than once.
  */
-export default class RequireResolver extends EventEmitter {
-  /**
-   * The static instance of RequireResolver
-   */
-  static instance: RequireResolver;
-
+class RequireResolver extends EventEmitter {
   /**
    * The original Module._resolveFilename()
    */
   original: Function;
-
-  /**
-   * In this case you do want a singleton.
-   */
-  static load(): RequireResolver {
-    if (!this.instance) {
-      this.instance = new RequireResolver();
-    }
-
-    return this.instance;
-  }
 
   /**
    * Wrap the original resolveFilename()
@@ -78,6 +66,9 @@ export default class RequireResolver extends EventEmitter {
     return file;
   }
 }
+
+//make sure this cannot be instantiated again
+export default new RequireResolver;
 
 //additional exports
 
