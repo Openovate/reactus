@@ -1,11 +1,11 @@
-const { Helpers } = require('../../src/');
+const { merge, walk, shim } = require('../../src/helpers');
 
 test('merge test', () => {
   const destination = {};
   const source1 = { some: { thing: 'good'}, one: 'bad'};
   const source2 = { some: { thing: 'bad'}, else: 'good'};
 
-  const actual = Helpers.merge(destination, source1, source2);
+  const actual = merge(destination, source1, source2);
 
   expect(actual).toBe(destination);
   expect(actual.some.thing).toBe('bad');
@@ -23,7 +23,7 @@ test('merge test', () => {
 
 test('walk test', () => {
   const files = [];
-  Helpers.walk(__dirname + '/assets', (file) => {
+  walk(__dirname + '/assets', (file) => {
     files.push(file);
   });
 
@@ -36,7 +36,7 @@ test('walk test', () => {
 })
 
 test('shim test', () => {
-  Helpers.shim('shimmy_ya');
+  shim('shimmy_ya');
   //const actual = require('shimmy_ya');
   //expect(typeof actual).toBe('function');
 })

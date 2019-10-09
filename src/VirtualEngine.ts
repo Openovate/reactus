@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import Helpers from './Helpers';
+import { walk, merge } from './helpers';
 import FileResolve from './FileResolve';
 import WebpackPlugin from './WebpackPlugin';
 import RequireResolver from './RequireResolver';
@@ -109,7 +109,7 @@ export default class VirtualEngine extends VirtualRegistry {
       //if source is a folder
       if (fs.statSync(source).isDirectory()) {
         //walk the folder and add files that it finds
-        Helpers.walk(source, (file: string) => {
+        walk(source, (file: string) => {
           //so let's say source is /foo/bar/zoo
           //file could look like /foo/bar/zoo/bam.js
           //so we just need to chop off the source and use the target instead
@@ -144,7 +144,7 @@ export default class VirtualEngine extends VirtualRegistry {
     super(config || {});
 
     //add defaults to config
-    Helpers.merge(this.data, {
+    merge(this.data, {
       //used for white labeling
       label: 'reactus',
       //virtual path templates which represent the target destination
@@ -303,7 +303,7 @@ export default class VirtualEngine extends VirtualRegistry {
     //if middleware is an object
     if (typeof middleware === 'object') {
       //merge and return
-      Helpers.merge(this.data, middleware);
+      merge(this.data, middleware);
       //uncache files
       delete this.lazyFiles;
       return this;

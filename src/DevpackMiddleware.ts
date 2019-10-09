@@ -3,7 +3,7 @@ import { IncomingMessage, ServerResponse } from 'http';
 import webpack from 'webpack';
 import webpackDev from 'webpack-dev-middleware';
 import webpackHot from 'webpack-hot-middleware';
-import Helpers from './Helpers';
+import { defaultNext } from './helpers';
 
 /**
  * Creates a Middleware for http server or express
@@ -32,7 +32,7 @@ export default function createMiddleware(
   return function middleware(
     req: IncomingMessage,
     res: ServerResponse,
-    next: NextFunction = Helpers.next
+    next: NextFunction = defaultNext
   ) {
     dev(req, res, (err: any) => {
       if (err) {

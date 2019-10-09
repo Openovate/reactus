@@ -6,7 +6,7 @@ import { Registry } from '@openovate/jsm';
 import React, { FunctionComponent, ComponentClass } from 'react';
 import { renderToString, renderToStaticMarkup } from 'react-dom/server';
 
-import Helpers from './Helpers';
+import { merge } from './helpers';
 import ReactusException from './ReactusException';
 
 const babel = require('@babel/core');
@@ -71,7 +71,7 @@ export default class VirtualRegistry extends Registry {
   constructor(config: object = {}) {
     super(config);
     //add defaults to config
-    Helpers.merge(this.data, {
+    merge(this.data, {
       //custom files and folders to map
       // formatted like - { context target: source path }
       map: {},

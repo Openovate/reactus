@@ -1,6 +1,6 @@
 import fs from 'fs';
 import webpack from 'webpack';
-import Helpers from './Helpers';
+import { walk, noop } from './helpers';
 
 const Watchpack = require('watchpack');
 const JailbreakPlugin = require('@openovate/webpack-jailbreak');
@@ -53,7 +53,7 @@ export default class WebpackPlugin {
       //if the file is a folder
       if (fs.existsSync(file) && fs.statSync(file).isDirectory()) {
         //walk the folder and add files that it finds
-        Helpers.walk(file, (file: string) => files.add(file), fs);
+        walk(file, (file: string) => files.add(file), fs);
         return;
       }
 
@@ -94,7 +94,7 @@ export default class WebpackPlugin {
   constructor(
     engine: VirtualEngine,
     config: PluginOptions = { watch: [] },
-    listener: webpack.Compiler.Handler = Helpers.noop
+    listener: webpack.Compiler.Handler = noop
   ) {
     this.engine = engine;
     this.config = config;

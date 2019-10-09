@@ -5,10 +5,9 @@ import VirtualEngine, {
   EngineOptions,
   RegistryOptions
 } from './VirtualEngine';
-import Helpers from './Helpers';
+import { shim } from './helpers';
 import DevpackMiddleware from './DevpackMiddleware';
 
-const shim = Helpers.shim;
 const devpack = DevpackMiddleware;
 
 /**
@@ -28,7 +27,6 @@ export {
   FileResolve,
   EngineOptions,
   RegistryOptions,
-  Helpers,
   devpack,
   shim
 };
