@@ -40,7 +40,7 @@ virtual file information to webpack to be considered when bundling files
 
 \+ **new WebpackPlugin**(`engine`: [VirtualEngine](../interfaces/_webpackplugin_.virtualengine.md), `config`: [PluginOptions](../interfaces/_webpackplugin_.pluginoptions.md), `listener`: webpack.Compiler.Handler): *[WebpackPlugin](_webpackplugin_.webpackplugin.md)*
 
-*Defined in [WebpackPlugin.ts:85](https://github.com/Openovate/reactus/blob/519cdb0/src/WebpackPlugin.ts#L85)*
+*Defined in [WebpackPlugin.ts:85](https://github.com/Openovate/reactus/blob/b750986/src/WebpackPlugin.ts#L85)*
 
 Sets up the engine, watchpack config and listener
 
@@ -50,7 +50,7 @@ Name | Type | Default | Description |
 ------ | ------ | ------ | ------ |
 `engine` | [VirtualEngine](../interfaces/_webpackplugin_.virtualengine.md) | - | The Virtual Engine |
 `config` | [PluginOptions](../interfaces/_webpackplugin_.pluginoptions.md) |  { watch: [] } | The plugin options |
-`listener` | webpack.Compiler.Handler |  Helpers.noop | The callback to call when webpack finishes compiling  |
+`listener` | webpack.Compiler.Handler |  noop | The callback to call when webpack finishes compiling  |
 
 **Returns:** *[WebpackPlugin](_webpackplugin_.webpackplugin.md)*
 
@@ -60,7 +60,7 @@ Name | Type | Default | Description |
 
 • **config**: *[PluginOptions](../interfaces/_webpackplugin_.pluginoptions.md)*
 
-*Defined in [WebpackPlugin.ts:21](https://github.com/Openovate/reactus/blob/519cdb0/src/WebpackPlugin.ts#L21)*
+*Defined in [WebpackPlugin.ts:21](https://github.com/Openovate/reactus/blob/b750986/src/WebpackPlugin.ts#L21)*
 
 The plugin options. Right now it's just `{ watch: [file, folder, ..] }`
 
@@ -70,7 +70,7 @@ ___
 
 • **engine**: *any*
 
-*Defined in [WebpackPlugin.ts:16](https://github.com/Openovate/reactus/blob/519cdb0/src/WebpackPlugin.ts#L16)*
+*Defined in [WebpackPlugin.ts:16](https://github.com/Openovate/reactus/blob/b750986/src/WebpackPlugin.ts#L16)*
 
 The Virtual Engine
 
@@ -80,7 +80,7 @@ ___
 
 • **listener**: *webpack.Compiler.Handler*
 
-*Defined in [WebpackPlugin.ts:26](https://github.com/Openovate/reactus/blob/519cdb0/src/WebpackPlugin.ts#L26)*
+*Defined in [WebpackPlugin.ts:26](https://github.com/Openovate/reactus/blob/b750986/src/WebpackPlugin.ts#L26)*
 
 The callback to call when webpack finishes compiling
 
@@ -90,7 +90,7 @@ ___
 
 • **system**? : *any*
 
-*Defined in [WebpackPlugin.ts:31](https://github.com/Openovate/reactus/blob/519cdb0/src/WebpackPlugin.ts#L31)*
+*Defined in [WebpackPlugin.ts:31](https://github.com/Openovate/reactus/blob/b750986/src/WebpackPlugin.ts#L31)*
 
 This is the holder for the JailbreakPlugin
 
@@ -100,7 +100,7 @@ ___
 
 • **watcher**? : *any*
 
-*Defined in [WebpackPlugin.ts:36](https://github.com/Openovate/reactus/blob/519cdb0/src/WebpackPlugin.ts#L36)*
+*Defined in [WebpackPlugin.ts:36](https://github.com/Openovate/reactus/blob/b750986/src/WebpackPlugin.ts#L36)*
 
 This is the holder for Watchpack
 
@@ -110,7 +110,7 @@ This is the holder for Watchpack
 
 • **get files**(): *string[]*
 
-*Defined in [WebpackPlugin.ts:42](https://github.com/Openovate/reactus/blob/519cdb0/src/WebpackPlugin.ts#L42)*
+*Defined in [WebpackPlugin.ts:42](https://github.com/Openovate/reactus/blob/b750986/src/WebpackPlugin.ts#L42)*
 
 A list of files to watch. When changes are made to any of these files, it
 will tell webpack to rebuild
@@ -123,7 +123,7 @@ ___
 
 • **get sources**(): *[FileSourceMap](../interfaces/_webpackplugin_.filesourcemap.md)*
 
-*Defined in [WebpackPlugin.ts:70](https://github.com/Openovate/reactus/blob/519cdb0/src/WebpackPlugin.ts#L70)*
+*Defined in [WebpackPlugin.ts:70](https://github.com/Openovate/reactus/blob/b750986/src/WebpackPlugin.ts#L70)*
 
 a list of sources in the form of `{ source path: context target }`
 
@@ -135,7 +135,7 @@ a list of sources in the form of `{ source path: context target }`
 
 ▸ **apply**(`compiler`: Compiler): *void*
 
-*Defined in [WebpackPlugin.ts:109](https://github.com/Openovate/reactus/blob/519cdb0/src/WebpackPlugin.ts#L109)*
+*Defined in [WebpackPlugin.ts:109](https://github.com/Openovate/reactus/blob/b750986/src/WebpackPlugin.ts#L109)*
 
 Used by webpack
 
@@ -153,7 +153,7 @@ ___
 
 ▸ **updateClient**(`compiler`: Compiler, `source`: string): *void*
 
-*Defined in [WebpackPlugin.ts:131](https://github.com/Openovate/reactus/blob/519cdb0/src/WebpackPlugin.ts#L131)*
+*Defined in [WebpackPlugin.ts:131](https://github.com/Openovate/reactus/blob/b750986/src/WebpackPlugin.ts#L131)*
 
 Updates a file's content in webpack
 
@@ -172,7 +172,7 @@ ___
 
 ▸ **updateServer**(`compiler`: Compiler, `source`: string): *void*
 
-*Defined in [WebpackPlugin.ts:151](https://github.com/Openovate/reactus/blob/519cdb0/src/WebpackPlugin.ts#L151)*
+*Defined in [WebpackPlugin.ts:151](https://github.com/Openovate/reactus/blob/b750986/src/WebpackPlugin.ts#L151)*
 
 Updates a file's content in require
 

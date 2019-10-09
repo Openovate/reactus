@@ -14,7 +14,6 @@ their React app faster than traditional tooling. Reactus is a
 Use **Reactus** if:
 
  - You want to define your own custom file structure
- - You want to modularize your React, NextJS or Razzle project
  - You want to create your own React framework
  - You have spent an exhaustive amount of time looking at Webpack's code.
  - You like to work with bare metal libraries

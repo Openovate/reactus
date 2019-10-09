@@ -56,7 +56,7 @@ The main engine that processes and routes virtual files to webpack, and require
 
 *Overrides [VirtualRegistry](_virtualregistry_.virtualregistry.md).[constructor](_virtualregistry_.virtualregistry.md#constructor)*
 
-*Defined in [VirtualEngine.ts:136](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualEngine.ts#L136)*
+*Defined in [VirtualEngine.ts:136](https://github.com/Openovate/reactus/blob/b750986/src/VirtualEngine.ts#L136)*
 
 Sets up the registry and the require resolver
 
@@ -84,7 +84,7 @@ ___
 
 • **lazyFiles**? : *[FileContentMap](../interfaces/_virtualengine_.filecontentmap.md)*
 
-*Defined in [VirtualEngine.ts:22](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualEngine.ts#L22)*
+*Defined in [VirtualEngine.ts:22](https://github.com/Openovate/reactus/blob/b750986/src/VirtualEngine.ts#L22)*
 
 Since files should be formed after you set all of your virtual files,
 this makes sure we only do it intentionally when we need to. If you need
@@ -98,7 +98,7 @@ ___
 
 *Inherited from [VirtualRegistry](_virtualregistry_.virtualregistry.md).[lazyPage](_virtualregistry_.virtualregistry.md#protected-optional-lazypage)*
 
-*Defined in [VirtualRegistry.ts:24](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualRegistry.ts#L24)*
+*Defined in [VirtualRegistry.ts:24](https://github.com/Openovate/reactus/blob/b750986/src/VirtualRegistry.ts#L24)*
 
 Since page compiles to common JS, we should cache the results to
 intentionally prevent unwanted compiles to the same file over and over
@@ -112,7 +112,7 @@ ___
 
 *Inherited from [VirtualRegistry](_virtualregistry_.virtualregistry.md).[lazyPresets](_virtualregistry_.virtualregistry.md#protected-lazypresets)*
 
-*Defined in [VirtualRegistry.ts:31](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualRegistry.ts#L31)*
+*Defined in [VirtualRegistry.ts:31](https://github.com/Openovate/reactus/blob/b750986/src/VirtualRegistry.ts#L31)*
 
 Since .babelrc is read, we should cache the results to intentionally
 prevent unwanted compiles to the same file over and over again. To refresh
@@ -124,7 +124,7 @@ the preset, just set this to null
 
 • **get WebpackPlugin**(): *object*
 
-*Defined in [VirtualEngine.ts:133](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualEngine.ts#L133)*
+*Defined in [VirtualEngine.ts:133](https://github.com/Openovate/reactus/blob/b750986/src/VirtualEngine.ts#L133)*
 
 The plugin to attach as a plugin in `webpack.config.js`
 
@@ -138,7 +138,7 @@ ___
 
 • **get files**(): *[FileContentMap](../interfaces/_virtualengine_.filecontentmap.md)*
 
-*Defined in [VirtualEngine.ts:27](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualEngine.ts#L27)*
+*Defined in [VirtualEngine.ts:27](https://github.com/Openovate/reactus/blob/b750986/src/VirtualEngine.ts#L27)*
 
 A list of files in the form of `{ context target: actual code }`
 
@@ -152,7 +152,7 @@ ___
 
 *Inherited from [VirtualRegistry](_virtualregistry_.virtualregistry.md).[page](_virtualregistry_.virtualregistry.md#page)*
 
-*Defined in [VirtualRegistry.ts:36](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualRegistry.ts#L36)*
+*Defined in [VirtualRegistry.ts:36](https://github.com/Openovate/reactus/blob/b750986/src/VirtualRegistry.ts#L36)*
 
 The transformed page component from `Page.jsx`
 
@@ -166,7 +166,7 @@ ___
 
 *Inherited from [VirtualRegistry](_virtualregistry_.virtualregistry.md).[presets](_virtualregistry_.virtualregistry.md#presets)*
 
-*Defined in [VirtualRegistry.ts:52](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualRegistry.ts#L52)*
+*Defined in [VirtualRegistry.ts:52](https://github.com/Openovate/reactus/blob/b750986/src/VirtualRegistry.ts#L52)*
 
 The configuration from `.babelrc`
 
@@ -178,7 +178,7 @@ ___
 
 • **get sources**(): *[FileSourceMap](../interfaces/_virtualengine_.filesourcemap.md)*
 
-*Defined in [VirtualEngine.ts:64](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualEngine.ts#L64)*
+*Defined in [VirtualEngine.ts:64](https://github.com/Openovate/reactus/blob/b750986/src/VirtualEngine.ts#L64)*
 
 A list of sources in the form of `{ context target: source path }`
 
@@ -192,7 +192,7 @@ A list of sources in the form of `{ context target: source path }`
 
 *Overrides [VirtualRegistry](_virtualregistry_.virtualregistry.md).[component](_virtualregistry_.virtualregistry.md#component)*
 
-*Defined in [VirtualEngine.ts:181](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualEngine.ts#L181)*
+*Defined in [VirtualEngine.ts:180](https://github.com/Openovate/reactus/blob/b750986/src/VirtualEngine.ts#L180)*
 
 Registers a global component
 
@@ -324,7 +324,7 @@ ___
 
 *Inherited from [VirtualRegistry](_virtualregistry_.virtualregistry.md).[render](_virtualregistry_.virtualregistry.md#render)*
 
-*Defined in [VirtualRegistry.ts:107](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualRegistry.ts#L107)*
+*Defined in [VirtualRegistry.ts:107](https://github.com/Openovate/reactus/blob/b750986/src/VirtualRegistry.ts#L107)*
 
 Renders a react view
 
@@ -346,7 +346,7 @@ ___
 
 ▸ **resolveEngine**(`request`: string, `resolve`: [FileResolve](_fileresolve_.fileresolve.md)): *void*
 
-*Defined in [VirtualEngine.ts:194](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualEngine.ts#L194)*
+*Defined in [VirtualEngine.ts:193](https://github.com/Openovate/reactus/blob/b750986/src/VirtualEngine.ts#L193)*
 
 Require resolver for named engines
 
@@ -365,7 +365,7 @@ ___
 
 ▸ **resolveFile**(`request`: string, `resolve`: [FileResolve](_fileresolve_.fileresolve.md)): *void*
 
-*Defined in [VirtualEngine.ts:242](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualEngine.ts#L242)*
+*Defined in [VirtualEngine.ts:241](https://github.com/Openovate/reactus/blob/b750986/src/VirtualEngine.ts#L241)*
 
 Require resolver for registered files
 
@@ -422,7 +422,7 @@ ___
 
 ▸ **use**(`middleware`: [VirtualRegistry](_virtualregistry_.virtualregistry.md) | object | Function): *[VirtualEngine](_virtualengine_.virtualengine.md)*
 
-*Defined in [VirtualEngine.ts:296](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualEngine.ts#L296)*
+*Defined in [VirtualEngine.ts:295](https://github.com/Openovate/reactus/blob/b750986/src/VirtualEngine.ts#L295)*
 
 Middleware method for VirtualEngine. Similar to how `express.use()` works
 
@@ -442,7 +442,7 @@ ___
 
 *Overrides [VirtualRegistry](_virtualregistry_.virtualregistry.md).[view](_virtualregistry_.virtualregistry.md#view)*
 
-*Defined in [VirtualEngine.ts:284](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualEngine.ts#L284)*
+*Defined in [VirtualEngine.ts:283](https://github.com/Openovate/reactus/blob/b750986/src/VirtualEngine.ts#L283)*
 
 Registers a view
 

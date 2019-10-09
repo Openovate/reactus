@@ -25,7 +25,7 @@ A JavascriptFile is a file that has exported results
 
 • **exports**: *any*
 
-*Defined in [FileResolve.ts:60](https://github.com/Openovate/reactus/blob/519cdb0/src/FileResolve.ts#L60)*
+*Defined in [FileResolve.ts:60](https://github.com/Openovate/reactus/blob/b750986/src/FileResolve.ts#L60)*
 
 The compiled results of the file, Usually from `exports`
 
@@ -35,6 +35,6 @@ ___
 
 • **file**: *string*
 
-*Defined in [FileResolve.ts:55](https://github.com/Openovate/reactus/blob/519cdb0/src/FileResolve.ts#L55)*
+*Defined in [FileResolve.ts:55](https://github.com/Openovate/reactus/blob/b750986/src/FileResolve.ts#L55)*
 
 The string file absolute path

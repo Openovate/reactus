@@ -24,7 +24,7 @@ An abstract describing all possible options of the registry
 
 • **map**? : *undefined | object*
 
-*Defined in [VirtualRegistry.ts:192](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualRegistry.ts#L192)*
+*Defined in [VirtualRegistry.ts:192](https://github.com/Openovate/reactus/blob/b750986/src/VirtualRegistry.ts#L192)*
 
 ___
 
@@ -32,7 +32,7 @@ ___
 
 • **page**? : *undefined | string*
 
-*Defined in [VirtualRegistry.ts:194](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualRegistry.ts#L194)*
+*Defined in [VirtualRegistry.ts:194](https://github.com/Openovate/reactus/blob/b750986/src/VirtualRegistry.ts#L194)*
 
 ___
 
@@ -40,4 +40,4 @@ ___
 
 • **source**? : *undefined | object*
 
-*Defined in [VirtualRegistry.ts:196](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualRegistry.ts#L196)*
+*Defined in [VirtualRegistry.ts:196](https://github.com/Openovate/reactus/blob/b750986/src/VirtualRegistry.ts#L196)*

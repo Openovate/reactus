@@ -29,7 +29,6 @@ we shouldn't be wrapping this more than once.
 ### Properties
 
 * [original](_requireresolver_.requireresolver.md#original)
-* [instance](_requireresolver_.requireresolver.md#static-instance)
 
 ### Methods
 
@@ -49,7 +48,6 @@ we shouldn't be wrapping this more than once.
 * [removeListener](_requireresolver_.requireresolver.md#removelistener)
 * [resolve](_requireresolver_.requireresolver.md#resolve)
 * [setMaxListeners](_requireresolver_.requireresolver.md#setmaxlisteners)
-* [load](_requireresolver_.requireresolver.md#static-load)
 * [once](_requireresolver_.requireresolver.md#static-once)
 
 ## Constructors
@@ -58,7 +56,7 @@ we shouldn't be wrapping this more than once.
 
 \+ **new RequireResolver**(): *[RequireResolver](_requireresolver_.requireresolver.md)*
 
-*Defined in [RequireResolver.ts:35](https://github.com/Openovate/reactus/blob/519cdb0/src/RequireResolver.ts#L35)*
+*Defined in [RequireResolver.ts:23](https://github.com/Openovate/reactus/blob/b750986/src/RequireResolver.ts#L23)*
 
 Wrap the original resolveFilename()
 
@@ -70,19 +68,9 @@ Wrap the original resolveFilename()
 
 • **original**: *Function*
 
-*Defined in [RequireResolver.ts:24](https://github.com/Openovate/reactus/blob/519cdb0/src/RequireResolver.ts#L24)*
+*Defined in [RequireResolver.ts:23](https://github.com/Openovate/reactus/blob/b750986/src/RequireResolver.ts#L23)*
 
 The original Module._resolveFilename()
-
-___
-
-### `Static` instance
-
-▪ **instance**: *[RequireResolver](_requireresolver_.requireresolver.md)*
-
-*Defined in [RequireResolver.ts:19](https://github.com/Openovate/reactus/blob/519cdb0/src/RequireResolver.ts#L19)*
-
-The static instance of RequireResolver
 
 ## Methods
 
@@ -387,7 +375,7 @@ ___
 
 ▸ **resolve**(`request`: string, `parent`: object): *any*
 
-*Defined in [RequireResolver.ts:53](https://github.com/Openovate/reactus/blob/519cdb0/src/RequireResolver.ts#L53)*
+*Defined in [RequireResolver.ts:41](https://github.com/Openovate/reactus/blob/b750986/src/RequireResolver.ts#L41)*
 
 Resolve callback for Module._resolveFilename
 
@@ -417,18 +405,6 @@ Name | Type |
 `n` | number |
 
 **Returns:** *this*
-
-___
-
-### `Static` load
-
-▸ **load**(): *[RequireResolver](_requireresolver_.requireresolver.md)*
-
-*Defined in [RequireResolver.ts:29](https://github.com/Openovate/reactus/blob/519cdb0/src/RequireResolver.ts#L29)*
-
-In this case you do want a singleton.
-
-**Returns:** *[RequireResolver](_requireresolver_.requireresolver.md)*
 
 ___
 

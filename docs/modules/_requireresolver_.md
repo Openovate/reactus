@@ -18,4 +18,7 @@
 
 • **Module**: *any* =  require('module')
 
-*Defined in [RequireResolver.ts:4](https://github.com/Openovate/reactus/blob/519cdb0/src/RequireResolver.ts#L4)*
+*Defined in [RequireResolver.ts:8](https://github.com/Openovate/reactus/blob/b750986/src/RequireResolver.ts#L8)*
+
+Module holds `Module._resolveFilename()` which is where all `require()` goes
+to find out where the actual file is located

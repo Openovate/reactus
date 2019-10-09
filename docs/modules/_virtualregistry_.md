@@ -27,7 +27,7 @@
 
 Ƭ **AnyComponent**: *string | FunctionComponent‹object› | ComponentClass‹object, any›*
 
-*Defined in [VirtualRegistry.ts:184](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualRegistry.ts#L184)*
+*Defined in [VirtualRegistry.ts:184](https://github.com/Openovate/reactus/blob/b750986/src/VirtualRegistry.ts#L184)*
 
 ## Variables
 
@@ -35,7 +35,7 @@
 
 • **babel**: *any* =  require('@babel/core')
 
-*Defined in [VirtualRegistry.ts:12](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualRegistry.ts#L12)*
+*Defined in [VirtualRegistry.ts:12](https://github.com/Openovate/reactus/blob/b750986/src/VirtualRegistry.ts#L12)*
 
 ___
 
@@ -43,4 +43,4 @@ ___
 
 • **requireFromString**: *any* =  require('require-from-string')
 
-*Defined in [VirtualRegistry.ts:13](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualRegistry.ts#L13)*
+*Defined in [VirtualRegistry.ts:13](https://github.com/Openovate/reactus/blob/b750986/src/VirtualRegistry.ts#L13)*

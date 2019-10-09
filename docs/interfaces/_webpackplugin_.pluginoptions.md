@@ -20,4 +20,4 @@ An abstract describing all possible options of the plugin
 
 • **watch**: *string[]*
 
-*Defined in [WebpackPlugin.ts:192](https://github.com/Openovate/reactus/blob/519cdb0/src/WebpackPlugin.ts#L192)*
+*Defined in [WebpackPlugin.ts:192](https://github.com/Openovate/reactus/blob/b750986/src/WebpackPlugin.ts#L192)*

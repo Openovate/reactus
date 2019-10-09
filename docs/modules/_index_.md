@@ -7,7 +7,6 @@
 ### Variables
 
 * [devpack](_index_.md#const-devpack)
-* [shim](_index_.md#const-shim)
 
 ### Functions
 
@@ -20,15 +19,7 @@
 
 • **devpack**: *[createMiddleware](_devpackmiddleware_.md#createmiddleware)* =  DevpackMiddleware
 
-*Defined in [index.ts:12](https://github.com/Openovate/reactus/blob/519cdb0/src/index.ts#L12)*
-
-___
-
-### `Const` shim
-
-• **shim**: *[shim](../classes/_helpers_.helpers.md#static-shim)* =  Helpers.shim
-
-*Defined in [index.ts:11](https://github.com/Openovate/reactus/blob/519cdb0/src/index.ts#L11)*
+*Defined in [index.ts:11](https://github.com/Openovate/reactus/blob/b750986/src/index.ts#L11)*
 
 ## Functions
 
@@ -36,7 +27,7 @@ ___
 
 ▸ **VirtualRegistry**(`config?`: [RegistryOptions](../interfaces/_virtualregistry_.registryoptions.md)): *[VirtualRegistry](../classes/_virtualregistry_.virtualregistry.md)*
 
-*Defined in [index.ts:42](https://github.com/Openovate/reactus/blob/519cdb0/src/index.ts#L42)*
+*Defined in [index.ts:40](https://github.com/Openovate/reactus/blob/b750986/src/index.ts#L40)*
 
 Instantiates a Virtual Registry by `engine = reactus.VirtualRegistry()`
 following how express instantiates routers by `express.Router()`.
@@ -55,7 +46,7 @@ ___
 
 ▸ **createVirtualEngine**(`config?`: [EngineOptions](../interfaces/_virtualengine_.engineoptions.md)): *[VirtualEngine](../classes/_virtualengine_.virtualengine.md)*
 
-*Defined in [index.ts:19](https://github.com/Openovate/reactus/blob/519cdb0/src/index.ts#L19)*
+*Defined in [index.ts:18](https://github.com/Openovate/reactus/blob/b750986/src/index.ts#L18)*
 
 Instantiates the Virtual Engine by `engine = reactus()`.
 

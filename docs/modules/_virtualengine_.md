@@ -26,7 +26,7 @@
 
 • **babel**: *any* =  require('@babel/core')
 
-*Defined in [VirtualEngine.ts:10](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualEngine.ts#L10)*
+*Defined in [VirtualEngine.ts:10](https://github.com/Openovate/reactus/blob/b750986/src/VirtualEngine.ts#L10)*
 
 ___
 
@@ -34,4 +34,4 @@ ___
 
 • **requireFromString**: *any* =  require('require-from-string')
 
-*Defined in [VirtualEngine.ts:11](https://github.com/Openovate/reactus/blob/519cdb0/src/VirtualEngine.ts#L11)*
+*Defined in [VirtualEngine.ts:11](https://github.com/Openovate/reactus/blob/b750986/src/VirtualEngine.ts#L11)*

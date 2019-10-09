@@ -22,7 +22,7 @@ circular dependency limitations. Instead we create a mock interface
 
 • **files**: *[FileContentMap](_webpackplugin_.filecontentmap.md)*
 
-*Defined in [WebpackPlugin.ts:170](https://github.com/Openovate/reactus/blob/519cdb0/src/WebpackPlugin.ts#L170)*
+*Defined in [WebpackPlugin.ts:170](https://github.com/Openovate/reactus/blob/b750986/src/WebpackPlugin.ts#L170)*
 
 ___
 
@@ -30,4 +30,4 @@ ___
 
 • **sources**: *[FileSourceMap](_webpackplugin_.filesourcemap.md)*
 
-*Defined in [WebpackPlugin.ts:171](https://github.com/Openovate/reactus/blob/519cdb0/src/WebpackPlugin.ts#L171)*
+*Defined in [WebpackPlugin.ts:171](https://github.com/Openovate/reactus/blob/b750986/src/WebpackPlugin.ts#L171)*
